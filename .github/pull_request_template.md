@@ -1,11 +1,12 @@
-## 📌𝘐𝘴𝘴𝘶𝘦𝘴
+## *📌 Issues*
 - closed #
 
-## 📎𝘞𝘰𝘳𝘬 𝘋𝘦𝘴𝘤𝘳𝘪𝘱𝘵𝘪𝘰𝘯
+## *📝 Work Description*
+-
 - 
+
+## *📸 Screenshot*
+<!-- <img src="이미지 주소" width=270 /> -->
+
+## *📢 To Reviewers*
 - 
-
-## 📷𝘚𝘤𝘳𝘦𝘦𝘯𝘴𝘩𝘰𝘵
-
-
-## 💬𝘛𝘰 𝘙𝘦𝘷𝘪𝘦𝘸𝘦𝘳𝘴
