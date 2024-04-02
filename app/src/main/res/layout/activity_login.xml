@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/login_btn_sign_up"
+            android:text="@string/login_btn_login"
             app:layout_constraintBottom_toTopOf="@id/btn_login_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
