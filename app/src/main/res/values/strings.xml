@@ -21,5 +21,10 @@
     <string name="sign_up_mbti">MBTI</string>
     <string name="sign_up_mbti_hint">MBTI를 입력해주세요</string>
     <string name="sign_up_btn_sign_up">회원가입 하기</string>
+    <string name="sign_up_check_format">모든 정보를 입력해주세요</string>
+    <string name="sign_up_id_format_error">6~10글자 이내로 입력해주세요</string>
+    <string name="sign_up_password_format_error">8~12글자 이내로 입력해주세요</string>
+    <string name="sign_up_success">회원가입에 성공했습니다</string>
+
 
 </resources>
