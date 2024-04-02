@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.sopt.now.R
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
 
@@ -44,9 +45,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
             else -> {
                 shortToast(getString(R.string.sign_up_success))
-                finish()
+                navigateToLogin(user)
             }
         }
+    }
+
+    private fun navigateToLogin(updateUser: User) {
+        intent.putExtra(USER, updateUser)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
 }
