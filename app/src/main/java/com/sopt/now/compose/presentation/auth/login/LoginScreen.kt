@@ -22,7 +22,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(
+    navController: NavHostController,
+    onClickLogin: () -> Unit = {},
+    onClickSignup: () -> Unit = {},
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
     var userId by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
