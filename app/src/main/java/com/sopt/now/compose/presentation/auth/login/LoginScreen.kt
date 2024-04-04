@@ -24,9 +24,12 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun LoginScreen(
     navController: NavHostController,
-    onClickLogin: () -> Unit = {},
-    onClickSignup: () -> Unit = {},
-    viewModel: LoginViewModel = hiltViewModel(),
+    onClickLogin: () -> Unit = {
+        // 로그인 로직을 여기에 추가
+    },
+    onClickSignup: () -> Unit = {
+        navController.navigate("signUp")
+    },
 ) {
     var userId by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -66,9 +69,10 @@ fun LoginScreen(
             Text("로그인 하기")
         }
         Spacer(modifier = Modifier.padding(vertical = 5.dp))
+
         Button(
-            onClick = { /* 클릭 시 수행될 동작 */ },
-            modifier = Modifier.fillMaxWidth(),
+            onClick = { navController.navigate("signUp") },
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text("회원가입 하기")
         }

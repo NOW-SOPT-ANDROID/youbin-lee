@@ -1,4 +1,6 @@
 package com.sopt.now.compose.presentation.auth.signup
 
-class SignUpViewModel {
+import androidx.lifecycle.ViewModel
+
+class SignUpViewModel : ViewModel() {
 }

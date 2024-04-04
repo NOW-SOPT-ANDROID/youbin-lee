@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavHostController) {
     var userId by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
@@ -56,16 +58,16 @@ fun SignUpScreen() {
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text("닉네임")
         TextField(
-            value = password,
-            onValueChange = { password = it },
+            value = nickname,
+            onValueChange = { nickname = it },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("닉네임을 입력해주세요") }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text("MBTI")
         TextField(
-            value = password,
-            onValueChange = { password = it },
+            value = mbti,
+            onValueChange = { mbti = it },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("MBTI를 입력해주세요") }
         )
@@ -83,5 +85,6 @@ fun SignUpScreen() {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSignUp() {
-    SignUpScreen()
+    val navController = rememberNavController()
+    SignUpScreen(navController)
 }
