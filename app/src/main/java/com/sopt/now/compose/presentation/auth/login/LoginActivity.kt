@@ -68,7 +68,7 @@ fun LoginScreen() {
                 id = result.data?.getStringExtra("id").orEmpty()
                 password = result.data?.getStringExtra("pw").orEmpty()
                 nickname = result.data?.getStringExtra("nickname").orEmpty()
-                mbti = result.data?.getStringExtra("age").orEmpty()
+                mbti = result.data?.getStringExtra("mbti").orEmpty()
             }
         }
 
