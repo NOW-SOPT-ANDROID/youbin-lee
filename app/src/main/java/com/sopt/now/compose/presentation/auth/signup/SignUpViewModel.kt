@@ -11,7 +11,7 @@ class SignUpViewModel : ViewModel() {
     private val _state = MutableSharedFlow<SignUpState>()
     val state = _state.asSharedFlow()
 
-    var userId = mutableStateOf("")
+    var id = mutableStateOf("")
     var password = mutableStateOf("")
     var nickname = mutableStateOf("")
     var mbti = mutableStateOf("")
@@ -27,6 +27,6 @@ class SignUpViewModel : ViewModel() {
     }
 
     private fun isSignUpValid(): Boolean {
-        return userId.value.isNotBlank() && password.value.isNotBlank() && nickname.value.isNotBlank() && mbti.value.isNotBlank()
+        return id.value.isNotBlank() && password.value.isNotBlank() && nickname.value.isNotBlank() && mbti.value.isNotBlank()
     }
 }
