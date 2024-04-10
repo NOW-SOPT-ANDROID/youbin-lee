@@ -10,7 +10,6 @@ import com.sopt.now.util.extension.shortToast
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
-    private lateinit var user: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,23 +18,13 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun initSignUpClickListener() {
         binding.btnSignUpSignup.setOnClickListener {
-            user = createUser()
-            checkSignUpFormat(user)
+            checkSignUpFormat()
         }
     }
 
-    private fun createUser(): User {
-        with(binding) {
-            return User(
-                etSignUpId.text.toString(),
-                etSignUpPw.text.toString(),
-                etSignUpNickname.text.toString(),
-                etSignUpMbti.text.toString(),
-            )
-        }
-    }
+    private fun checkSignUpFormat() {
+        val user = createUser()
 
-    private fun checkSignUpFormat(user: User) {
         when {
             user.id.length !in ID_MIN_LENGTH..ID_MAX_LENGTH -> shortToast(R.string.sign_up_id_format_error)
 
@@ -47,6 +36,17 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 shortToast(R.string.sign_up_success)
                 navigateToLogin(user)
             }
+        }
+    }
+
+    private fun createUser(): User {
+        with(binding) {
+            return User(
+                etSignUpId.text.toString(),
+                etSignUpPw.text.toString(),
+                etSignUpNickname.text.toString(),
+                etSignUpMbti.text.toString(),
+            )
         }
     }
 

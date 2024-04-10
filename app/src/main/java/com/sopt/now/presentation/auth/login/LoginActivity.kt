@@ -23,12 +23,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        signUpActivityLauncher()
+        setSignUpActivityLauncher()
         initSignUpClickListener()
         initLoginClickListener()
     }
 
-    private fun signUpActivityLauncher() {
+    private fun setSignUpActivityLauncher() {
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
