@@ -1,6 +1,5 @@
 package com.sopt.now.compose.presentation.mypage
 
-
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity

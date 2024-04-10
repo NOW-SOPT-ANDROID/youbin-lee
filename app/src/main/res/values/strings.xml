@@ -8,7 +8,6 @@
     <string name="btn_sign_up">회원가입 하기</string>
     <string name="btn_login">로그인 하기</string>
 
-
     <!--sign_up-->
     <string name="sign_up_title">SIGN UP</string>
     <string name="sign_up_id_hint">아이디를 입력해주세요</string>

@@ -66,7 +66,6 @@ fun SignUpScreen() {
 
     val context = LocalContext.current
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()

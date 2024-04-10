@@ -109,7 +109,11 @@ fun LoginScreen() {
                 if (loginId.trim().isNotEmpty() && loginId == id && loginPassword.trim()
                         .isNotEmpty() && loginPassword == password
                 ) {
-                    Toast.makeText(context, context.getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.login_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     val intent = Intent(context, MainPageActivity::class.java).apply {
                         putExtras(
@@ -122,7 +126,11 @@ fun LoginScreen() {
                         )
                     }
                     context.startActivity(intent)
-                } else Toast.makeText(context, context.getString(R.string.login_id_pw_error), Toast.LENGTH_SHORT).show()
+                } else Toast.makeText(
+                    context,
+                    context.getString(R.string.login_id_pw_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
