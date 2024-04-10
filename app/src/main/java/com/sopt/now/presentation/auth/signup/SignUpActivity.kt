@@ -37,14 +37,14 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun checkSignUpFormat(user: User) {
         when {
-            user.id.length !in 6..10 -> shortToast(getString(R.string.sign_up_id_format_error))
+            user.id.length !in 6..10 -> shortToast(R.string.sign_up_id_format_error)
 
-            user.password.length !in 8..12 -> shortToast(getString(R.string.sign_up_password_format_error))
+            user.password.length !in 8..12 -> shortToast(R.string.sign_up_password_format_error)
 
-            user.nickName.isEmpty() || user.mbti.isEmpty() -> shortToast(getString(R.string.sign_up_check_format))
+            user.nickName.isEmpty() || user.mbti.isEmpty() -> shortToast(R.string.sign_up_check_format)
 
             else -> {
-                shortToast(getString(R.string.sign_up_success))
+                shortToast(R.string.sign_up_success)
                 navigateToLogin(user)
             }
         }

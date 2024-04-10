@@ -50,11 +50,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun initLoginClickListener() {
         binding.btnLoginLogin.setOnClickListener {
             when {
-                !::user.isInitialized -> shortToast(getString(R.string.login_is_not_initialized))
-                checkIdnAvailable(user) -> shortToast(getString(R.string.login_id_fail))
-                checkPwAvailable(user) -> shortToast(getString(R.string.login_pw_fail))
+                !::user.isInitialized -> shortToast(R.string.login_is_not_initialized)
+                checkIdnAvailable(user) -> shortToast(R.string.login_id_fail)
+                checkPwAvailable(user) -> shortToast(R.string.login_pw_fail)
                 else -> {
-                    shortToast(getString(R.string.login_success))
+                    shortToast(R.string.login_success)
                     navigateToMain(user)
                 }
             }
