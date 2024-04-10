@@ -1,6 +1,5 @@
 package com.sopt.now.compose.presentation.auth.signup
 
-
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -26,10 +25,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
+import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.auth.login.LoginActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
@@ -73,11 +75,11 @@ fun SignUpScreen() {
         Spacer(modifier = Modifier.padding(20.dp))
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "SIGN UP",
+            text = stringResource(id = R.string.sign_up_title),
             fontSize = 25.sp
         )
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = "ID")
+        Text(text = stringResource(id = R.string.id))
         TextField(
             value = id,
             onValueChange = {
@@ -85,10 +87,10 @@ fun SignUpScreen() {
                 checkId = id.trim().length in 6..10
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("아이디를 입력해주세요") }
+            placeholder = { Text(stringResource(id = R.string.sign_up_id_hint)) }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
-        Text("비밀번호")
+        Text(stringResource(id = R.string.pw))
         TextField(
             value = password,
             onValueChange = {
@@ -97,10 +99,11 @@ fun SignUpScreen() {
             },
 
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("비밀번호를 입력해주세요") }
+            placeholder = { Text(stringResource(id = R.string.sign_up_pw_hint)) },
+            visualTransformation = PasswordVisualTransformation(),
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
-        Text("닉네임")
+        Text(stringResource(id = R.string.nickname))
         TextField(
             value = nickname,
             onValueChange = {
@@ -109,10 +112,10 @@ fun SignUpScreen() {
             },
 
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("닉네임을 입력해주세요") }
+            placeholder = { Text(stringResource(id = R.string.sign_up_nickname_hint)) }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
-        Text("MBTI")
+        Text(stringResource(id = R.string.mbti))
         TextField(
             value = mbti,
             onValueChange = {
@@ -120,7 +123,7 @@ fun SignUpScreen() {
                 checkMbti = mbti.trim().length in 1..3
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("MBTI를 입력해주세요") }
+            placeholder = { Text(stringResource(id = R.string.sign_up_mbti_hint)) }
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
@@ -128,19 +131,19 @@ fun SignUpScreen() {
                 when {
                     !checkId -> Toast.makeText(
                         context,
-                        "6~10글자 이내로 입력해주세요",
+                        context.getString(R.string.sign_up_id_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     !checkPassword -> Toast.makeText(
                         context,
-                        ">8~12글자 이내로 입력해주세요",
+                        context.getString(R.string.sign_up_pw_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
                     !checkNickname && !checkMbti -> Toast.makeText(
                         context,
-                        "모든 정보를 입력해주세요",
+                        context.getString(R.string.sign_up_nickname_mbti_error),
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -156,14 +159,18 @@ fun SignUpScreen() {
                             )
                         }
                         (context as? Activity)?.setResult(RESULT_OK, intent)
-                        Toast.makeText(context, "회원가입에 성공했습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.sign_up_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         (context as? Activity)?.finish()
                     }
                 }
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text("회원가입 하기")
+            Text(stringResource(id = R.string.btn_sign_up))
         }
         Spacer(modifier = Modifier.padding(bottom = 30.dp))
     }
