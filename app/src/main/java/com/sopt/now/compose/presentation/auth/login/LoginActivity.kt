@@ -3,11 +3,8 @@ package com.sopt.now.compose.presentation.auth.login
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -33,29 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
+import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.presentation.auth.signup.SignActivity
 import com.sopt.now.compose.presentation.mypage.MainPageActivity
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-
-class LoginActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            NOWSOPTAndroidTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LoginScreen()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onNavigateToSignUp: () -> Unit
+) {
     var loginId by remember { mutableStateOf("") }
     var loginPassword by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -138,7 +118,10 @@ fun LoginScreen() {
         }
         Spacer(modifier = Modifier.padding(vertical = 5.dp))
         Button(
-            onClick = { result.launch(Intent(context, SignActivity::class.java)) },
+            onClick =
+            onNavigateToSignUp,
+
+//            { result.launch(Intent(context, SignActivity::class.java)) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(id = R.string.btn_sign_up))
@@ -150,5 +133,6 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewLogin() {
-    LoginScreen()
+    val navController = rememberNavController()
+    LoginScreen(onNavigateToSignUp = { navController.navigate("signUpScreen") })
 }
