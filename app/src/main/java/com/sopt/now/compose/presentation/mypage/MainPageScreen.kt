@@ -1,6 +1,5 @@
 package com.sopt.now.compose.presentation.mypage
 
-import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,26 +11,36 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
+import com.sopt.now.compose.model.User
 
 @Composable
 fun MainPageScreen(
     navController: NavController,
     mainPageViewModel: MainPageViewModel = viewModel()
 ) {
-    val context = LocalContext.current
+    val myPageState by mainPageViewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        navController.previousBackStackEntry?.savedStateHandle?.run {
+            val user = get<User>("User") ?: User("", "", "", "")
+            mainPageViewModel.setUserInfo(user)
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -60,31 +69,27 @@ fun MainPageScreen(
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        (context as? Activity)?.intent?.getStringExtra("id")?.let {
-            Text(
-                text = it,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, bottom = 40.dp),
-            )
-        }
+        Text(
+            text = myPageState.id,
+            fontSize = 18.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, bottom = 40.dp),
+        )
+
         Spacer(modifier = Modifier.padding(20.dp))
         Text(
             text = stringResource(id = R.string.nickname),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        (context as? Activity)?.intent?.getStringExtra("nickname")?.let {
-            Text(
-                text = it,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, bottom = 40.dp),
-            )
-        }
-
+        Text(
+            text = myPageState.nickname,
+            fontSize = 18.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, bottom = 40.dp),
+        )
     }
 }
 
