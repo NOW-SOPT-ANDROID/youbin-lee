@@ -1,6 +1,5 @@
 package com.sopt.now.compose.presentation.auth.login
 
-
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.widget.Toast
@@ -28,14 +27,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
+import com.sopt.now.compose.ScreenRoute
 import com.sopt.now.compose.presentation.mypage.MainPageActivity
 
 @Composable
 fun LoginScreen(
-    onNavigateToSignUp: () -> Unit
-) {
+    navController: NavController,
+
+    ) {
     var loginId by remember { mutableStateOf("") }
     var loginPassword by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -118,9 +120,7 @@ fun LoginScreen(
         }
         Spacer(modifier = Modifier.padding(vertical = 5.dp))
         Button(
-            onClick =
-            onNavigateToSignUp,
-
+            onClick = { navController.navigate(ScreenRoute.SignUp.route) },
 //            { result.launch(Intent(context, SignActivity::class.java)) },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -134,5 +134,5 @@ fun LoginScreen(
 @Composable
 private fun PreviewLogin() {
     val navController = rememberNavController()
-    LoginScreen(onNavigateToSignUp = { navController.navigate("signUpScreen") })
+    LoginScreen(navController)
 }
