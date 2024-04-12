@@ -14,8 +14,8 @@ class SignUpViewModel : ViewModel() {
         _state.value = _state.value.copy(id = id)
     }
 
-    fun setPassword(password: String) {
-        _state.value = _state.value.copy(password = password)
+    fun setPassword(pw: String) {
+        _state.value = _state.value.copy(pw = pw)
     }
 
     fun setNickname(nickname: String) {
@@ -31,7 +31,7 @@ class SignUpViewModel : ViewModel() {
             _state.value.id.length !in ID_MIN_LENGTH..ID_MAX_LENGTH ->
                 _state.value.copy(message = "아이디는 6~10글자 이내로 입력해주세요.")
 
-            _state.value.password.length !in PW_MIN_LENGTH..PW_MAX_LENGTH ->
+            _state.value.pw.length !in PW_MIN_LENGTH..PW_MAX_LENGTH ->
                 _state.value.copy(message = "비밀번호는 8~12글자 이내로 입력해주세요.")
 
             _state.value.nickname.isBlank() ->
@@ -42,11 +42,10 @@ class SignUpViewModel : ViewModel() {
 
             else -> {
                 _state.value = _state.value.copy(message = "회원가입에 성공했습니다")
-                _state.value // 마지막에 상태를 반환합니다.
+                _state.value
             }
         }
     }
-
 
     fun clearMessage() {
         _state.value = _state.value.copy(message = null)

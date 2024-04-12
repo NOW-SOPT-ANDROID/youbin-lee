@@ -45,13 +45,13 @@ fun SignUpScreen(
             if (message == "회원가입에 성공했습니다") {
                 val user = User(
                     id = signUpState.id,
-                    password = signUpState.password,
+                    pw = signUpState.pw,
                     nickname = signUpState.nickname,
                     mbti = signUpState.mbti
                 )
 
                 navController.currentBackStackEntry?.savedStateHandle?.set(
-                    key = "user",
+                    key = "User",
                     value = user
                 )
                 navController.navigate(ScreenRoute.Login.route)
@@ -86,9 +86,9 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.pw))
         TextField(
-            value = signUpState.password,
-            onValueChange = { password ->
-                signUpViewModel.setPassword(password)
+            value = signUpState.pw,
+            onValueChange = { pw ->
+                signUpViewModel.setPassword(pw)
             },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = R.string.sign_up_pw_hint)) },

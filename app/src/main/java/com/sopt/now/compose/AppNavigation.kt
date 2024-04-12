@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sopt.now.compose.presentation.auth.login.LoginScreen
 import com.sopt.now.compose.presentation.auth.signup.SignUpScreen
+import com.sopt.now.compose.presentation.mypage.MainPageScreen
 
 @Composable
 fun AppNavigation(
@@ -21,6 +22,11 @@ fun AppNavigation(
             route = ScreenRoute.Login.route
         ) {
             LoginScreen(navController)
+        }
+        composable(
+            route = ScreenRoute.MainPage.route
+        ) {
+            MainPageScreen(navController)
         }
     }
 }
