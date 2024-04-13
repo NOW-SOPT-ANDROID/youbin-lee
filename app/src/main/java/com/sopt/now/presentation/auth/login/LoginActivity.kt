@@ -65,7 +65,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.etLoginId.text.toString() != user.id
 
     private fun checkPwAvailable(user: User): Boolean =
-        binding.etLoginPw.text.toString() != user.password
+        binding.etLoginPw.text.toString() != user.pw
 
     private fun navigateToMain(user: User) {
         Intent(this, MainActivity::class.java).apply {

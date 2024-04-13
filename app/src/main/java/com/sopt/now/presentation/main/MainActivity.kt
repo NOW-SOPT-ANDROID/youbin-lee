@@ -25,7 +25,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun setUserData() {
         with(binding) {
-            tvMyPageNickname.text = user.nickName
+            tvMyPageNickname.text = user.nickname
             tvMyPageId.text = user.id
             tvMyPageMbti.text = user.mbti
         }
