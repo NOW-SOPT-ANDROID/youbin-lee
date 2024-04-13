@@ -10,8 +10,8 @@
     <string name="login_btn_login">로그인 하기</string>
     <string name="login_btn_sign_up">회원가입 하기</string>
     <string name="login_is_not_initialized">회원가입을 먼저 진행해주세요</string>
-    <string name="login_id_fail">아이디가 일치하지 않습니다</string>
-    <string name="login_pw_fail">비밀번호가 일치하지 않습니다</string>
+    <string name="login_id_error">아이디가 일치하지 않습니다</string>
+    <string name="login_pw_error">비밀번호가 일치하지 않습니다</string>
     <string name="login_success">로그인에 성공했습니다</string>
 
     <!--sign_up-->

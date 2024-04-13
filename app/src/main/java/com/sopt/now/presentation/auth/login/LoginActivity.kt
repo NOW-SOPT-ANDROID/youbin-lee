@@ -6,6 +6,9 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityLoginBinding
@@ -14,11 +17,13 @@ import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.getParcelable
 import com.sopt.now.util.extension.shortToast
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var user: User
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         setSignUpActivityLauncher()
         initSignUpClickListener()
         initLoginClickListener()
+        observeLoginFormat()
     }
 
     private fun setSignUpActivityLauncher() {
@@ -33,8 +39,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                user = result.data?.getParcelable(USER, User::class.java)
-                    ?: return@registerForActivityResult
+                loginViewModel.setUser(
+                    result.data?.getParcelable(USER, User::class.java)
+                        ?: return@registerForActivityResult
+                )
             }
         }
     }
@@ -49,23 +57,26 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun initLoginClickListener() {
         binding.btnLoginLogin.setOnClickListener {
-            when {
-                !::user.isInitialized -> shortToast(R.string.login_is_not_initialized)
-                checkIdnAvailable(user) -> shortToast(R.string.login_id_fail)
-                checkPwAvailable(user) -> shortToast(R.string.login_pw_fail)
-                else -> {
-                    shortToast(R.string.login_success)
-                    navigateToMain(user)
-                }
+            with(loginViewModel) {
+                checkIdInput(binding.etLoginId.text.toString())
+                checkPwInput(binding.etLoginPw.text.toString())
+                checkLoginFormat()
             }
         }
     }
 
-    private fun checkIdnAvailable(user: User): Boolean =
-        binding.etLoginId.text.toString() != user.id
-
-    private fun checkPwAvailable(user: User): Boolean =
-        binding.etLoginPw.text.toString() != user.pw
+    private fun observeLoginFormat() {
+        loginViewModel.loginState.flowWithLifecycle(lifecycle).onEach { loginState ->
+            when (loginState) {
+                is LoginState.IdError -> shortToast(R.string.login_id_error)
+                is LoginState.PwError -> shortToast(R.string.login_pw_error)
+                is LoginState.Success -> {
+                    shortToast(R.string.login_success)
+                    navigateToMain(loginViewModel.getUser())
+                }
+            }
+        }.launchIn(lifecycleScope)
+    }
 
     private fun navigateToMain(user: User) {
         Intent(this, MainActivity::class.java).apply {

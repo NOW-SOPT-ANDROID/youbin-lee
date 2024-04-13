@@ -1,7 +1,6 @@
 package com.sopt.now.presentation.auth.signup
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +26,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun initSignUpClickListener() {
         binding.btnSignUpSignup.setOnClickListener {
-            Log.d("LYB", "유저 객체 셋해줌")
             signUpViewModel.setUser(with(binding) {
                 User(
                     etSignUpId.text.toString().trim(),
@@ -42,7 +40,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun observeSignUpFormat() {
         signUpViewModel.signUpState.flowWithLifecycle(lifecycle).onEach { signUpState ->
-            Log.d("LYB", "현재 확인하는 중")
             when (signUpState) {
                 is SignUpState.IdError -> shortToast(R.string.sign_up_id_format_error)
                 is SignUpState.PwError -> shortToast(R.string.sign_up_pw_format_error)
