@@ -43,6 +43,5 @@
 
     <!--home-->
     <string name="home_my_profile_message">상태 메세지</string>
-    <string name="home_friend_music">멜론 뮤직</string>
 
 </resources>

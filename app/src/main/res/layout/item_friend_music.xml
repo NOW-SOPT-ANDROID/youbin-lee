@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
             android:layout_marginStart="10dp"
-            android:text="@string/home_friend_music" />
+            tools:text="멜론 뮤직" />
 
         <ImageView
             android:id="@+id/img_play_btn"
