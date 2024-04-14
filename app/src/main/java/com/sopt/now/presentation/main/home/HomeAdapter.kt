@@ -1,32 +1,43 @@
 package com.sopt.now.presentation.main.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.R
 import com.sopt.now.data.FriendInfo
 import com.sopt.now.databinding.ItemFriendMusicBinding
 import com.sopt.now.databinding.ItemFriendProfileBinding
 import com.sopt.now.databinding.ItemMyProfileBinding
 
-class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var friendList: List<FriendInfo> = emptyList()
+    private val inflater by lazy { LayoutInflater.from(context) }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(viewType, parent, false)
 
         return when (viewType) {
-            R.layout.item_friend_profile -> FriendProfileViewHolder(
-                ItemFriendProfileBinding.bind(view),
+            VIEW_TYPE_MY_PROFILE -> MyProfileViewHolder(
+                ItemMyProfileBinding.inflate(
+                    inflater,
+                    parent,
+                    false
+                )
             )
 
-            R.layout.item_friend_music -> FriendMusicViewHolder(
-                ItemFriendMusicBinding.bind(view),
+            VIEW_TYPE_FRIEND_PROFILE -> FriendProfileViewHolder(
+                ItemFriendProfileBinding.inflate(
+                    inflater,
+                    parent,
+                    false
+                )
             )
 
-            else -> MyProfileViewHolder(
-                ItemMyProfileBinding.bind(view),
+            else -> FriendMusicViewHolder(
+                ItemFriendMusicBinding.inflate(
+                    inflater,
+                    parent,
+                    false
+                )
             )
         }
     }
@@ -48,8 +59,14 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int) = when (friendList[position]) {
-        is FriendInfo.MyProfile -> R.layout.item_my_profile
-        is FriendInfo.FriendProfile -> if ((friendList[position] as FriendInfo.FriendProfile).music.isNullOrBlank()) R.layout.item_friend_profile else R.layout.item_friend_music
+        is FriendInfo.MyProfile -> VIEW_TYPE_MY_PROFILE
+        is FriendInfo.FriendProfile -> if ((friendList[position] as FriendInfo.FriendProfile).music.isNullOrBlank()) VIEW_TYPE_FRIEND_PROFILE else VIEW_TYPE_FRIEND_MUSIC
+    }
+
+    companion object {
+        const val VIEW_TYPE_MY_PROFILE = 0
+        const val VIEW_TYPE_FRIEND_PROFILE = 1
+        const val VIEW_TYPE_FRIEND_MUSIC = 2
     }
 
 }

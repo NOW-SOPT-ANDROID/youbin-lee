@@ -21,7 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun initAdapter() {
-        _adapter = HomeAdapter()
+        _adapter = HomeAdapter(requireContext())
         binding.homeRvFriends.adapter = adapter
         adapter.setFriendList(homeViewModel.mockFriendInfoLists)
     }
