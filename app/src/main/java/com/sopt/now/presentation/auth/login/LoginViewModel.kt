@@ -13,8 +13,10 @@ class LoginViewModel : ViewModel() {
     val loginState: SharedFlow<LoginState> get() = _loginState
 
     private lateinit var user: User
+
     private var isIdCorrect = false
     private var isPwCorrect = false
+
     fun setUser(user: User) {
         this.user = user
     }
