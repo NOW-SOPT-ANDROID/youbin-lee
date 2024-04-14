@@ -11,8 +11,6 @@
         android:layout_height="0dp"
         android:layout_marginVertical="10dp"
         android:layout_marginStart="20dp"
-        android:background="@drawable/shape_rect_2_white_line"
-        android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/img_main_profile"
         app:layout_constraintBottom_toBottomOf="parent"
