@@ -9,6 +9,9 @@ import com.sopt.now.util.base.BaseFragment
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
+    private var _adapter: HomeAdapter? = null
+    private val adapter get() = requireNotNull(_adapter) { getString(R.string.adapter_not_initialized_error_msg) }
+
     private val homeViewModel by activityViewModels<HomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -18,9 +21,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun initAdapter() {
-        val homeAdapter = HomeAdapter()
-        binding.homeRvFriends.adapter = homeAdapter
-        homeAdapter.setFriendList(homeViewModel.mockFriendInfoLists)
+        _adapter = HomeAdapter()
+        binding.homeRvFriends.adapter = adapter
+        adapter.setFriendList(homeViewModel.mockFriendInfoLists)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _adapter = null
     }
 
 }

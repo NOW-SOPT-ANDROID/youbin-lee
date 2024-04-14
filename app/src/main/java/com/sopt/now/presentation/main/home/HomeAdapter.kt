@@ -9,7 +9,7 @@ import com.sopt.now.databinding.ItemFriendMusicBinding
 import com.sopt.now.databinding.ItemFriendProfileBinding
 import com.sopt.now.databinding.ItemMyProfileBinding
 
-class HomeAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var friendList: List<FriendInfo> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

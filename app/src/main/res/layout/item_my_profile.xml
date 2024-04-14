@@ -2,7 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:background="@drawable/layer_list_home_bottom_gray">
 
     <ImageView
         android:id="@+id/iv_profile"
@@ -46,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:text="@string/home_my_profile_message" />
 
         <ImageView
