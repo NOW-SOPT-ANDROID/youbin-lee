@@ -22,11 +22,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initBnvItemListener()
+        initBnvItemClickListener()
         getUserData()
     }
 
-    private fun initBnvItemListener() {
+    private fun initBnvItemClickListener() {
         supportFragmentManager.findFragmentById(R.id.fcv_main)
             ?: navigateTo<HomeFragment>()
 
