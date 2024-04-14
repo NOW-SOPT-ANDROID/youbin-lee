@@ -13,6 +13,7 @@ class SignUpViewModel : ViewModel() {
     val signUpState: SharedFlow<SignUpState> get() = _signUpState
 
     private lateinit var user: User
+
     fun setUser(user: User) {
         this.user = user
     }
