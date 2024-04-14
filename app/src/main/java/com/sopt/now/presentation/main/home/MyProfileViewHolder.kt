@@ -11,7 +11,7 @@ class MyProfileViewHolder(private val binding: ItemMyProfileBinding) :
     fun onBind(friendData: FriendInfo.MyProfile) {
         with(binding) {
             ivProfile.load(friendData.profileImage) {
-                transformations(RoundedCornersTransformation(60f))
+                transformations(RoundedCornersTransformation(50f))
             }
             tvName.text = friendData.name
         }
