@@ -10,6 +10,7 @@ import com.sopt.now.databinding.ItemFriendProfileBinding
 import com.sopt.now.databinding.ItemMyProfileBinding
 
 class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private var friendList: List<FriendInfo> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,22 +35,21 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = friendList[position]
 
         when (holder) {
-            is FriendProfileViewHolder -> holder.onBind(item as FriendInfo.FriendProfile)
-            is MyProfileViewHolder -> holder.onBind(item as FriendInfo.MyProfile)
-            is FriendMusicViewHolder -> holder.onBind(item as FriendInfo.FriendMusic)
+            is MyProfileViewHolder -> holder.onBind(friendList[position] as FriendInfo.MyProfile)
+            is FriendProfileViewHolder -> holder.onBind(friendList[position] as FriendInfo.FriendProfile)
+            is FriendMusicViewHolder -> holder.onBind(item as FriendInfo.FriendProfile)
         }
     }
 
     override fun getItemCount() = friendList.size
     fun setFriendList(friendList: List<FriendInfo>) {
-        this.friendList = friendList.toList()
+        this.friendList = friendList.toMutableList()
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int) = when (friendList[position]) {
         is FriendInfo.MyProfile -> R.layout.item_my_profile
-        is FriendInfo.FriendProfile -> R.layout.item_friend_profile
-        is FriendInfo.FriendMusic -> R.layout.item_friend_music
+        is FriendInfo.FriendProfile -> if ((friendList[position] as FriendInfo.FriendProfile).music.isNullOrBlank()) R.layout.item_friend_profile else R.layout.item_friend_music
     }
 
 }

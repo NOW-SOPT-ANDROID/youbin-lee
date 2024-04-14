@@ -1,15 +1,16 @@
 package com.sopt.now.presentation.main.home
 
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.sopt.now.data.FriendInfo
 import com.sopt.now.databinding.ItemFriendProfileBinding
 
 class FriendProfileViewHolder(private val binding: ItemFriendProfileBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun onBind(friendData: FriendInfo.FriendProfile) {
+    fun onBind(item: FriendInfo.FriendProfile) {
         with(binding) {
-            ivProfile.setImageResource(friendData.profileImage)
-            tvName.text = friendData.name
+            ivProfile.load(item.profileImage)
+            tvName.text = item.name
         }
     }
 }

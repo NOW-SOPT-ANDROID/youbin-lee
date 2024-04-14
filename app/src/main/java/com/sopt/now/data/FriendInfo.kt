@@ -1,5 +1,7 @@
 package com.sopt.now.data
 
+import androidx.annotation.DrawableRes
+
 sealed class FriendInfo {
 
     data class MyProfile(
@@ -9,13 +11,8 @@ sealed class FriendInfo {
 
     data class FriendProfile(
         val name: String,
-        val profileImage: Int,
-    ) : FriendInfo()
-
-    data class FriendMusic(
-        val name: String,
-        val profileImage: Int,
-        val music: String,
+        @DrawableRes val profileImage: Int,
+        val music: String? = "",
     ) : FriendInfo()
 
 }

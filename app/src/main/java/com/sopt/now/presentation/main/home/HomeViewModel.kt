@@ -11,7 +11,7 @@ class HomeViewModel : ViewModel() {
             profileImage = R.drawable.img_main_profile,
             name = "이유빈",
         ),
-        FriendInfo.FriendMusic(
+        FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile1,
             name = "우상욱",
             music = "EASY"
@@ -20,12 +20,12 @@ class HomeViewModel : ViewModel() {
             profileImage = R.drawable.img_friend_profile2,
             name = "배지현",
         ),
-        FriendInfo.FriendMusic(
+        FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile3,
             name = "최준서",
             music = "Siren"
         ),
-        FriendInfo.FriendMusic(
+        FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile4,
             name = "김언지",
             music = "SHEESH"
@@ -38,7 +38,7 @@ class HomeViewModel : ViewModel() {
             profileImage = R.drawable.img_friend_profile6,
             name = "배찬우",
         ),
-        FriendInfo.FriendMusic(
+        FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile7,
             name = "강문수",
             music = "Magnetic"
