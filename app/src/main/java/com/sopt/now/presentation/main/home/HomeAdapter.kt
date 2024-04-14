@@ -64,9 +64,9 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     companion object {
-        const val VIEW_TYPE_MY_PROFILE = 0
-        const val VIEW_TYPE_FRIEND_PROFILE = 1
-        const val VIEW_TYPE_FRIEND_MUSIC = 2
+        private const val VIEW_TYPE_MY_PROFILE = 0
+        private const val VIEW_TYPE_FRIEND_PROFILE = 1
+        private const val VIEW_TYPE_FRIEND_MUSIC = 2
     }
 
 }
