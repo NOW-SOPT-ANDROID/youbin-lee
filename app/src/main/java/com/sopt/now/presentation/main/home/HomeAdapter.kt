@@ -43,7 +43,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = friendList.size
     fun setFriendList(friendList: List<FriendInfo>) {
-        this.friendList = friendList.toMutableList()
+        this.friendList = friendList.toList()
         notifyDataSetChanged()
     }
 
