@@ -12,7 +12,9 @@ import com.sopt.now.databinding.ItemMyProfileBinding
 class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var friendList: List<FriendInfo> = emptyList()
+
     private val inflater by lazy { LayoutInflater.from(context) }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType) {
