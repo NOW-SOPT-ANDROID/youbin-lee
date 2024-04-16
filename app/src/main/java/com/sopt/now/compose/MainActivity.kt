@@ -42,10 +42,10 @@ fun MainBottomNav(navController: NavController, content: @Composable () -> Unit)
         bottomBar = {
             BottomNavigation(navController = navController)
         }
-    ) { innerPadding ->
+    ) {
         Column(
             modifier = Modifier
-                .padding(innerPadding),
+                .padding(it),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             content()
