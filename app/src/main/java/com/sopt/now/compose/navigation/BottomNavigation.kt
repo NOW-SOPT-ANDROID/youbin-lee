@@ -21,9 +21,9 @@ fun BottomNavigation(navController: NavController) {
     NavigationBar {
         items.forEach { item ->
             NavigationBarItem(
-                selected = currentRoute == item.screenRoute,
+                selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.screenRoute) {
+                    navController.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }

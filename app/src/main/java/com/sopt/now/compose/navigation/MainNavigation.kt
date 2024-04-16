@@ -45,19 +45,19 @@ fun NavGraphBuilder.authGraph(
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    navigation(startDestination = BottomNavItem.Home.screenRoute, route = NavGraph.Main.route) {
+    navigation(startDestination = BottomNavItem.Home.route, route = NavGraph.Main.route) {
         composable(
-            BottomNavItem.Home.screenRoute
+            BottomNavItem.Home.route
         ) {
             HomeScreen(navController)
         }
         composable(
-            BottomNavItem.Search.screenRoute
+            BottomNavItem.Search.route
         ) {
             SearchScreen(navController)
         }
         composable(
-            BottomNavItem.MyPage.screenRoute
+            BottomNavItem.MyPage.route
         ) {
             MyPageScreen(navController)
         }

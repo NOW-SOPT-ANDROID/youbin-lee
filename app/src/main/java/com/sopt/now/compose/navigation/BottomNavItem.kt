@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.sopt.now.compose.R
 
 sealed class BottomNavItem(
-    val title: Int, val icon: ImageVector, val screenRoute: String
+    val title: Int, val icon: ImageVector, val route: String
 ) {
     data object Home : BottomNavItem(R.string.nav_home, Icons.Filled.Home, "HOME")
     data object Search : BottomNavItem(R.string.nav_search, Icons.Filled.Search, "SCREEN")
