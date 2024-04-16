@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.mypage
+package com.sopt.now.compose.presentation.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.navigation
 
 sealed class ScreenRoute(val route: String) {
     data object Login : ScreenRoute(route = "login")

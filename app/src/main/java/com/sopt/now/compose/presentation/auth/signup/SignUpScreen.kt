@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.ScreenRoute
+import com.sopt.now.compose.navigation.ScreenRoute
 import com.sopt.now.compose.model.User
 import kotlinx.coroutines.launch
 

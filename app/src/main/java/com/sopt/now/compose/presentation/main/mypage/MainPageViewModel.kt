@@ -1,8 +1,7 @@
-package com.sopt.now.compose.presentation.mypage
+package com.sopt.now.compose.presentation.main.mypage
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.model.User
-import com.sopt.now.compose.presentation.auth.login.LoginState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.mypage
+package com.sopt.now.compose.presentation.main.mypage
 
 data class MyPageState(
     val id: String = "",

@@ -1,4 +1,4 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sopt.now.compose.presentation.auth.login.LoginScreen
 import com.sopt.now.compose.presentation.auth.signup.SignUpScreen
-import com.sopt.now.compose.presentation.mypage.MainPageScreen
+import com.sopt.now.compose.presentation.main.mypage.MainPageScreen
 
 @Composable
 fun AppNavigation(
