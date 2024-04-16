@@ -29,16 +29,16 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.data.model.User
 
 @Composable
-fun MainPageScreen(
+fun MyPageScreen(
     navController: NavController,
-    mainPageViewModel: MainPageViewModel = viewModel()
+    myPageViewModel: MyPageViewModel = viewModel()
 ) {
-    val myPageState by mainPageViewModel.state.collectAsStateWithLifecycle()
+    val myPageState by myPageViewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         navController.previousBackStackEntry?.savedStateHandle?.run {
             val user = get<User>("User") ?: User("", "", "", "")
-            mainPageViewModel.setUserInfo(user)
+            myPageViewModel.setUserInfo(user)
         }
     }
 
@@ -97,5 +97,5 @@ fun MainPageScreen(
 @Composable
 fun MainPreview() {
     val navController = rememberNavController()
-    MainPageScreen(navController)
+    MyPageScreen(navController)
 }

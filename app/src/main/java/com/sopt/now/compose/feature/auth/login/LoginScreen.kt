@@ -26,8 +26,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.navigation.ScreenRoute
 import com.sopt.now.compose.data.model.User
+import com.sopt.now.compose.navigation.NavGraph
+import com.sopt.now.compose.navigation.AuthGraph
 import kotlinx.coroutines.launch
 
 @Composable
@@ -54,7 +55,12 @@ fun LoginScreen(
                     key = "User",
                     value = user
                 )
-                navController.navigate(ScreenRoute.MainPage.route)
+                navController.navigate(NavGraph.Main.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
             } else {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 loginViewModel.clearMessage()
@@ -114,7 +120,7 @@ fun LoginScreen(
         }
         Spacer(modifier = Modifier.padding(vertical = 5.dp))
         Button(
-            onClick = { navController.navigate(ScreenRoute.SignUp.route) },
+            onClick = { navController.navigate(AuthGraph.SignUp.route) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(id = R.string.btn_sign_up))

@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.navigation.ScreenRoute
+import com.sopt.now.compose.navigation.AuthGraph
 import com.sopt.now.compose.data.model.User
 import kotlinx.coroutines.launch
 
@@ -54,7 +54,7 @@ fun SignUpScreen(
                     key = "User",
                     value = user
                 )
-                navController.navigate(ScreenRoute.Login.route)
+                navController.navigate(AuthGraph.Login.route)
             } else {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 signUpViewModel.clearMessage()
