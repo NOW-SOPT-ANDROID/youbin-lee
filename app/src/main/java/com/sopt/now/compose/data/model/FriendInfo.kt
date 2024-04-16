@@ -1,6 +1,7 @@
 package com.sopt.now.compose.data.model
 
 sealed class FriendInfo {
+
     data class MyProfile(
         val name: String,
         val profileImage: Int,
