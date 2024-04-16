@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.sopt.now.compose.MainBottomNav
 import com.sopt.now.compose.feature.auth.login.LoginScreen
 import com.sopt.now.compose.feature.auth.signup.SignUpScreen
 import com.sopt.now.compose.feature.main.home.HomeScreen
@@ -20,7 +21,7 @@ fun MainNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavGraph.Auth.route
+        startDestination = MainGraph.Auth.route
     ) {
         authGraph(navController)
         mainGraph(navController)
@@ -30,7 +31,7 @@ fun MainNavigation(
 fun NavGraphBuilder.authGraph(
     navController: NavController
 ) {
-    navigation(startDestination = AuthGraph.Login.route, route = NavGraph.Auth.route) {
+    navigation(startDestination = AuthGraph.Login.route, route = MainGraph.Auth.route) {
         composable(
             route = AuthGraph.SignUp.route
         ) {
@@ -45,21 +46,27 @@ fun NavGraphBuilder.authGraph(
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    navigation(startDestination = BottomNavItem.Home.route, route = NavGraph.Main.route) {
+    navigation(startDestination = BottomNavItem.Home.route, route = MainGraph.Main.route) {
         composable(
             BottomNavItem.Home.route
         ) {
-            HomeScreen(navController)
+            MainBottomNav(navController = navController) {
+                HomeScreen(navController)
+            }
         }
         composable(
             BottomNavItem.Search.route
         ) {
-            SearchScreen(navController)
+            MainBottomNav(navController = navController) {
+                SearchScreen(navController)
+            }
         }
         composable(
             BottomNavItem.MyPage.route
         ) {
-            MyPageScreen(navController)
+            MainBottomNav(navController = navController) {
+                MyPageScreen(navController)
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.model.User
-import com.sopt.now.compose.navigation.NavGraph
+import com.sopt.now.compose.navigation.MainGraph
 import com.sopt.now.compose.navigation.AuthGraph
 import kotlinx.coroutines.launch
 
@@ -55,7 +55,7 @@ fun LoginScreen(
                     key = "User",
                     value = user
                 )
-                navController.navigate(NavGraph.Main.route) {
+                navController.navigate(MainGraph.Main.route) {
                     popUpTo(navController.graph.startDestinationId) {
                         inclusive = true
                     }

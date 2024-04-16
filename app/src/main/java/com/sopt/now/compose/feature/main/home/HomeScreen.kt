@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -15,40 +14,34 @@ import androidx.navigation.NavController
 import com.sopt.now.compose.component.profile.FriendProfileItem
 import com.sopt.now.compose.component.profile.MyProfileItem
 import com.sopt.now.compose.data.model.FriendInfo
-import com.sopt.now.compose.navigation.BottomNavigation
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     homeViewModel: HomeViewModel = viewModel()
 ) {
-    Scaffold(
-        bottomBar = { BottomNavigation(navController = navController) }
+    Column(
+        modifier = Modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .padding(it),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .fillMaxSize()
+                .padding(20.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(20.dp)
-            ) {
-                items(homeViewModel.friendList) { friend ->
-                    when (friend) {
-                        is FriendInfo.MyProfile -> MyProfileItem(
-                            name = friend.name,
-                            profileImage = friend.profileImage,
-                            profileImageEtc = friend.profileImageEtc
-                        )
+            items(homeViewModel.friendList) { friend ->
+                when (friend) {
+                    is FriendInfo.MyProfile -> MyProfileItem(
+                        name = friend.name,
+                        profileImage = friend.profileImage,
+                        profileImageEtc = friend.profileImageEtc
+                    )
 
-                        is FriendInfo.FriendProfile -> FriendProfileItem(
-                            name = friend.name,
-                            profileImage = friend.profileImage,
-                            selfDescription = friend.selfDescription
-                        )
-                    }
+                    is FriendInfo.FriendProfile -> FriendProfileItem(
+                        name = friend.name,
+                        profileImage = friend.profileImage,
+                        selfDescription = friend.selfDescription
+                    )
                 }
             }
         }
