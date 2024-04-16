@@ -1,7 +1,7 @@
-package com.sopt.now.compose.presentation.auth.login
+package com.sopt.now.compose.feature.auth.login
 
 import androidx.lifecycle.ViewModel
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.data.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

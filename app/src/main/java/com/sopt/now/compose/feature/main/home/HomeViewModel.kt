@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.main.home
+package com.sopt.now.compose.feature.main.home
 
 import androidx.lifecycle.ViewModel
 

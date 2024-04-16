@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.sopt.now.compose.presentation.auth.login.LoginScreen
-import com.sopt.now.compose.presentation.auth.signup.SignUpScreen
-import com.sopt.now.compose.presentation.main.mypage.MainPageScreen
+import com.sopt.now.compose.feature.auth.login.LoginScreen
+import com.sopt.now.compose.feature.auth.signup.SignUpScreen
+import com.sopt.now.compose.feature.main.mypage.MainPageScreen
 
 @Composable
 fun AppNavigation(

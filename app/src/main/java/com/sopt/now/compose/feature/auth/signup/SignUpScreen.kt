@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.auth.login
+package com.sopt.now.compose.feature.auth.signup
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -27,45 +27,38 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.navigation.ScreenRoute
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.data.model.User
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
+fun SignUpScreen(
     navController: NavController,
-    loginViewModel: LoginViewModel = viewModel()
+    signUpViewModel: SignUpViewModel = viewModel(),
 ) {
-    val loginState by loginViewModel.state.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
 
+    val signUpState by signUpViewModel.state.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    LaunchedEffect(loginState.message) {
-        loginState.message?.let { message ->
-            if (message == "로그인에 성공했습니다") {
+    LaunchedEffect(signUpState.message) {
+        signUpState.message?.let { message ->
+            if (message == "회원가입에 성공했습니다") {
                 val user = User(
-                    id = loginState.id,
-                    pw = loginState.pw,
-                    nickname = loginState.nickname,
-                    mbti = loginState.mbti
+                    id = signUpState.id,
+                    pw = signUpState.pw,
+                    nickname = signUpState.nickname,
+                    mbti = signUpState.mbti
                 )
 
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     key = "User",
                     value = user
                 )
-                navController.navigate(ScreenRoute.MainPage.route)
+                navController.navigate(ScreenRoute.Login.route)
             } else {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                loginViewModel.clearMessage()
+                signUpViewModel.clearMessage()
             }
-        }
-    }
-
-    LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
-            val user = get<User>("User") ?: User("", "", "", "")
-            loginViewModel.setUserInfo(user)
         }
     }
 
@@ -77,45 +70,58 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(20.dp))
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(id = R.string.login_title),
+            text = stringResource(id = R.string.sign_up_title),
             fontSize = 25.sp
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(text = stringResource(id = R.string.id))
         TextField(
-            value = loginState.id,
+            value = signUpState.id,
             onValueChange = { id ->
-                loginViewModel.setId(id)
+                signUpViewModel.setId(id)
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(id = R.string.login_id_hint)) }
+            placeholder = { Text(stringResource(id = R.string.sign_up_id_hint)) }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.pw))
         TextField(
-            value = loginState.pw,
+            value = signUpState.pw,
             onValueChange = { pw ->
-                loginViewModel.setPassword(pw)
+                signUpViewModel.setPassword(pw)
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(id = R.string.login_pw_hint)) },
+            placeholder = { Text(stringResource(id = R.string.sign_up_pw_hint)) },
             visualTransformation = PasswordVisualTransformation(),
+        )
+        Spacer(modifier = Modifier.padding(vertical = 20.dp))
+        Text(stringResource(id = R.string.nickname))
+        TextField(
+            value = signUpState.nickname,
+            onValueChange = { nickname ->
+                signUpViewModel.setNickname(nickname)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text(stringResource(id = R.string.sign_up_nickname_hint)) }
+        )
+        Spacer(modifier = Modifier.padding(vertical = 20.dp))
+        Text(stringResource(id = R.string.mbti))
+        TextField(
+            value = signUpState.mbti,
+            onValueChange = { mbti ->
+                signUpViewModel.setMbti(mbti)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text(stringResource(id = R.string.sign_up_mbti_hint)) }
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
             onClick = {
                 scope.launch {
-                    loginViewModel.checkLogin()
+                    signUpViewModel.checkSignUp()
                 }
             },
             modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(stringResource(id = R.string.btn_login))
-        }
-        Spacer(modifier = Modifier.padding(vertical = 5.dp))
-        Button(
-            onClick = { navController.navigate(ScreenRoute.SignUp.route) },
-            modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(id = R.string.btn_sign_up))
         }
@@ -127,5 +133,5 @@ fun LoginScreen(
 @Composable
 private fun PreviewLogin() {
     val navController = rememberNavController()
-    LoginScreen(navController)
+    SignUpScreen(navController)
 }

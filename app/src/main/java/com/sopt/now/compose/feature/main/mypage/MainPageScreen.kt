@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.main.mypage
+package com.sopt.now.compose.feature.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.data.model.User
 
 @Composable
 fun MainPageScreen(

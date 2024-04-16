@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.auth.signup
+package com.sopt.now.compose.feature.auth.signup
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
