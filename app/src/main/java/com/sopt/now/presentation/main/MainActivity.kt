@@ -52,7 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     true
                 }
 
-                else -> false
+                else -> throw IllegalArgumentException()
             }
         }
     }
