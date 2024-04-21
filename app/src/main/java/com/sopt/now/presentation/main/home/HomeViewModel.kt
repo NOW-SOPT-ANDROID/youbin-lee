@@ -37,6 +37,7 @@ class HomeViewModel : ViewModel() {
         FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile6,
             name = "배찬우",
+            music = "hype boy"
         ),
         FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile7,
@@ -50,6 +51,11 @@ class HomeViewModel : ViewModel() {
         FriendInfo.FriendProfile(
             profileImage = R.drawable.img_friend_profile9,
             name = "이나경",
+        ),
+        FriendInfo.FriendProfile(
+            profileImage = R.drawable.img_friend_profile9,
+            name = "조세연",
+            music = "잘자요 아가씨"
         )
 
     )

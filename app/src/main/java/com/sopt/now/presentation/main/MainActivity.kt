@@ -2,8 +2,6 @@ package com.sopt.now.presentation.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.sopt.now.R
 import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityMainBinding
@@ -27,8 +25,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun initBnvItemClickListener() {
-        supportFragmentManager.findFragmentById(R.id.fcv_main)
-            ?: navigateTo<HomeFragment>()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_main)
+        if (currentFragment == null || currentFragment !is HomeFragment) {
+            replaceFragment(HomeFragment())
+        }
 
         binding.bnvMain.setOnItemSelectedListener {
             when (it.itemId) {
@@ -67,9 +67,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         user = intent.getParcelable(USER, User::class.java) ?: return
     }
 
-    private inline fun <reified T : Fragment> navigateTo() {
-        supportFragmentManager.commit {
-            replace<T>(R.id.fcv_main, T::class.java.canonicalName)
-        }
-    }
 }

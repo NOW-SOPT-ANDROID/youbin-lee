@@ -10,8 +10,7 @@ import com.sopt.now.util.base.BaseFragment
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
-    private lateinit var user: User
-
+    private var user: User? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -20,14 +19,14 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun getUserData() {
-        user = arguments?.getParcelable(USER) ?: return
+        user = arguments?.getParcelable(USER)
     }
 
     private fun setUserData() {
         with(binding) {
-            tvMyPageNickname.text = user.nickname
-            tvMyPageId.text = user.id
-            tvMyPageMbti.text = user.mbti
+            tvMyPageNickname.text = user?.nickname
+            tvMyPageId.text = user?.id
+            tvMyPageMbti.text = user?.mbti
         }
     }
 }
