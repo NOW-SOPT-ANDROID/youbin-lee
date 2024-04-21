@@ -27,8 +27,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _adapter = null
+        super.onDestroyView()
     }
 
 }

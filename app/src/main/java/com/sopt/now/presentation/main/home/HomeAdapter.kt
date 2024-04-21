@@ -48,8 +48,8 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
         val item = friendList[position]
 
         when (holder) {
-            is MyProfileViewHolder -> holder.onBind(friendList[position] as FriendInfo.MyProfile)
-            is FriendProfileViewHolder -> holder.onBind(friendList[position] as FriendInfo.FriendProfile)
+            is MyProfileViewHolder -> holder.onBind(item as FriendInfo.MyProfile)
+            is FriendProfileViewHolder -> holder.onBind(item as FriendInfo.FriendProfile)
             is FriendMusicViewHolder -> holder.onBind(item as FriendInfo.FriendProfile)
         }
     }
