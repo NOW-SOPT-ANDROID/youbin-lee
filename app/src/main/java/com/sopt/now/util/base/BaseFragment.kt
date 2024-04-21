@@ -14,7 +14,7 @@ abstract class BaseFragment<T : ViewDataBinding>(
 ) : Fragment() {
 
     private var _binding: T? = null
-    private val binding: T
+    protected val binding: T
         get() = requireNotNull(_binding) { "binding object is not initialized" }
 
     override fun onCreateView(
