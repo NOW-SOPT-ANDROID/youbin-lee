@@ -10,7 +10,7 @@ sealed class FriendInfo {
 
     data class FriendProfile(
         val name: String,
-        val profileImage: Int,
+        val profileImage: String,
         val selfDescription: String,
     ) : FriendInfo()
 

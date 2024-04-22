@@ -12,15 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
+
 
 @Composable
 fun FriendProfileItem(
     name: String,
-    profileImage: Int,
+    profileImage: String,
     selfDescription: String,
 ) {
     Row(
@@ -30,7 +31,7 @@ fun FriendProfileItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(profileImage),
+            painter = rememberImagePainter(data = profileImage),
             contentDescription = "img_profile",
             modifier = Modifier
                 .size(60.dp)
