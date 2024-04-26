@@ -144,10 +144,3 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.padding(bottom = 30.dp))
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//private fun PreviewLogin() {
-//    val navController = rememberNavController()
-//    SignUpScreen(navController)
-//}

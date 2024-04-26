@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginRoute(
+    popBackStack: () -> Unit,
     navController: NavHostController,
     onMainClick: () -> Unit,
     onSignUpClick: () -> Unit,
@@ -51,8 +52,15 @@ fun LoginRoute(
         loginViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { loginSideEffect ->
                 when (loginSideEffect) {
-                    LoginSideEffect.SignUpNavigation -> onSignUpClick()
-                    LoginSideEffect.MainNavigation -> onMainClick()
+                    LoginSideEffect.SignUpNavigation -> {
+                        popBackStack()
+                        onSignUpClick()
+                    }
+
+                    LoginSideEffect.MainNavigation -> {
+                        popBackStack()
+                        onMainClick()
+                    }
                 }
             }
     }
@@ -129,10 +137,3 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(bottom = 30.dp))
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//private fun PreviewLogin() {
-//    val navController = rememberNavController()
-//    LoginScreen(navController)
-//}

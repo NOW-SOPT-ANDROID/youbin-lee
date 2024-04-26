@@ -15,12 +15,14 @@ fun NavController.loginNavigation(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.loginGraph(
+    popBackStack: () -> Unit,
     onSingUpClick: () -> Unit,
     onMainClick: () -> Unit,
     navHostController: NavHostController
 ) {
     composable(route = Login.ROUTE) {
         LoginRoute(
+            popBackStack = popBackStack,
             onSignUpClick = onSingUpClick,
             onMainClick = onMainClick,
             navController = navHostController

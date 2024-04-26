@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.sopt.now.compose.feature.auth.login.navigation.Login
 import com.sopt.now.compose.feature.auth.login.navigation.loginNavigation
-import com.sopt.now.compose.feature.auth.signup.navigation.SignUp
 import com.sopt.now.compose.feature.auth.signup.navigation.signUpNavigation
 import com.sopt.now.compose.feature.main.home.navigation.homeNavigation
 import com.sopt.now.compose.feature.main.mypage.navigation.myPageNavigation
@@ -23,9 +23,10 @@ class MainNavigator(
     val currentNavItem: BottomNavigationItem?
         @Composable get() = currentRoute?.route?.let(BottomNavigationItem::find)
 
-    val startDestination = SignUp.ROUTE
+    val startDestination = Login.ROUTE
     fun navigateMainNavigation(itemType: BottomNavigationItem) {
         navOptions {
+            popBackStack()
             launchSingleTop = true
             restoreState = true
         }.let {
@@ -43,6 +44,10 @@ class MainNavigator(
 
     fun signUpNavigation() {
         navHostController.signUpNavigation()
+    }
+
+    fun popBackStack() {
+        navHostController.popBackStack()
     }
 
     @Composable
