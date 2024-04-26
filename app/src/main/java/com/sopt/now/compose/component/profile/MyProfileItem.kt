@@ -34,7 +34,7 @@ fun MyProfileItem(
             contentDescription = "img_profile",
             modifier = Modifier
                 .size(100.dp)
-                .aspectRatio(1f / 1f),
+                .aspectRatio(1f),
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
@@ -42,14 +42,13 @@ fun MyProfileItem(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(10.dp))
         Spacer(modifier = Modifier.weight(1f))
         Image(
             painter = painterResource(profileImageEtc),
             contentDescription = "img_profile_etc",
             modifier = Modifier
                 .size(60.dp)
-                .aspectRatio(1f / 1f),
+                .aspectRatio(1f),
         )
     }
 }

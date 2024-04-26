@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 
-
 @Composable
 fun FriendProfileItem(
     name: String,
@@ -35,7 +34,7 @@ fun FriendProfileItem(
             contentDescription = "img_profile",
             modifier = Modifier
                 .size(60.dp)
-                .aspectRatio(1f / 1f),
+                .aspectRatio(1f),
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
@@ -43,7 +42,6 @@ fun FriendProfileItem(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(10.dp))
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = selfDescription,
