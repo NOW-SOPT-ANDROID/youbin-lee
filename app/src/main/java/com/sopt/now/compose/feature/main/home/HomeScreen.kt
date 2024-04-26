@@ -10,15 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.sopt.now.compose.component.profile.FriendProfileItem
 import com.sopt.now.compose.component.profile.MyProfileItem
 import com.sopt.now.compose.data.model.FriendInfo
 
 @Composable
-fun HomeScreen(
-    navController: NavController,
+fun HomeRoute(
     homeViewModel: HomeViewModel = viewModel()
+) {
+    HomeScreen(friendList = homeViewModel.friendList)
+}
+
+@Composable
+fun HomeScreen(
+    friendList: List<FriendInfo>
 ) {
     Column(
         modifier = Modifier,
@@ -29,7 +34,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-            items(homeViewModel.friendList) { friend ->
+            items(friendList) { friend ->
                 when (friend) {
                     is FriendInfo.MyProfile -> MyProfileItem(
                         name = friend.name,

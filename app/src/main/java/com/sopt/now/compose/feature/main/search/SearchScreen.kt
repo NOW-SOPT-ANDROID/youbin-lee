@@ -6,13 +6,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchRoute(){
+
+}
+
+@Composable
+fun SearchScreen() {
 
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MainPreview() {
-    val navController = rememberNavController()
-    SearchScreen(navController)
+    SearchScreen()
 }

@@ -60,7 +60,7 @@ class HomeViewModel : ViewModel() {
         FriendInfo.FriendProfile(
             profileImage = "https://avatars.githubusercontent.com/u/135544903?v=4",
             name = "조세연",
-            selfDescription = "언니 잘 지내고 있지? 잉랑함"
+            selfDescription = "잉랑해 굉랑해 두립해"
         )
     )
 

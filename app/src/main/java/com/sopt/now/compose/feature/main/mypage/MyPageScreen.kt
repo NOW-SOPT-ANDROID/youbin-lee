@@ -18,30 +18,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.model.User
 
 @Composable
-fun MyPageScreen(
-    navController: NavController,
+fun MyPageRoute(
+    navHostController: NavHostController,
     myPageViewModel: MyPageViewModel = viewModel()
 ) {
+
     val myPageState by myPageViewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
+        navHostController.previousBackStackEntry?.savedStateHandle?.run {
             val user = get<User>("User") ?: User("", "", "", "")
             myPageViewModel.setUserInfo(user)
         }
     }
 
+    MyPageScreen(
+        myPageState = myPageState
+    )
+}
+
+@Composable
+fun MyPageScreen(
+    myPageState: MyPageState
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,9 +101,8 @@ fun MyPageScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun MainPreview() {
-    val navController = rememberNavController()
-    MyPageScreen(navController)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun MainPreview() {
+//    MyPageScreen()
+//}

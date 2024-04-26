@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.auth.signup
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,52 +15,73 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.navigation.AuthGraph
 import com.sopt.now.compose.data.model.User
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpScreen(
-    navController: NavController,
+fun SignUpRoute(
+    navController: NavHostController,
     signUpViewModel: SignUpViewModel = viewModel(),
+    onLoginClick: () -> Unit
 ) {
 
     val signUpState by signUpViewModel.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(signUpState.message) {
-        signUpState.message?.let { message ->
-            if (message == "회원가입에 성공했습니다") {
-                val user = User(
-                    id = signUpState.id,
-                    pw = signUpState.pw,
-                    nickname = signUpState.nickname,
-                    mbti = signUpState.mbti
-                )
+    LaunchedEffect(signUpViewModel.sideEffect, lifecycleOwner) {
+        signUpViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
+            .collect { signUpSideEffect ->
+                when (signUpSideEffect) {
+                    SignUpSideEffect.LoginNavigation -> {
+                        val user = User(
+                            id = signUpState.id,
+                            pw = signUpState.pw,
+                            nickname = signUpState.nickname,
+                            mbti = signUpState.mbti
+                        )
 
-                navController.currentBackStackEntry?.savedStateHandle?.set(
-                    key = "User",
-                    value = user
-                )
-                navController.navigate(AuthGraph.Login.route)
-            } else {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                signUpViewModel.clearMessage()
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "User",
+                            value = user
+                        )
+
+                        onLoginClick()
+                    }
+                }
             }
-        }
     }
 
+    SignUpScreen(
+        signUpViewModel = signUpViewModel,
+        onLoginClick = {
+            scope.launch {
+                signUpViewModel.checkSignUp()
+            }
+        },
+        signUpState = signUpState,
+
+        )
+
+}
+
+@Composable
+fun SignUpScreen(
+    signUpState: SignUpState,
+    onLoginClick: () -> Unit,
+    signUpViewModel: SignUpViewModel,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -116,11 +136,7 @@ fun SignUpScreen(
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
-            onClick = {
-                scope.launch {
-                    signUpViewModel.checkSignUp()
-                }
-            },
+            onClick = onLoginClick,
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(stringResource(id = R.string.btn_sign_up))
@@ -129,9 +145,9 @@ fun SignUpScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun PreviewLogin() {
-    val navController = rememberNavController()
-    SignUpScreen(navController)
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun PreviewLogin() {
+//    val navController = rememberNavController()
+//    SignUpScreen(navController)
+//}
