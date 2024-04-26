@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
-import com.sopt.now.compose.feature.auth.login.navigation.Login
 import com.sopt.now.compose.feature.auth.login.navigation.loginGraph
 import com.sopt.now.compose.feature.auth.signup.navigation.signUpGraph
 import com.sopt.now.compose.feature.main.home.navigation.homeGraph
