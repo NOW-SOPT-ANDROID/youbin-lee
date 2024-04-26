@@ -18,7 +18,7 @@ enum class BottomNavigationItem(
     Search(
         R.string.nav_search,
         Icons.Filled.Search,
-        "SCREEN"
+        "SEARCH"
     ),
     MyPage(
         R.string.nav_my_page,

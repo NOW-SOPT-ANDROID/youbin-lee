@@ -31,9 +31,9 @@ class MainNavigator(
             restoreState = true
         }.let {
             when (itemType) {
-                BottomNavigationItem.Home -> navHostController.homeNavigation()
-                BottomNavigationItem.MyPage -> navHostController.myPageNavigation()
-                BottomNavigationItem.Search -> navHostController.searchNavigation()
+                BottomNavigationItem.Home -> navHostController.homeNavigation(navOptions = it)
+                BottomNavigationItem.Search -> navHostController.searchNavigation(navOptions = it)
+                BottomNavigationItem.MyPage -> navHostController.myPageNavigation(navOptions = it)
             }
         }
     }

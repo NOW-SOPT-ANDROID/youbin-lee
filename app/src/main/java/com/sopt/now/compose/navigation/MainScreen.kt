@@ -51,10 +51,10 @@ fun MainScreen(
                     navHostController = navController.navHostController
                 )
                 homeGraph()
+                searchGraph()
                 myPageGraph(
                     navHostController = navController.navHostController
                 )
-                searchGraph()
             }
         }
     }
