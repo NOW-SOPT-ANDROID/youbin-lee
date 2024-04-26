@@ -1,6 +1,5 @@
-package com.sopt.now.compose.presentation.auth.login
+package com.sopt.now.compose.feature.auth.login
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,51 +15,31 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.ScreenRoute
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.data.model.User
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
-    navController: NavController,
+fun LoginRoute(
+    popBackStack: () -> Unit,
+    navController: NavHostController,
+    onMainClick: () -> Unit,
+    onSignUpClick: () -> Unit,
     loginViewModel: LoginViewModel = viewModel()
 ) {
     val loginState by loginViewModel.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-
     val context = LocalContext.current
-
-    LaunchedEffect(loginState.message) {
-        loginState.message?.let { message ->
-            if (message == "로그인에 성공했습니다") {
-                val user = User(
-                    id = loginState.id,
-                    pw = loginState.pw,
-                    nickname = loginState.nickname,
-                    mbti = loginState.mbti
-                )
-
-                navController.currentBackStackEntry?.savedStateHandle?.set(
-                    key = "User",
-                    value = user
-                )
-                navController.navigate(ScreenRoute.MainPage.route)
-            } else {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                loginViewModel.clearMessage()
-            }
-        }
-    }
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(true) {
         navController.previousBackStackEntry?.savedStateHandle?.run {
@@ -69,6 +48,46 @@ fun LoginScreen(
         }
     }
 
+    LaunchedEffect(loginViewModel.sideEffect, lifecycleOwner) {
+        loginViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
+            .collect { loginSideEffect ->
+                when (loginSideEffect) {
+                    LoginSideEffect.SignUpNavigation -> {
+                        popBackStack()
+                        onSignUpClick()
+                    }
+
+                    LoginSideEffect.MainNavigation -> {
+                        popBackStack()
+                        onMainClick()
+                    }
+                }
+            }
+    }
+
+    LoginScreen(
+        loginState = loginState,
+        loginViewModel = loginViewModel,
+        onSignUpClick = {
+            scope.launch {
+                loginViewModel.signUpClick()
+            }
+        },
+        onMainClick = {
+            scope.launch {
+                loginViewModel.checkLogin()
+            }
+        }
+    )
+}
+
+@Composable
+fun LoginScreen(
+    loginState: LoginState,
+    loginViewModel: LoginViewModel,
+    onMainClick: () -> Unit,
+    onSignUpClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -103,29 +122,18 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
-            onClick = {
-                scope.launch {
-                    loginViewModel.checkLogin()
-                }
-            },
+            onClick = onMainClick,
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(stringResource(id = R.string.btn_login))
         }
         Spacer(modifier = Modifier.padding(vertical = 5.dp))
         Button(
-            onClick = { navController.navigate(ScreenRoute.SignUp.route) },
+            onClick = onSignUpClick,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(stringResource(id = R.string.btn_sign_up))
         }
         Spacer(modifier = Modifier.padding(bottom = 30.dp))
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewLogin() {
-    val navController = rememberNavController()
-    LoginScreen(navController)
 }

@@ -1,4 +1,4 @@
-package com.sopt.now.compose.presentation.mypage
+package com.sopt.now.compose.feature.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,25 +23,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.model.User
+import com.sopt.now.compose.data.model.User
 
 @Composable
-fun MainPageScreen(
-    navController: NavController,
-    mainPageViewModel: MainPageViewModel = viewModel()
+fun MyPageRoute(
+    navHostController: NavHostController,
+    myPageViewModel: MyPageViewModel = viewModel()
 ) {
-    val myPageState by mainPageViewModel.state.collectAsStateWithLifecycle()
+
+    val myPageState by myPageViewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
+        navHostController.previousBackStackEntry?.savedStateHandle?.run {
             val user = get<User>("User") ?: User("", "", "", "")
-            mainPageViewModel.setUserInfo(user)
+            myPageViewModel.setUserInfo(user)
         }
     }
 
+    MyPageScreen(
+        myPageState = myPageState
+    )
+}
+
+@Composable
+fun MyPageScreen(
+    myPageState: MyPageState
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,6 +105,5 @@ fun MainPageScreen(
 @Preview(showBackground = true)
 @Composable
 fun MainPreview() {
-    val navController = rememberNavController()
-    MainPageScreen(navController)
+    MyPageScreen(MyPageState("hi", "hi", "hi", "hi", "hi"))
 }

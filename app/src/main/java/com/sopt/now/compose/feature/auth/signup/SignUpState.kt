@@ -1,6 +1,6 @@
-package com.sopt.now.compose.presentation.auth.login
+package com.sopt.now.compose.feature.auth.signup
 
-data class LoginState(
+data class SignUpState(
     val id: String = "",
     val pw: String = "",
     val nickname: String = "",
