@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.data.FriendInfo
 import com.sopt.now.databinding.ItemFriendMusicBinding
 import com.sopt.now.databinding.ItemFriendProfileBinding
 import com.sopt.now.databinding.ItemMyProfileBinding

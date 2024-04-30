@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
-import com.sopt.now.data.User
+import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
@@ -27,7 +27,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     private fun initSignUpClickListener() {
         binding.btnSignUpSignup.setOnClickListener {
             signUpViewModel.setUser(with(binding) {
-                User(
+                UserEntity(
                     etSignUpId.text.toString().trim(),
                     etSignUpPw.text.toString().trim(),
                     etSignUpNickname.text.toString().trim(),
@@ -52,8 +52,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         }.launchIn(lifecycleScope)
     }
 
-    private fun navigateToLogin(updateUser: User) {
-        intent.putExtra(USER, updateUser)
+    private fun navigateToLogin(updateUserEntity: UserEntity) {
+        intent.putExtra(USER, updateUserEntity)
         setResult(RESULT_OK, intent)
         finish()
     }

@@ -2,7 +2,7 @@ package com.sopt.now.presentation.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.User
+import com.sopt.now.domain.entity.UserEntity
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -12,16 +12,16 @@ class LoginViewModel : ViewModel() {
     private val _loginState = MutableSharedFlow<LoginState>()
     val loginState: SharedFlow<LoginState> get() = _loginState
 
-    private lateinit var user: User
+    private lateinit var userEntity: UserEntity
 
     private var isIdCorrect = false
     private var isPwCorrect = false
 
-    fun setUser(user: User) {
-        this.user = user
+    fun setUser(userEntity: UserEntity) {
+        this.userEntity = userEntity
     }
 
-    fun getUser() = user
+    fun getUser() = userEntity
 
     fun checkLoginFormat() {
         viewModelScope.launch {
@@ -35,11 +35,11 @@ class LoginViewModel : ViewModel() {
     }
 
     fun checkIdInput(id: String) {
-        if (::user.isInitialized) isIdCorrect = id == user.id
+        if (::userEntity.isInitialized) isIdCorrect = id == userEntity.id
     }
 
     fun checkPwInput(pw: String) {
-        if (::user.isInitialized) isPwCorrect = user.pw == pw
+        if (::userEntity.isInitialized) isPwCorrect = userEntity.pw == pw
     }
 
 }

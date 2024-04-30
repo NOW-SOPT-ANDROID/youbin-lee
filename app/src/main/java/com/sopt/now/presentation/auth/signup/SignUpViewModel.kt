@@ -2,7 +2,7 @@ package com.sopt.now.presentation.auth.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.User
+import com.sopt.now.domain.entity.UserEntity
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -12,22 +12,22 @@ class SignUpViewModel : ViewModel() {
     private val _signUpState = MutableSharedFlow<SignUpState>()
     val signUpState: SharedFlow<SignUpState> get() = _signUpState
 
-    private lateinit var user: User
+    private lateinit var userEntity: UserEntity
 
-    fun setUser(user: User) {
-        this.user = user
+    fun setUser(userEntity: UserEntity) {
+        this.userEntity = userEntity
     }
 
-    fun getUser() = user
+    fun getUser() = userEntity
 
     fun checkSignUpFormat() {
         viewModelScope.launch {
             val signUpFormat = when {
-                user.id.length !in ID_MIN_LENGTH..ID_MAX_LENGTH -> SignUpState.IdError
+                userEntity.id.length !in ID_MIN_LENGTH..ID_MAX_LENGTH -> SignUpState.IdError
 
-                user.pw.length !in PW_MIN_LENGTH..PW_MAX_LENGTH -> SignUpState.PwError
+                userEntity.pw.length !in PW_MIN_LENGTH..PW_MAX_LENGTH -> SignUpState.PwError
 
-                user.nickname.isEmpty() || user.mbti.isEmpty() -> SignUpState.BlankError
+                userEntity.nickname.isEmpty() || userEntity.mbti.isEmpty() -> SignUpState.BlankError
 
                 else -> SignUpState.Success
             }

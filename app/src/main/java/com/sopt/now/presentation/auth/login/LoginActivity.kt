@@ -10,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
-import com.sopt.now.data.User
+import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.presentation.auth.signup.SignUpActivity
 import com.sopt.now.presentation.main.MainActivity
@@ -40,7 +40,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 loginViewModel.setUser(
-                    result.data?.getParcelable(USER, User::class.java)
+                    result.data?.getParcelable(USER, UserEntity::class.java)
                         ?: return@registerForActivityResult
                 )
             }
@@ -78,9 +78,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }.launchIn(lifecycleScope)
     }
 
-    private fun navigateToMain(user: User) {
+    private fun navigateToMain(userEntity: UserEntity) {
         Intent(this, MainActivity::class.java).apply {
-            putExtra(USER, user)
+            putExtra(USER, userEntity)
             addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }
