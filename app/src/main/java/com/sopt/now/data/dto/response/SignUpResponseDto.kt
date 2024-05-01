@@ -10,11 +10,4 @@ data class SignUpResponseDto(
     val code: Int,
     @SerialName("message")
     val message: String,
-) {
-    fun toSignUpModel() = SignUpResponseModel(
-        code,
-        message
-    )
-}
-
-
+)

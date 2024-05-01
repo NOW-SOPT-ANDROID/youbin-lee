@@ -1,14 +1,11 @@
 package com.sopt.now.presentation.auth.signup
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.presentation.User
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
-import com.sopt.now.util.UiState
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,18 +39,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     private fun observeSignUpFormat() {
         signUpViewModel.signUpState.observe(this) { state ->
             when (state) {
-                is UiState.Success -> {
+                true -> {
                     shortToast(R.string.sign_up_success)
                     navigateToLogin(signUpViewModel.getUser())
                 }
 
-                is UiState.Failure -> {
-                    Log.d("LYB", state.msg)
-                    Toast.makeText(this, (state.msg), Toast.LENGTH_SHORT).show()
+                false -> {
+                    shortToast(R.string.sign_up_id_format_error)
                 }
-                is UiState.Loading -> return@observe
             }
-
         }
     }
 
