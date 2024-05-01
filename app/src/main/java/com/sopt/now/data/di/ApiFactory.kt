@@ -2,6 +2,8 @@ package com.sopt.now.data.di
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.sopt.now.BuildConfig
+import com.sopt.now.BuildConfig.AUTH_BASE_URL
 import com.sopt.now.data.service.AuthService
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -34,6 +36,6 @@ object ApiFactory {
         getRetrofit(url.toString()).create(T::class.java)
 }
 
-//object ServicePool {
-//    val authService = ApiFactory.create<AuthService, String>(AUTH_BASE_URL)
-//}
+object ServicePool {
+    val authService = ApiFactory.create<AuthService, String>(AUTH_BASE_URL)
+}

@@ -1,45 +1,42 @@
 package com.sopt.now.presentation.auth.login
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.sopt.now.domain.entity.UserEntity
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
+import com.sopt.now.presentation.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 class LoginViewModel : ViewModel() {
+//
+//    private val _loginState = MutableSharedFlow<LoginState>()
+//    val loginState: SharedFlow<LoginState> get() = _loginState
 
-    private val _loginState = MutableSharedFlow<LoginState>()
-    val loginState: SharedFlow<LoginState> get() = _loginState
-
-    private lateinit var userEntity: UserEntity
+    private lateinit var user: User
 
     private var isIdCorrect = false
     private var isPwCorrect = false
 
-    fun setUser(userEntity: UserEntity) {
-        this.userEntity = userEntity
+    fun setUser(user: User) {
+        this.user = user
     }
 
-    fun getUser() = userEntity
+    fun getUser() = user
 
-    fun checkLoginFormat() {
-        viewModelScope.launch {
-            val loginFormat = when {
-                !isIdCorrect -> LoginState.IdError
-                !isPwCorrect -> LoginState.PwError
-                else -> LoginState.Success
-            }
-            _loginState.emit(loginFormat)
-        }
-    }
+//    fun checkLoginFormat() {
+//        viewModelScope.launch {
+//            val loginFormat = when {
+//                !isIdCorrect -> LoginState.IdError
+//                !isPwCorrect -> LoginState.PwError
+//                else -> LoginState.Success
+//            }
+//            _loginState.emit(loginFormat)
+//        }
+//    }
 
     fun checkIdInput(id: String) {
-        if (::userEntity.isInitialized) isIdCorrect = id == userEntity.id
+        if (::user.isInitialized) isIdCorrect = id == user.id
     }
 
     fun checkPwInput(pw: String) {
-        if (::userEntity.isInitialized) isPwCorrect = userEntity.pw == pw
+        if (::user.isInitialized) isPwCorrect = user.pw == pw
     }
 
 }

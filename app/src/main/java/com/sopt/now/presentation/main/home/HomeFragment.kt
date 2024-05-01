@@ -6,7 +6,9 @@ import androidx.fragment.app.activityViewModels
 import com.sopt.now.R
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.util.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private var _adapter: HomeAdapter? = null

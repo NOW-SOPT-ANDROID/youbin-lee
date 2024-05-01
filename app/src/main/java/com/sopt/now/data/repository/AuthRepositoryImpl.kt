@@ -1,4 +1,16 @@
 package com.sopt.now.data.repository
 
-class AuthRepositoryImpl {
+import com.sopt.now.data.datasource.AuthDataSource
+import com.sopt.now.data.dto.request.toSignUpRequestDto
+import com.sopt.now.domain.entity.request.SignUpRequestModel
+import com.sopt.now.domain.entity.response.SignUpResponseModel
+import com.sopt.now.domain.repository.AuthRepository
+import javax.inject.Inject
+
+class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDataSource) :
+    AuthRepository {
+    override suspend fun postSignUp(user: SignUpRequestModel): Result<SignUpResponseModel> =
+        runCatching {
+            authDataSource.postSignUp(user.toSignUpRequestDto()).toSignUpModel()
+        }
 }

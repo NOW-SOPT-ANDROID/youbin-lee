@@ -3,19 +3,20 @@ package com.sopt.now.presentation.main
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.sopt.now.R
-import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.databinding.ActivityMainBinding
+import com.sopt.now.presentation.User
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.presentation.main.home.HomeFragment
 import com.sopt.now.presentation.main.mypage.MyPageFragment
 import com.sopt.now.presentation.main.search.SearchFragment
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.getParcelable
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    private lateinit var userEntity: UserEntity
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 R.id.menu_my_page -> {
                     val myPageFragment = MyPageFragment().apply {
                         arguments = Bundle().apply {
-                            putParcelable(USER, userEntity)
+                            putParcelable(USER, user)
                         }
                     }
                     replaceFragment(myPageFragment)
@@ -64,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun getUserData() {
-        userEntity = intent.getParcelable(USER, UserEntity::class.java) ?: return
+        user = intent.getParcelable(USER, User::class.java) ?: return
     }
 
 }

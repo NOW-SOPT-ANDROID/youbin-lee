@@ -7,19 +7,16 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
-import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.databinding.ActivityLoginBinding
+import com.sopt.now.presentation.User
 import com.sopt.now.presentation.auth.signup.SignUpActivity
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.getParcelable
-import com.sopt.now.util.extension.shortToast
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
@@ -30,8 +27,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         setSignUpActivityLauncher()
         initSignUpClickListener()
-        initLoginClickListener()
-        observeLoginFormat()
+//        initLoginClickListener()
+//        observeLoginFormat()
     }
 
     private fun setSignUpActivityLauncher() {
@@ -40,7 +37,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         ) { result ->
             if (result.resultCode == RESULT_OK) {
                 loginViewModel.setUser(
-                    result.data?.getParcelable(USER, UserEntity::class.java)
+                    result.data?.getParcelable(USER, User::class.java)
                         ?: return@registerForActivityResult
                 )
             }
@@ -55,32 +52,32 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
-    private fun initLoginClickListener() {
-        binding.btnLoginLogin.setOnClickListener {
-            with(loginViewModel) {
-                checkIdInput(binding.etLoginId.text.toString())
-                checkPwInput(binding.etLoginPw.text.toString())
-                checkLoginFormat()
-            }
-        }
-    }
+//    private fun initLoginClickListener() {
+//        binding.btnLoginLogin.setOnClickListener {
+//            with(loginViewModel) {
+//                checkIdInput(binding.etLoginId.text.toString())
+//                checkPwInput(binding.etLoginPw.text.toString())
+//                checkLoginFormat()
+//            }
+//        }
+//    }
+//
+//    private fun observeLoginFormat() {
+//        loginViewModel.loginState.flowWithLifecycle(lifecycle).onEach { loginState ->
+//            when (loginState) {
+//                is LoginState.IdError -> shortToast(R.string.login_id_error)
+//                is LoginState.PwError -> shortToast(R.string.login_pw_error)
+//                is LoginState.Success -> {
+//                    shortToast(R.string.login_success)
+//                    navigateToMain(loginViewModel.getUser())
+//                }
+//            }
+//        }.launchIn(lifecycleScope)
+//    }
 
-    private fun observeLoginFormat() {
-        loginViewModel.loginState.flowWithLifecycle(lifecycle).onEach { loginState ->
-            when (loginState) {
-                is LoginState.IdError -> shortToast(R.string.login_id_error)
-                is LoginState.PwError -> shortToast(R.string.login_pw_error)
-                is LoginState.Success -> {
-                    shortToast(R.string.login_success)
-                    navigateToMain(loginViewModel.getUser())
-                }
-            }
-        }.launchIn(lifecycleScope)
-    }
-
-    private fun navigateToMain(userEntity: UserEntity) {
+    private fun navigateToMain(user: User) {
         Intent(this, MainActivity::class.java).apply {
-            putExtra(USER, userEntity)
+            putExtra(USER, user)
             addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }
