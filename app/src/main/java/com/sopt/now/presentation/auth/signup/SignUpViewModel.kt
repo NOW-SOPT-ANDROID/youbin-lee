@@ -28,7 +28,7 @@ class SignUpViewModel : ViewModel() {
     fun checkSignUpAvailable() {
         viewModelScope.launch {
             runCatching {
-                authService.postSignUpFromServer(
+                authService.postSignUpToServer(
                     SignUpRequestDto(
                         user.id,
                         user.pw,

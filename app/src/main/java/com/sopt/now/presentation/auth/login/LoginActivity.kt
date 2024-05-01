@@ -14,6 +14,7 @@ import com.sopt.now.presentation.auth.signup.SignUpActivity
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.getParcelable
+import com.sopt.now.util.extension.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,8 +28,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         setSignUpActivityLauncher()
         initSignUpClickListener()
-//        initLoginClickListener()
-//        observeLoginFormat()
+        initLoginClickListener()
+        observeLoginFormat()
     }
 
     private fun setSignUpActivityLauncher() {
@@ -36,10 +37,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                loginViewModel.setUser(
-                    result.data?.getParcelable(USER, User::class.java)
-                        ?: return@registerForActivityResult
-                )
+                with(loginViewModel) {
+                    setUser(
+                        result.data?.getParcelable(USER, User::class.java)
+                            ?: return@registerForActivityResult
+                    )
+//                    setMemberId(
+//                        result.data?.getStringExtra(MEMBER_ID) ?: return@registerForActivityResult
+//                    )
+                }
+
             }
         }
     }
@@ -52,32 +59,33 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
-//    private fun initLoginClickListener() {
-//        binding.btnLoginLogin.setOnClickListener {
-//            with(loginViewModel) {
-//                checkIdInput(binding.etLoginId.text.toString())
-//                checkPwInput(binding.etLoginPw.text.toString())
-//                checkLoginFormat()
-//            }
-//        }
-//    }
-//
-//    private fun observeLoginFormat() {
-//        loginViewModel.loginState.flowWithLifecycle(lifecycle).onEach { loginState ->
-//            when (loginState) {
-//                is LoginState.IdError -> shortToast(R.string.login_id_error)
-//                is LoginState.PwError -> shortToast(R.string.login_pw_error)
-//                is LoginState.Success -> {
-//                    shortToast(R.string.login_success)
-//                    navigateToMain(loginViewModel.getUser())
-//                }
-//            }
-//        }.launchIn(lifecycleScope)
-//    }
+    private fun initLoginClickListener() {
+        binding.btnLoginLogin.setOnClickListener {
+            loginViewModel.checkLoginAvailable(
+                binding.etLoginId.text.toString(),
+                binding.etLoginPw.text.toString()
+            )
+        }
+    }
+
+    private fun observeLoginFormat() {
+        loginViewModel.loginState.observe(this) { state ->
+            when (state) {
+                true -> {
+                    shortToast(R.string.login_success)
+                    navigateToMain(loginViewModel.getUser())
+                }
+
+                false -> shortToast(R.string.server_error)
+            }
+
+        }
+    }
 
     private fun navigateToMain(user: User) {
         Intent(this, MainActivity::class.java).apply {
             putExtra(USER, user)
+            putExtra(MEMBER_ID, loginViewModel.getMemberId())
             addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }

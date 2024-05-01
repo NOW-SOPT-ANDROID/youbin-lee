@@ -1,42 +1,53 @@
 package com.sopt.now.presentation.auth.login
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.sopt.now.data.di.ServicePool.authService
+import com.sopt.now.data.dto.request.LoginRequestDto
 import com.sopt.now.presentation.User
-import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-//
-//    private val _loginState = MutableSharedFlow<LoginState>()
-//    val loginState: SharedFlow<LoginState> get() = _loginState
+
+    private val _loginState = MutableLiveData<Boolean>()
+    val loginState: MutableLiveData<Boolean> get() = _loginState
 
     private lateinit var user: User
 
-    private var isIdCorrect = false
-    private var isPwCorrect = false
+    private var memberId: String? = null
 
     fun setUser(user: User) {
         this.user = user
     }
 
-    fun getUser() = user
-
-//    fun checkLoginFormat() {
-//        viewModelScope.launch {
-//            val loginFormat = when {
-//                !isIdCorrect -> LoginState.IdError
-//                !isPwCorrect -> LoginState.PwError
-//                else -> LoginState.Success
-//            }
-//            _loginState.emit(loginFormat)
-//        }
+//    fun setMemberId(memberId: String) {
+//        this.memberId = memberId
 //    }
 
-    fun checkIdInput(id: String) {
-        if (::user.isInitialized) isIdCorrect = id == user.id
-    }
+    fun getMemberId() = memberId
 
-    fun checkPwInput(pw: String) {
-        if (::user.isInitialized) isPwCorrect = user.pw == pw
+    fun getUser() = user
+
+    fun checkLoginAvailable(id: String, pw: String) {
+        viewModelScope.launch {
+            runCatching {
+                authService.postLoginToServer(
+                    LoginRequestDto(
+                        id,
+                        pw
+                    )
+                )
+            }
+                .onSuccess {
+                    memberId = it.headers()["Location"]?.split("/")?.last()
+                    _loginState.value = true
+                }
+                .onFailure {
+                    _loginState.value = false
+                }
+        }
+
     }
 
 }

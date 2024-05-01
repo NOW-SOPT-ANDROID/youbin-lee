@@ -31,7 +31,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     etSignUpMbti.text.toString().trim(),
                 )
             })
-            // 보류
             signUpViewModel.checkSignUpAvailable()
         }
     }
