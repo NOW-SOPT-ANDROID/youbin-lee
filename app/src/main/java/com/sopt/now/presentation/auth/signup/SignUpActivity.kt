@@ -10,6 +10,7 @@ import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
+import com.sopt.now.util.extension.toast
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
@@ -40,7 +41,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         signUpViewModel.signUpState.observe(this) { state ->
             when (state) {
                 is AuthState.Success -> {
-                    shortToast(R.string.sign_up_success)
+                    toast(getString(R.string.sign_up_success, signUpViewModel.getMemberId()))
                     navigateToLogin(signUpViewModel.getUser())
                 }
 

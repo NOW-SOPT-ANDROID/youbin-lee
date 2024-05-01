@@ -29,7 +29,7 @@
     <string name="sign_up_phone_hint">전화번호를 입력해주세요</string>
     <string name="sign_up_btn_sign_up">회원가입 하기</string>
     <string name="sign_up_format_error">정확한 값을 입력해주세요</string>
-    <string name="sign_up_success">회원가입에 성공했습니다</string>
+    <string name="sign_up_success">회원가입 성공! 유저의 ID는 %s!</string>
 
     <!--my_page-->
     <string name="my_page_introduce">진정한 엥뿌피 되기 도전~!</string>
