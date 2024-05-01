@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
 import com.sopt.now.presentation.auth.signup.SignUpActivity
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
@@ -71,14 +72,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun observeLoginFormat() {
         loginViewModel.loginState.observe(this) { state ->
             when (state) {
-                true -> {
+                is AuthState.Success -> {
                     shortToast(R.string.login_success)
                     navigateToMain(loginViewModel.getUser())
                 }
 
-                false -> shortToast(R.string.server_error)
-            }
+                is AuthState.InputError -> shortToast(R.string.sign_up_format_error)
 
+                is AuthState.Failure -> shortToast(R.string.server_error)
+            }
         }
     }
 

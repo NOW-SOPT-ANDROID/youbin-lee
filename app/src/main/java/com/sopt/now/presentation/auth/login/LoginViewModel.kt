@@ -6,12 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.di.ServicePool.authService
 import com.sopt.now.data.dto.request.LoginRequestDto
 import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
-    private val _loginState = MutableLiveData<Boolean>()
-    val loginState: MutableLiveData<Boolean> get() = _loginState
+    private val _loginState = MutableLiveData<AuthState>()
+    val loginState: MutableLiveData<AuthState> get() = _loginState
 
     private lateinit var user: User
 
@@ -40,14 +41,18 @@ class LoginViewModel : ViewModel() {
                 )
             }
                 .onSuccess {
-                    memberId = it.headers()["Location"]?.split("/")?.last()
-                    _loginState.value = true
+                    when (it.body()?.code) {
+                        in 200..209 -> {
+                            memberId = it.headers()["Location"]?.split("/")?.last()
+                            _loginState.value = AuthState.Success
+                        }
+
+                        else -> _loginState.value = AuthState.InputError
+                    }
                 }
                 .onFailure {
-                    _loginState.value = false
+                    _loginState.value = AuthState.Failure
                 }
         }
-
     }
-
 }
