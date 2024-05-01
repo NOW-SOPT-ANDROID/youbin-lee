@@ -55,7 +55,7 @@ object RetrofitModule {
         factory: Converter.Factory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(AUTH_BASE_URL)
-        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(factory)
         .client(client)
         .build()
 }
