@@ -22,10 +22,6 @@ class LoginViewModel : ViewModel() {
         this.user = user
     }
 
-//    fun setMemberId(memberId: String) {
-//        this.memberId = memberId
-//    }
-
     fun getMemberId() = memberId
 
     fun getUser() = user
