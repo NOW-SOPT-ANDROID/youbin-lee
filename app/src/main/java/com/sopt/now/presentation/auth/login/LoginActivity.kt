@@ -16,6 +16,7 @@ import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.getParcelable
 import com.sopt.now.util.extension.shortToast
+import com.sopt.now.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,9 +44,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                         result.data?.getParcelable(USER, User::class.java)
                             ?: return@registerForActivityResult
                     )
-//                    setMemberId(
-//                        result.data?.getStringExtra(MEMBER_ID) ?: return@registerForActivityResult
-//                    )
                 }
 
             }
@@ -73,7 +71,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         loginViewModel.loginState.observe(this) { state ->
             when (state) {
                 is AuthState.Success -> {
-                    shortToast(R.string.login_success)
+                    toast(getString(R.string.login_success, loginViewModel.getMemberId()))
                     navigateToMain(loginViewModel.getUser())
                 }
 
