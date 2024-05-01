@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
@@ -38,12 +39,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     private fun observeSignUpFormat() {
         signUpViewModel.signUpState.observe(this) { state ->
             when (state) {
-                true -> {
+                is AuthState.Success -> {
                     shortToast(R.string.sign_up_success)
                     navigateToLogin(signUpViewModel.getUser())
                 }
 
-                false -> {
+                is AuthState.InputError ->
+                    shortToast(R.string.sign_up_format_error)
+
+                is AuthState.Failure -> {
                     shortToast(R.string.server_error)
                 }
             }

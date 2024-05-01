@@ -6,14 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.di.ServicePool.authService
 import com.sopt.now.data.dto.request.SignUpRequestDto
 import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
 
     private lateinit var user: User
 
-    private val _signUpState = MutableLiveData<Boolean>()
-    val signUpState: MutableLiveData<Boolean> get() = _signUpState
+    private val _signUpState = MutableLiveData<AuthState>()
+    val signUpState: MutableLiveData<AuthState> get() = _signUpState
 
     private var memberId: String? = null
 
@@ -38,11 +39,17 @@ class SignUpViewModel : ViewModel() {
                 )
             }
                 .onSuccess {
-                    memberId = it.headers()["Location"]?.split("/")?.last()
-                    _signUpState.value = true
+                    when (it.body()?.code) {
+                        in 200..209 -> {
+                            memberId = it.headers()["Location"]?.split("/")?.last()
+                            _signUpState.value = AuthState.Success
+                        }
+
+                        else -> _signUpState.value = AuthState.InputError
+                    }
                 }
                 .onFailure {
-                    _signUpState.value = false
+                    _signUpState.value = AuthState.Failure
                 }
         }
     }
