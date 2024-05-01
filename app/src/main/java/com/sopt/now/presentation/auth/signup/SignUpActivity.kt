@@ -5,12 +5,11 @@ import androidx.activity.viewModels
 import com.sopt.now.R
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
     private val signUpViewModel by viewModels<SignUpViewModel>()
@@ -32,6 +31,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     etSignUpMbti.text.toString().trim(),
                 )
             })
+            // 보류
             signUpViewModel.checkSignUpAvailable()
         }
     }
@@ -45,15 +45,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 }
 
                 false -> {
-                    shortToast(R.string.sign_up_id_format_error)
+                    shortToast(R.string.server_error)
                 }
             }
         }
     }
 
     private fun navigateToLogin(user: User) {
-        intent.putExtra(USER, user)
-        setResult(RESULT_OK, intent)
+        intent.apply {
+            putExtra(USER, user)
+            putExtra(MEMBER_ID, signUpViewModel.getMemberId())
+            setResult(RESULT_OK, this)
+        }
+//        setResult(RESULT_OK, intent)
         finish()
     }
 

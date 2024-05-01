@@ -16,5 +16,6 @@ data class SignUpRequestDto(
     val phone: String,
 )
 
-fun SignUpRequestModel.toSignUpRequestDto(): SignUpRequestDto =
-    SignUpRequestDto(id, pw, nickname, phone)
+//
+//fun SignUpRequestModel.toSignUpRequestDto(): SignUpRequestDto =
+//    SignUpRequestDto(id, pw, nickname, phone)

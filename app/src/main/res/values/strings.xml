@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
     <string name="adapter_not_initialized_error_msg">Adapter is not initialized</string>
+    <string name="server_error">서버통신 실패</string>
 
     <!--login-->
     <string name="login_title">Welcome to SOPT</string>

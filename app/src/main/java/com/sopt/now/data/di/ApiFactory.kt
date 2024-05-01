@@ -2,7 +2,6 @@ package com.sopt.now.data.di
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.sopt.now.BuildConfig
 import com.sopt.now.BuildConfig.AUTH_BASE_URL
 import com.sopt.now.data.service.AuthService
 import kotlinx.serialization.json.Json
@@ -28,8 +27,8 @@ object ApiFactory {
     fun getRetrofit(url: String): Retrofit =
         Retrofit.Builder()
             .baseUrl(url)
-            .client(okHttpClient)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .client(okHttpClient)
             .build()
 
     inline fun <reified T, B> create(url: B): T =

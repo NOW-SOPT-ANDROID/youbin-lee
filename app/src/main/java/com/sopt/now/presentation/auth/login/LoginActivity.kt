@@ -85,5 +85,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     companion object {
         const val USER = "User"
+        const val MEMBER_ID = "memberId"
     }
 }

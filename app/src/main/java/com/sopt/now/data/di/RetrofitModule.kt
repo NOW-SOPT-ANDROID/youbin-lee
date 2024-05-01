@@ -16,46 +16,46 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-object RetrofitModule {
-    private const val APPLICATION_JSON = "application/json"
-
-    @Provides
-    @Singleton
-    fun provideJson(): Json = Json {
-        ignoreUnknownKeys = true
-        prettyPrint = true
-    }
-
-    @Provides
-    @Singleton
-    fun provideJsonConverter(json: Json): Converter.Factory =
-        json.asConverterFactory(APPLICATION_JSON.toMediaType())
-
-    @Provides
-    @Singleton
-    fun provideHttpLoggingInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(
-        loggingInterceptor: Interceptor
-    ): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(loggingInterceptor)
-        .build()
-
-    @Provides
-    @Singleton
-    @OPEN
-    fun provideOpenRetrofit(
-        client: OkHttpClient,
-        factory: Converter.Factory
-    ): Retrofit = Retrofit.Builder()
-        .baseUrl(AUTH_BASE_URL)
-        .addConverterFactory(factory)
-        .client(client)
-        .build()
-}
+//@Module
+//@InstallIn(SingletonComponent::class)
+//object RetrofitModule {
+//    private const val APPLICATION_JSON = "application/json"
+//
+//    @Provides
+//    @Singleton
+//    fun provideJson(): Json = Json {
+//        ignoreUnknownKeys = true
+//        prettyPrint = true
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideJsonConverter(json: Json): Converter.Factory =
+//        json.asConverterFactory(APPLICATION_JSON.toMediaType())
+//
+//    @Provides
+//    @Singleton
+//    fun provideHttpLoggingInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
+//        level = HttpLoggingInterceptor.Level.BODY
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideOkHttpClient(
+//        loggingInterceptor: Interceptor
+//    ): OkHttpClient = OkHttpClient.Builder()
+//        .addInterceptor(loggingInterceptor)
+//        .build()
+//
+//    @Provides
+//    @Singleton
+//    @OPEN
+//    fun provideOpenRetrofit(
+//        client: OkHttpClient,
+//        factory: Converter.Factory
+//    ): Retrofit = Retrofit.Builder()
+//        .baseUrl(AUTH_BASE_URL)
+//        .addConverterFactory(factory)
+//        .client(client)
+//        .build()
+//}
