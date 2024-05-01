@@ -60,7 +60,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             putExtra(MEMBER_ID, signUpViewModel.getMemberId())
             setResult(RESULT_OK, this)
         }
-//        setResult(RESULT_OK, intent)
         finish()
     }
 

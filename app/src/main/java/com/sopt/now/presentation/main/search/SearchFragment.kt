@@ -2,7 +2,6 @@ package com.sopt.now.presentation.main.search
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +11,7 @@ import com.sopt.now.domain.entity.response.FollowerResponseModel
 import com.sopt.now.util.UiState
 import com.sopt.now.util.base.BaseFragment
 import com.sopt.now.util.extension.shortToast
+import com.sopt.now.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -47,14 +47,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     setFollowerList(followerData)
                 }
 
-                is UiState.Failure -> {
-                    Toast.makeText(requireContext(), followerState.msg, Toast.LENGTH_LONG).show()
-//                    shortToast(followerState.msg)
-                }
+                is UiState.Failure -> toast(followerState.msg)
 
-                is UiState.Loading -> {
-                    shortToast(R.string.ui_state_loading)
-                }
+
+                is UiState.Loading -> shortToast(R.string.ui_state_loading)
+
             }
         }.launchIn(lifecycleScope)
     }

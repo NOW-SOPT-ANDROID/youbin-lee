@@ -27,7 +27,6 @@ class SearchViewModel @Inject constructor(private val repository: FollowerReposi
                 .onSuccess { followerEntityList ->
                     val followerDataList = followerEntityList.map { entity ->
                         FollowerResponseModel(
-                            id = entity.id,
                             avatar = entity.avatar,
                             email = entity.email,
                             first_name = entity.first_name,

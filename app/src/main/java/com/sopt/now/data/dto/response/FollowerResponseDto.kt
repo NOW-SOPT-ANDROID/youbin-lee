@@ -43,7 +43,6 @@ data class FollowerResponseDto(
 
     fun toFollowerEntity(): List<FollowerResponseModel> = data.map {
         FollowerResponseModel(
-            id = it.id,
             avatar = it.avatar,
             email = it.email,
             first_name = it.first_name,
