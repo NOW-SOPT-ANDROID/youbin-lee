@@ -24,6 +24,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AUTH_BASE_URL", properties["auth.base.url"]
+        buildConfigField "String", "OPEN_BASE_URL", properties["open.base.url"]
+
     }
 
     buildTypes {
@@ -83,4 +85,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
+    // timber
+    implementation "com.jakewharton.timber:timber:4.7.1"
 }
