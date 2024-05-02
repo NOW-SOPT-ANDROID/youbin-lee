@@ -38,7 +38,7 @@ class LoginViewModel : ViewModel() {
             }
                 .onSuccess {
                     when (it.body()?.code) {
-                        in 200..209 -> {
+                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
                             memberId = it.headers()["Location"]?.split("/")?.last()
                             _loginState.value = AuthState.Success
                         }
@@ -50,5 +50,10 @@ class LoginViewModel : ViewModel() {
                     _loginState.value = AuthState.Failure
                 }
         }
+    }
+
+    companion object {
+        private const val SERVER_MIN_CODE = 200
+        private const val SERVER_MAX_CODE = 209
     }
 }
