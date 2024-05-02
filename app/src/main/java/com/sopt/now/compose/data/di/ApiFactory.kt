@@ -4,7 +4,9 @@ package com.sopt.now.compose.data.di
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.compose.BuildConfig.AUTH_BASE_URL
+import com.sopt.now.compose.BuildConfig.OPEN_BASE_URL
 import com.sopt.now.compose.data.service.AuthService
+import com.sopt.now.compose.data.service.FollowerService
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,4 +40,5 @@ object ApiFactory {
 
 object ServicePool {
     val authService = ApiFactory.create<AuthService, String>(AUTH_BASE_URL)
+    val followerService = ApiFactory.create<FollowerService, String>(OPEN_BASE_URL)
 }

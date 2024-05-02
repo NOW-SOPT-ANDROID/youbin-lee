@@ -35,10 +35,16 @@ fun MyPageRoute(
 
     val myPageState by myPageViewModel.state.collectAsStateWithLifecycle()
 
+//    LaunchedEffect(true) {
+//        navHostController.previousBackStackEntry?.savedStateHandle?.run {
+//            val user = get<User>("User") ?: User("", "", "", "")
+//            myPageViewModel.setUserInfo(user)
+//        }
+//    }
+
     LaunchedEffect(true) {
         navHostController.previousBackStackEntry?.savedStateHandle?.run {
-            val user = get<User>("User") ?: User("", "", "", "")
-            myPageViewModel.setUserInfo(user)
+            val memberId = get<String>("memberId")
         }
     }
 
