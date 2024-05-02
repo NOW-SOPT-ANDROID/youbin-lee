@@ -25,7 +25,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.model.User
+import com.sopt.now.compose.feature.User
 import kotlinx.coroutines.launch
 
 @Composable

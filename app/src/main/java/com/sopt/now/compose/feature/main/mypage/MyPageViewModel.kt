@@ -1,7 +1,7 @@
 package com.sopt.now.compose.feature.main.mypage
 
 import androidx.lifecycle.ViewModel
-import com.sopt.now.compose.data.model.User
+import com.sopt.now.compose.feature.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -4,6 +4,5 @@ data class SignUpState(
     val id: String = "",
     val pw: String = "",
     val nickname: String = "",
-    val mbti: String = "",
-    val message: String? = null
+    val phone: String = "",
 )

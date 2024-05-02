@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.component.profile.FriendProfileItem
 import com.sopt.now.compose.component.profile.MyProfileItem
-import com.sopt.now.compose.data.model.FriendInfo
 
 @Composable
 fun HomeRoute(

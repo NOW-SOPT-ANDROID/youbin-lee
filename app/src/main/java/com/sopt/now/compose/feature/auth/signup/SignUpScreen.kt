@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.auth.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.model.User
+import com.sopt.now.compose.feature.User
 import kotlinx.coroutines.launch
 
 @Composable
@@ -44,12 +45,17 @@ fun SignUpRoute(
         signUpViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { signUpSideEffect ->
                 when (signUpSideEffect) {
-                    SignUpSideEffect.LoginNavigation -> {
+                    is SignUpSideEffect.Success -> {
+                        Toast.makeText(
+                            context,
+                            "회원가입 성공" + signUpSideEffect.memberId,
+                            Toast.LENGTH_SHORT
+                        ).show()
                         val user = User(
                             id = signUpState.id,
                             pw = signUpState.pw,
                             nickname = signUpState.nickname,
-                            mbti = signUpState.mbti
+                            mbti = signUpState.phone
                         )
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
@@ -58,6 +64,14 @@ fun SignUpRoute(
                         )
 
                         onLoginClick()
+                    }
+
+                    SignUpSideEffect.InputError -> {
+                        Toast.makeText(context, "정확한 값을 입력해주세요", Toast.LENGTH_SHORT).show()
+                    }
+
+                    SignUpSideEffect.Failure -> {
+                        Toast.makeText(context, "서버통신 실패", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -127,12 +141,12 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.mbti))
         TextField(
-            value = signUpState.mbti,
+            value = signUpState.phone,
             onValueChange = { mbti ->
-                signUpViewModel.setMbti(mbti)
+                signUpViewModel.setPhone(mbti)
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(id = R.string.sign_up_mbti_hint)) }
+            placeholder = { Text(stringResource(id = R.string.sign_up_phone_hint)) }
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
