@@ -18,14 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.feature.User
 
 @Composable
 fun MyPageRoute(
@@ -35,16 +33,12 @@ fun MyPageRoute(
 
     val myPageState by myPageViewModel.state.collectAsStateWithLifecycle()
 
-//    LaunchedEffect(true) {
-//        navHostController.previousBackStackEntry?.savedStateHandle?.run {
-//            val user = get<User>("User") ?: User("", "", "", "")
-//            myPageViewModel.setUserInfo(user)
-//        }
-//    }
-
     LaunchedEffect(true) {
         navHostController.previousBackStackEntry?.savedStateHandle?.run {
-            val memberId = get<String>("memberId")
+            val memberId = get<String>("memberId")?.toInt()
+            myPageViewModel.setMemberId(memberId ?: 0)
+
+            myPageViewModel.getUserInfo()
         }
     }
 
@@ -80,12 +74,12 @@ fun MyPageScreen(
         }
         Spacer(modifier = Modifier.padding(20.dp))
         Text(
-            text = stringResource(id = R.string.id),
+            text = stringResource(id = R.string.phone),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = myPageState.id,
+            text = myPageState.nickname,
             fontSize = 18.sp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,17 +93,11 @@ fun MyPageScreen(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = myPageState.nickname,
+            text = myPageState.phone,
             fontSize = 18.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, bottom = 40.dp),
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainPreview() {
-    MyPageScreen(MyPageState("hi", "hi", "hi", "hi", "hi"))
 }

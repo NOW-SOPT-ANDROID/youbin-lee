@@ -12,7 +12,7 @@ class SearchViewModel : ViewModel() {
     private val _sideEffect: MutableSharedFlow<SearchSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<SearchSideEffect> get() = _sideEffect
 
-    fun getFriendsInfo(page: Int) {
+    suspend fun getFriendsInfo(page: Int) {
         viewModelScope.launch {
             runCatching {
                 followerService.getFollowerListFromServer(page)

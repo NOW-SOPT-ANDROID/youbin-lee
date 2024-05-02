@@ -41,13 +41,6 @@ fun LoginRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-//    LaunchedEffect(true) {
-//        navController.previousBackStackEntry?.savedStateHandle?.run {
-//            val user = get<User>("User") ?: User("", "", "", "")
-//            loginViewModel.setUserInfo(user)
-//        }
-//    }
-
     LaunchedEffect(loginViewModel.sideEffect, lifecycleOwner) {
         loginViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { loginSideEffect ->

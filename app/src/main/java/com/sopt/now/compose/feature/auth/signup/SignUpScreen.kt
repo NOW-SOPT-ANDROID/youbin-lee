@@ -51,12 +51,6 @@ fun SignUpRoute(
                             "회원가입 성공! ID는" + signUpSideEffect.memberId,
                             Toast.LENGTH_SHORT
                         ).show()
-//                        val user = User(
-//                            id = signUpState.id,
-//                            pw = signUpState.pw,
-//                            nickname = signUpState.nickname,
-//                            phone = signUpState.phone
-//                        )
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "memberId",

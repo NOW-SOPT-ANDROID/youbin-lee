@@ -22,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.component.profile.FollowerItem
 import com.sopt.now.compose.data.dto.response.FollowerResponseDto
 
-
 @Composable
 fun SearchRoute(
     searchViewModel: SearchViewModel = viewModel()
