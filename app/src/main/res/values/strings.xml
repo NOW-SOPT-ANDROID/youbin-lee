@@ -6,7 +6,7 @@
     <string name="id">ID</string>
     <string name="pw">비밀번호</string>
     <string name="nickname">닉네임</string>
-    <string name="mbti">MBTI</string>
+    <string name="phone">전화번호</string>
     <string name="btn_sign_up">회원가입 하기</string>
     <string name="btn_login">로그인 하기</string>
 

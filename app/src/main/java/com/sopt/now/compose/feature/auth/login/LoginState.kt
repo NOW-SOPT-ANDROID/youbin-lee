@@ -5,5 +5,4 @@ data class LoginState(
     val pw: String = "",
     val nickname: String = "",
     val mbti: String = "",
-    val message: String? = null
 )

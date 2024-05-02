@@ -48,19 +48,19 @@ fun SignUpRoute(
                     is SignUpSideEffect.Success -> {
                         Toast.makeText(
                             context,
-                            "회원가입 성공" + signUpSideEffect.memberId,
+                            "회원가입 성공! ID는" + signUpSideEffect.memberId,
                             Toast.LENGTH_SHORT
                         ).show()
-                        val user = User(
-                            id = signUpState.id,
-                            pw = signUpState.pw,
-                            nickname = signUpState.nickname,
-                            mbti = signUpState.phone
-                        )
+//                        val user = User(
+//                            id = signUpState.id,
+//                            pw = signUpState.pw,
+//                            nickname = signUpState.nickname,
+//                            phone = signUpState.phone
+//                        )
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
-                            key = "User",
-                            value = user
+                            key = "memberId",
+                            value = signUpSideEffect.memberId
                         )
 
                         onLoginClick()
@@ -81,12 +81,11 @@ fun SignUpRoute(
         signUpViewModel = signUpViewModel,
         onLoginClick = {
             scope.launch {
-                signUpViewModel.checkSignUp()
+                signUpViewModel.checkSignUpAvailable()
             }
         },
         signUpState = signUpState,
-
-        )
+    )
 
 }
 
@@ -139,11 +138,11 @@ fun SignUpScreen(
             placeholder = { Text(stringResource(id = R.string.sign_up_nickname_hint)) }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
-        Text(stringResource(id = R.string.mbti))
+        Text(stringResource(id = R.string.phone))
         TextField(
             value = signUpState.phone,
-            onValueChange = { mbti ->
-                signUpViewModel.setPhone(mbti)
+            onValueChange = { phone ->
+                signUpViewModel.setPhone(phone)
             },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = R.string.sign_up_phone_hint)) }

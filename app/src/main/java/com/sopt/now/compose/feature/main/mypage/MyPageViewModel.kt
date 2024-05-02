@@ -17,7 +17,7 @@ class MyPageViewModel : ViewModel() {
             id = user.id,
             pw = user.pw,
             nickname = user.nickname,
-            mbti = user.mbti
+            mbti = user.phone
         )
     }
 }

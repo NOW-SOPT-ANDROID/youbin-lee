@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.auth.login
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.feature.User
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,12 +41,12 @@ fun LoginRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
-            val user = get<User>("User") ?: User("", "", "", "")
-            loginViewModel.setUserInfo(user)
-        }
-    }
+//    LaunchedEffect(true) {
+//        navController.previousBackStackEntry?.savedStateHandle?.run {
+//            val user = get<User>("User") ?: User("", "", "", "")
+//            loginViewModel.setUserInfo(user)
+//        }
+//    }
 
     LaunchedEffect(loginViewModel.sideEffect, lifecycleOwner) {
         loginViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
@@ -57,10 +57,29 @@ fun LoginRoute(
                         onSignUpClick()
                     }
 
-                    LoginSideEffect.MainNavigation -> {
+                    is LoginSideEffect.Success -> {
+                        Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+
                         popBackStack()
                         onMainClick()
+
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "memberId",
+                            value = loginSideEffect.memberId
+                        )
                     }
+
+                    LoginSideEffect.InputError -> Toast.makeText(
+                        context,
+                        "정확한 값을 입력해주세요",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    LoginSideEffect.Failure -> Toast.makeText(
+                        context,
+                        "서버통신 실패",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
@@ -75,7 +94,7 @@ fun LoginRoute(
         },
         onMainClick = {
             scope.launch {
-                loginViewModel.checkLogin()
+                loginViewModel.checkLoginAvailable()
             }
         }
     )

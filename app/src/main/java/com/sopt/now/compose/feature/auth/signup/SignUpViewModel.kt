@@ -36,11 +36,7 @@ class SignUpViewModel : ViewModel() {
         _state.value = _state.value.copy(phone = phone)
     }
 
-//    fun setMemberId(memberId: String) {
-//        _state.value = _state.value.copy(memberId = memberId)
-//    }
-
-    suspend fun checkSignUp() {
+    suspend fun checkSignUpAvailable() {
         viewModelScope.launch {
             runCatching {
                 authService.postSignUpToServer(
@@ -79,20 +75,5 @@ class SignUpViewModel : ViewModel() {
         private const val SERVER_MIN_CODE = 200
         private const val SERVER_MAX_CODE = 209
     }
-//        when {
-//            _state.value.id.length !in ID_MIN_LENGTH..ID_MAX_LENGTH ->
-//                _state.value.copy(message = "아이디는 6~10글자 이내로 입력해주세요.")
-//
-//            else -> _sideEffect.emit(SignUpSideEffect.LoginNavigation)
-//        }
-//        _sideEffect.resetReplayCache()
-//    }
-
-//    companion object {
-//        private const val ID_MIN_LENGTH = 6
-//        private const val ID_MAX_LENGTH = 10
-//        private const val PW_MIN_LENGTH = 8
-//        private const val PW_MAX_LENGTH = 12
-//    }
 
 }
