@@ -50,10 +50,3 @@ fun FollowerItem(
         )
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun MainPreview() {
-    FollowerItem("hi", "hi", "hi")
-}
-

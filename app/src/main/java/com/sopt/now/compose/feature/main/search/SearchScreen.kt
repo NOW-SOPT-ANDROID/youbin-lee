@@ -6,39 +6,48 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sopt.now.compose.component.profile.FriendProfileItem
-import com.sopt.now.compose.component.profile.MyProfileItem
-import com.sopt.now.compose.feature.main.home.FriendInfo
+import com.sopt.now.compose.component.profile.FollowerItem
+import com.sopt.now.compose.data.dto.response.FollowerResponseDto
+
 
 @Composable
 fun SearchRoute(
     searchViewModel: SearchViewModel = viewModel()
 ) {
-    val searchState by searchViewModel.state.collectAsStateWithLifecycle()
 
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var followerList: List<FollowerInfo>? = null
+    var followerList by remember { mutableStateOf<List<FollowerResponseDto.FollowerData>?>(null) }
 
     LaunchedEffect(true) {
+        searchViewModel.getFriendsInfo(2)
+    }
+
+    LaunchedEffect(searchViewModel.sideEffect, lifecycleOwner) {
         searchViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { searchSideEffect ->
                 when (searchSideEffect) {
                     is SearchSideEffect.Success -> {
                         followerList = searchSideEffect.followerList
+                        Toast.makeText(
+                            context,
+                            "서버통신 성공",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     SearchSideEffect.Failure -> Toast.makeText(
@@ -51,19 +60,13 @@ fun SearchRoute(
             }
     }
 
-    followerList?.let {
-        SearchScreen(
-            searchState = searchState,
-            followerList = it
-        )
-    }
+    followerList?.let { SearchScreen(followerList = it) }
 
 }
 
 @Composable
 fun SearchScreen(
-    searchState: SearchState,
-    followerList: List<FollowerInfo>
+    followerList: List<FollowerResponseDto.FollowerData>
 ) {
     Column(
         modifier = Modifier,
@@ -74,22 +77,13 @@ fun SearchScreen(
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-//            items(followerList) { friend ->
-//                when (friend) {
-//                    is FriendInfo.MyProfile -> MyProfileItem(
-//                        name = friend.name,
-//                        profileImage = friend.profileImage,
-//                        profileImageEtc = friend.profileImageEtc
-//                    )
-//
-//                    is FriendInfo.FriendProfile -> FriendProfileItem(
-//                        name = friend.name,
-//                        profileImage = friend.profileImage,
-//                        selfDescription = friend.selfDescription
-//                    )
-//                }
+            items(followerList) { friend ->
+                FollowerItem(
+                    name = friend.first_name,
+                    profileImage = friend.avatar,
+                    email = friend.email
+                )
             }
         }
     }
-
-
+}

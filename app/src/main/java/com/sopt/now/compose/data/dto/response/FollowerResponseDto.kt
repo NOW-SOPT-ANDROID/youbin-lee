@@ -1,10 +1,10 @@
 package com.sopt.now.compose.data.dto.response
 
 
-import com.sopt.now.compose.feature.main.search.FollowerInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class FollowerResponseDto(
     @SerialName("page")
     val page: Int,
@@ -19,6 +19,7 @@ data class FollowerResponseDto(
     @SerialName("support")
     val support: Support,
 ) {
+    @Serializable
     data class FollowerData(
         @SerialName("id")
         val id: Int,
@@ -39,12 +40,4 @@ data class FollowerResponseDto(
         @SerialName("text")
         val text: String,
     )
-
-    fun toFollowerEntity(): List<FollowerInfo> = data.map {
-        FollowerInfo(
-            name = it.first_name,
-            profileImage = it.avatar,
-            email = it.email,
-        )
-    }
 }
