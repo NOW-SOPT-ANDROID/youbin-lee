@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.di.ServicePool.authService
 import com.sopt.now.compose.data.dto.request.SignUpRequestDto
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -36,7 +35,7 @@ class SignUpViewModel : ViewModel() {
         _state.value = _state.value.copy(phone = phone)
     }
 
-    suspend fun checkSignUpAvailable() {
+    fun checkSignUpAvailable() {
         viewModelScope.launch {
             runCatching {
                 authService.postSignUpToServer(

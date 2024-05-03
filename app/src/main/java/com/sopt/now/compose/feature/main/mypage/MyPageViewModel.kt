@@ -32,7 +32,7 @@ class MyPageViewModel : ViewModel() {
         )
     }
 
-    suspend fun getUserInfo() {
+    fun getUserInfo() {
         viewModelScope.launch {
             runCatching {
                 memberId?.let { authService.getUserFromServer(it) }

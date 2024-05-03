@@ -30,7 +30,7 @@ class LoginViewModel : ViewModel() {
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun checkLoginAvailable() {
+    fun checkLoginAvailable() {
         viewModelScope.launch {
             runCatching {
                 authService.postLoginToServer(
