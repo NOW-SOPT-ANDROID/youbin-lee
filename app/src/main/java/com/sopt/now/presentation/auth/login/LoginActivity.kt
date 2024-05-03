@@ -84,7 +84,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun navigateToMain(user: User) {
         Intent(this, MainActivity::class.java).apply {
-//            putExtra(USER, user)
             putExtra(MEMBER_ID, loginViewModel.getMemberId())
             addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
