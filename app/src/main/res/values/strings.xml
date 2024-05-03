@@ -34,7 +34,7 @@
     <!--my_page-->
     <string name="my_page_introduce">진정한 엥뿌피 되기 도전~!</string>
     <string name="my_page_id_title">ID</string>
-    <string name="my_page_mbti_title">MBTI</string>
+    <string name="my_page_phone_title">전화번호</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
