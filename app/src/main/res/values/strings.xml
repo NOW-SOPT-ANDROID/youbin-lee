@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
-    <string name="server_faile">서버통신 실패</string>
-    <string name="server_input_error">정확한 값을 입력해주세요</string>
+    <string name="server_failure">서버통신 실패</string>
+    <string name="input_error">정확한 값을 입력해주세요</string>
 
     <string name="id">ID</string>
     <string name="pw">비밀번호</string>
@@ -16,9 +16,7 @@
     <string name="sign_up_pw_hint">비밀번호를 입력해주세요</string>
     <string name="sign_up_nickname_hint">닉네임을 입력해주세요</string>
     <string name="sign_up_phone_hint">전화번호를 입력해주세요</string>
-    <string name="sign_up_success">회원가입에 성공! ID는 %s!</string>
-    <string name="sign_up_id_format_error">6~10글자 이내로 입력해주세요</string>
-    <string name="sign_up_password_format_error">8~12글자 이내로 입력해주세요</string>
+    <string name="sign_up_success">회원가입에 성공! ID는 %d!</string>
     <string name="sign_up_nickname_mbti_format_error">모든 정보를 입력해주세요</string>
 
     <!--login-->

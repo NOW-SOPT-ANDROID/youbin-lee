@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.auth.signup
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +25,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.feature.User
+import com.sopt.now.compose.util.shortToast
 import kotlinx.coroutines.launch
 
 @Composable
@@ -46,11 +45,9 @@ fun SignUpRoute(
             .collect { signUpSideEffect ->
                 when (signUpSideEffect) {
                     is SignUpSideEffect.Success -> {
-                        Toast.makeText(
-                            context,
-                            "회원가입 성공! ID는" + signUpSideEffect.memberId,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context.shortToast(
+                            R.string.sign_up_success + (signUpSideEffect.memberId?.toInt() ?: 0)
+                        )
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "memberId",
@@ -60,13 +57,11 @@ fun SignUpRoute(
                         onLoginClick()
                     }
 
-                    SignUpSideEffect.InputError -> {
-                        Toast.makeText(context, "정확한 값을 입력해주세요", Toast.LENGTH_SHORT).show()
-                    }
+                    SignUpSideEffect.InputError -> context.shortToast(R.string.input_error)
 
-                    SignUpSideEffect.Failure -> {
-                        Toast.makeText(context, "서버통신 실패", Toast.LENGTH_SHORT).show()
-                    }
+
+                    SignUpSideEffect.Failure -> context.shortToast(R.string.server_failure)
+
                 }
             }
     }

@@ -1,6 +1,5 @@
 package com.sopt.now.compose.feature.auth.login
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +25,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
+import com.sopt.now.compose.util.shortToast
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,7 +51,7 @@ fun LoginRoute(
                     }
 
                     is LoginSideEffect.Success -> {
-                        Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                        context.shortToast(R.string.login_success)
 
                         popBackStack()
                         onMainClick()
@@ -62,17 +62,9 @@ fun LoginRoute(
                         )
                     }
 
-                    LoginSideEffect.InputError -> Toast.makeText(
-                        context,
-                        "정확한 값을 입력해주세요",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    LoginSideEffect.InputError -> context.shortToast(R.string.input_error)
 
-                    LoginSideEffect.Failure -> Toast.makeText(
-                        context,
-                        "서버통신 실패",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    LoginSideEffect.Failure -> context.shortToast(R.string.server_failure)
                 }
             }
     }
