@@ -31,5 +31,7 @@
     <string name="nav_home">home</string>
     <string name="nav_search">search</string>
     <string name="nav_my_page">my page</string>
+    <string name="main_page_search">자세히 알아보기</string>
+    <string name="main_page_detail">안녕하세요 이유빈입니당</string>
 
 </resources>

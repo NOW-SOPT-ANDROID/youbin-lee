@@ -45,9 +45,9 @@ fun SignUpRoute(
             .collect { signUpSideEffect ->
                 when (signUpSideEffect) {
                     is SignUpSideEffect.Success -> {
-                        context.shortToast(
-                            R.string.sign_up_success + (signUpSideEffect.memberId?.toInt() ?: 0)
-                        )
+//                        context.shortToast(
+//                            R.string.sign_up_success + (signUpSideEffect.memberId?.toInt() ?: 0)
+//                        )
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "memberId",
