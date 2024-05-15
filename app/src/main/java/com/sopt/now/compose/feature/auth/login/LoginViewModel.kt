@@ -25,8 +25,8 @@ class LoginViewModel : ViewModel() {
         _state.value = _state.value.copy(id = id)
     }
 
-    fun setPassword(pw: String) {
-        _state.value = _state.value.copy(pw = pw)
+    fun setPassword(password: String) {
+        _state.value = _state.value.copy(password = password)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -37,7 +37,7 @@ class LoginViewModel : ViewModel() {
                     state.value.run {
                         LoginRequestDto(
                             id,
-                            pw
+                            password
                         )
                     }
 

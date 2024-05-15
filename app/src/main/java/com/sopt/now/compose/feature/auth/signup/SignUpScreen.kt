@@ -111,9 +111,9 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.pw))
         TextField(
-            value = signUpState.pw,
-            onValueChange = { pw ->
-                signUpViewModel.setPassword(pw)
+            value = signUpState.password,
+            onValueChange = { password ->
+                signUpViewModel.setPassword(password)
             },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = R.string.sign_up_pw_hint)) },

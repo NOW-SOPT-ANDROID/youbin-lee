@@ -23,8 +23,8 @@ class SignUpViewModel : ViewModel() {
         _state.value = _state.value.copy(id = id)
     }
 
-    fun setPassword(pw: String) {
-        _state.value = _state.value.copy(pw = pw)
+    fun setPassword(password: String) {
+        _state.value = _state.value.copy(password = password)
     }
 
     fun setNickname(nickname: String) {
@@ -42,7 +42,7 @@ class SignUpViewModel : ViewModel() {
                     state.value.run {
                         SignUpRequestDto(
                             id,
-                            pw,
+                            password,
                             nickname,
                             phone
                         )

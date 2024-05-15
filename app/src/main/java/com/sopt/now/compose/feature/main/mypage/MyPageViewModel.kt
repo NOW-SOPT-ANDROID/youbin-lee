@@ -40,8 +40,8 @@ class MyPageViewModel : ViewModel() {
                 .onSuccess { response ->
                     setUserInfo(
                         MyPageState(
-                            response?.body()?.data?.phone ?: "",
-                            response?.body()?.data?.nickname ?: ""
+                            response?.body()?.data?.phone.orEmpty(),
+                            response?.body()?.data?.nickname.orEmpty()
                         )
                     )
                     _sideEffect.emit(true)

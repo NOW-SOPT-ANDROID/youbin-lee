@@ -116,9 +116,9 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.pw))
         TextField(
-            value = loginState.pw,
-            onValueChange = { pw ->
-                loginViewModel.setPassword(pw)
+            value = loginState.password,
+            onValueChange = { password ->
+                loginViewModel.setPassword(password)
             },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = R.string.login_pw_hint)) },
