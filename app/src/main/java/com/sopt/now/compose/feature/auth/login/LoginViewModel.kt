@@ -45,15 +45,11 @@ class LoginViewModel : ViewModel() {
             }
                 .onSuccess {
                     when (it.body()?.code) {
-                        in SERVER_MIN_CODE..SERVER_MAX_CODE ->
-                            _sideEffect.emit(
-                                LoginSideEffect.Success(
-                                    it.headers()["Location"]?.split(
-                                        "/"
-                                    )?.last()
-                                )
+                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
+                            LoginSideEffect.Success(
+                                it.headers()["Location"]
                             )
-
+                        )
 
                         else -> _sideEffect.emit(LoginSideEffect.InputError)
                     }

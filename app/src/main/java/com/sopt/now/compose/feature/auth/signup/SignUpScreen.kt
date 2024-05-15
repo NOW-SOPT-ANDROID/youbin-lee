@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.auth.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,9 +46,11 @@ fun SignUpRoute(
             .collect { signUpSideEffect ->
                 when (signUpSideEffect) {
                     is SignUpSideEffect.Success -> {
-//                        context.shortToast(
-//                            R.string.sign_up_success + (signUpSideEffect.memberId?.toInt() ?: 0)
-//                        )
+                        Toast.makeText(
+                            context,
+                            "회원가입 성공! ID는 " + signUpSideEffect.memberId,
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "memberId",
