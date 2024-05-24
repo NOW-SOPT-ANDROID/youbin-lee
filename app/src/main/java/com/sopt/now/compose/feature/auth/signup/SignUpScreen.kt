@@ -1,5 +1,6 @@
 package com.sopt.now.compose.feature.auth.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.model.User
+import com.sopt.now.compose.util.shortToast
 import kotlinx.coroutines.launch
 
 @Composable
@@ -44,21 +45,26 @@ fun SignUpRoute(
         signUpViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { signUpSideEffect ->
                 when (signUpSideEffect) {
-                    SignUpSideEffect.LoginNavigation -> {
-                        val user = User(
-                            id = signUpState.id,
-                            pw = signUpState.pw,
-                            nickname = signUpState.nickname,
-                            mbti = signUpState.mbti
-                        )
+                    is SignUpSideEffect.Success -> {
+                        Toast.makeText(
+                            context,
+                            "회원가입 성공! ID는 " + signUpSideEffect.memberId,
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
-                            key = "User",
-                            value = user
+                            key = "memberId",
+                            value = signUpSideEffect.memberId
                         )
 
                         onLoginClick()
                     }
+
+                    SignUpSideEffect.InputError -> context.shortToast(R.string.input_error)
+
+
+                    SignUpSideEffect.Failure -> context.shortToast(R.string.server_failure)
+
                 }
             }
     }
@@ -67,12 +73,11 @@ fun SignUpRoute(
         signUpViewModel = signUpViewModel,
         onLoginClick = {
             scope.launch {
-                signUpViewModel.checkSignUp()
+                signUpViewModel.checkSignUpAvailable()
             }
         },
         signUpState = signUpState,
-
-        )
+    )
 
 }
 
@@ -106,9 +111,9 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.pw))
         TextField(
-            value = signUpState.pw,
-            onValueChange = { pw ->
-                signUpViewModel.setPassword(pw)
+            value = signUpState.password,
+            onValueChange = { password ->
+                signUpViewModel.setPassword(password)
             },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = R.string.sign_up_pw_hint)) },
@@ -125,14 +130,14 @@ fun SignUpScreen(
             placeholder = { Text(stringResource(id = R.string.sign_up_nickname_hint)) }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
-        Text(stringResource(id = R.string.mbti))
+        Text(stringResource(id = R.string.phone))
         TextField(
-            value = signUpState.mbti,
-            onValueChange = { mbti ->
-                signUpViewModel.setMbti(mbti)
+            value = signUpState.phone,
+            onValueChange = { phone ->
+                signUpViewModel.setPhone(phone)
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(id = R.string.sign_up_mbti_hint)) }
+            placeholder = { Text(stringResource(id = R.string.sign_up_phone_hint)) }
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(

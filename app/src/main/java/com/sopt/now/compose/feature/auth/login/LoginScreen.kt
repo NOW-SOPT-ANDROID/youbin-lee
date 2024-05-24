@@ -25,7 +25,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.model.User
+import com.sopt.now.compose.util.shortToast
+import com.sopt.now.compose.util.toast
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,13 +42,6 @@ fun LoginRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(true) {
-        navController.previousBackStackEntry?.savedStateHandle?.run {
-            val user = get<User>("User") ?: User("", "", "", "")
-            loginViewModel.setUserInfo(user)
-        }
-    }
-
     LaunchedEffect(loginViewModel.sideEffect, lifecycleOwner) {
         loginViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
             .collect { loginSideEffect ->
@@ -57,10 +51,21 @@ fun LoginRoute(
                         onSignUpClick()
                     }
 
-                    LoginSideEffect.MainNavigation -> {
+                    is LoginSideEffect.Success -> {
+                        context.shortToast(R.string.login_success)
+
                         popBackStack()
                         onMainClick()
+
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "memberId",
+                            value = loginSideEffect.memberId
+                        )
                     }
+
+                    is LoginSideEffect.ErrorToast -> context.toast(loginSideEffect.message)
+
+                    LoginSideEffect.Failure -> context.shortToast(R.string.server_failure)
                 }
             }
     }
@@ -75,7 +80,7 @@ fun LoginRoute(
         },
         onMainClick = {
             scope.launch {
-                loginViewModel.checkLogin()
+                loginViewModel.checkLoginAvailable()
             }
         }
     )
@@ -112,9 +117,9 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Text(stringResource(id = R.string.pw))
         TextField(
-            value = loginState.pw,
-            onValueChange = { pw ->
-                loginViewModel.setPassword(pw)
+            value = loginState.password,
+            onValueChange = { password ->
+                loginViewModel.setPassword(password)
             },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(stringResource(id = R.string.login_pw_hint)) },

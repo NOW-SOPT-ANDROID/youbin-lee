@@ -2,7 +2,6 @@ package com.sopt.now.compose.feature.main.home
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.compose.R
-import com.sopt.now.compose.data.model.FriendInfo
 
 class HomeViewModel : ViewModel() {
 
