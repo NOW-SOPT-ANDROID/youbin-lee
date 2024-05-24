@@ -34,5 +34,10 @@
     <string name="nav_my_page">my page</string>
     <string name="main_page_search">자세히 알아보기</string>
     <string name="main_page_detail">안녕하세요 이유빈입니당</string>
+    <string name="main_page_text_hello">Hello, </string>
+    <string name="main_page_text_name">leeeyubin</string>
+    <string name="main_page_show_less">Show less</string>
+    <string name="main_page_show_more">Show more</string>
+
 
 </resources>

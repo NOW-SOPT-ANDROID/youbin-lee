@@ -1,7 +1,6 @@
 package com.sopt.now.compose.feature.main.mypage
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -67,7 +66,6 @@ fun MyPageRoute(
     )
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MyPageScreen(
     myPageState: MyPageState,
@@ -86,7 +84,7 @@ fun MyPageScreen(
                 contentDescription = "img_main_compose",
                 modifier = Modifier
                     .size(60.dp)
-                    .aspectRatio(1f / 1f),
+                    .aspectRatio(1f),
             )
             Text(
                 stringResource(id = R.string.main_page_sub_title),
@@ -122,83 +120,82 @@ fun MyPageScreen(
                 .padding(top = 10.dp, bottom = 40.dp),
         )
 
-        // 애니메이션 1
+        AnimationOne()
 
-        var visible by remember { mutableStateOf(false) }
-        val density = LocalDensity.current
+        AnimationTwo()
 
+    }
+
+}
+
+@Composable
+fun AnimationOne(modifier: Modifier = Modifier) {
+    var visible by remember { mutableStateOf(false) }
+    val density = LocalDensity.current
+
+    Text(
+        text = stringResource(id = R.string.main_page_search),
+        fontSize = 18.sp,
+        color = Color.Blue,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp, bottom = 40.dp)
+            .clickable {
+                visible = !visible
+            },
+    )
+
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically {
+            with(density) { -40.dp.roundToPx() }
+        } + expandVertically(
+            expandFrom = Alignment.Top
+        ) + fadeIn(
+            initialAlpha = 0.3f
+        ),
+        exit = slideOutVertically() + shrinkVertically() + fadeOut()
+    ) {
         Text(
-            text = stringResource(id = R.string.main_page_search),
-            fontSize = 18.sp,
-            color = Color.Blue,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, bottom = 40.dp)
-                .clickable {
-                    // 클릭 가능하게 만들기
-                    visible = !visible // 가시성 상태를 반전
-                },
+            stringResource(id = R.string.main_page_detail),
         )
+    }
 
-        // visible 값에 따라 자식 컴포저블의 가시성을 애니메이션과 함께 보여줌
-        AnimatedVisibility(
-            visible = visible,
-            // false -> true
-            enter = slideInVertically {
-                // 상단에서 슬라이드인
-                with(density) { -40.dp.roundToPx() }
-            } + expandVertically(
-                // 상단에서 확장
-                expandFrom = Alignment.Top
-            ) + fadeIn(
-                // 초기 투명도 설정, 초기 알파값 0.3f
-                initialAlpha = 0.3f
-            ),
-            // true -> false
-            exit = slideOutVertically() + shrinkVertically() + fadeOut()
-        ) {
-            Text(
-                stringResource(id = R.string.main_page_detail),
-            )
-        }
+}
 
-        //애니메이션 2
+@Composable
+fun AnimationTwo(modifier: Modifier = Modifier) {
+    var expanded by remember { mutableStateOf(false) }
 
-        // 만약 상태를 유지하고 싶다면 rememberSaveable 사용하기
-        var expanded by remember { mutableStateOf(false) }
+    val extraPadding by animateDpAsState(
+        if (expanded) 50.dp
+        else 0.dp, label = ""
+    )
 
-        // 애니메이션이 끝날 때까지 값이 지속적으로 갱신되는 State 객체를 반환함
-        // 확장되면 패딩이 50.dp로 증가, 그렇지 않으면 0.dp
-        val extraPadding by animateDpAsState(
-            if (expanded) 50.dp else 0.dp, label = ""
-        )
-
-        Surface(
-            color = Pink80,
-            modifier = Modifier.padding(vertical = 4.dp)
-        ) {
-            Row(modifier = Modifier.padding(24.dp)) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(bottom = extraPadding)
-                ) {
-                    Text(text = "Hello, ")
-                    Text(text = "leeeyubin")
-                }
-                //OutlinedButton: 클릭 시 expanded 상태를 반전시키기
-                OutlinedButton(
-                    onClick = { expanded = !expanded }
-                ) {
-                    Text(
-                        if (expanded) "Show less" else "Show more",
-                        color = black
-                    )
-                }
+    Surface(
+        color = Pink80,
+        modifier = modifier.padding(vertical = 4.dp)
+    ) {
+        Row(modifier = modifier.padding(24.dp)) {
+            Column(
+                modifier = modifier
+                    .weight(1f)
+                    .padding(bottom = extraPadding)
+            ) {
+                Text(text = stringResource(id = R.string.main_page_text_hello))
+                Text(text = stringResource(id = R.string.main_page_text_name))
+            }
+            OutlinedButton(
+                onClick = { expanded = !expanded }
+            ) {
+                Text(
+                    if (expanded) stringResource(id = R.string.main_page_show_less)
+                    else stringResource(id = R.string.main_page_show_more),
+                    color = black
+                )
             }
         }
     }
-
 }
 
 @Preview(showBackground = true)
