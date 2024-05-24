@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
@@ -23,9 +22,10 @@ fun FollowerItem(
     name: String,
     profileImage: String,
     email: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -33,17 +33,17 @@ fun FollowerItem(
         Image(
             painter = rememberImagePainter(data = profileImage),
             contentDescription = "img_profile",
-            modifier = Modifier
+            modifier = modifier
                 .size(60.dp)
                 .aspectRatio(1f),
         )
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = modifier.width(10.dp))
         Text(
             text = name,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
         Text(
             text = email,
             fontSize = 14.sp,

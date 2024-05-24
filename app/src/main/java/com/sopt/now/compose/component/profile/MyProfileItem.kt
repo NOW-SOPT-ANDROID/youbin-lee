@@ -21,10 +21,11 @@ import androidx.compose.ui.unit.sp
 fun MyProfileItem(
     name: String,
     profileImage: Int,
-    profileImageEtc: Int
+    profileImageEtc: Int,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -32,21 +33,21 @@ fun MyProfileItem(
         Image(
             painter = painterResource(profileImage),
             contentDescription = "img_profile",
-            modifier = Modifier
+            modifier = modifier
                 .size(100.dp)
                 .aspectRatio(1f),
         )
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = modifier.width(10.dp))
         Text(
             text = name,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
         Image(
             painter = painterResource(profileImageEtc),
             contentDescription = "img_profile_etc",
-            modifier = Modifier
+            modifier = modifier
                 .size(60.dp)
                 .aspectRatio(1f),
         )

@@ -22,9 +22,10 @@ fun FriendProfileItem(
     name: String,
     profileImage: String,
     selfDescription: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -32,17 +33,17 @@ fun FriendProfileItem(
         Image(
             painter = rememberImagePainter(data = profileImage),
             contentDescription = "img_profile",
-            modifier = Modifier
+            modifier = modifier
                 .size(60.dp)
                 .aspectRatio(1f),
         )
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = modifier.width(10.dp))
         Text(
             text = name,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
         Text(
             text = selfDescription,
             fontSize = 14.sp,
