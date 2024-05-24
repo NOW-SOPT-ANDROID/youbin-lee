@@ -2,7 +2,7 @@ package com.sopt.now.presentation.main.home
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.R
-import com.sopt.now.data.FriendInfo
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 class HomeViewModel : ViewModel() {
 

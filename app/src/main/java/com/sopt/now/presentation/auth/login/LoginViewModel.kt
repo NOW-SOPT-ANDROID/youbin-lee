@@ -1,45 +1,59 @@
 package com.sopt.now.presentation.auth.login
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.User
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import com.sopt.now.data.di.ServicePool.authService
+import com.sopt.now.data.dto.request.LoginRequestDto
+import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
-    private val _loginState = MutableSharedFlow<LoginState>()
-    val loginState: SharedFlow<LoginState> get() = _loginState
+    private val _loginState = MutableLiveData<AuthState>()
+    val loginState: MutableLiveData<AuthState> get() = _loginState
 
     private lateinit var user: User
 
-    private var isIdCorrect = false
-    private var isPwCorrect = false
+    private var memberId: String? = null
 
     fun setUser(user: User) {
         this.user = user
     }
 
+    fun getMemberId() = memberId
+
     fun getUser() = user
 
-    fun checkLoginFormat() {
+    fun checkLoginAvailable(id: String, pw: String) {
         viewModelScope.launch {
-            val loginFormat = when {
-                !isIdCorrect -> LoginState.IdError
-                !isPwCorrect -> LoginState.PwError
-                else -> LoginState.Success
+            runCatching {
+                authService.postLoginToServer(
+                    LoginRequestDto(
+                        id,
+                        pw
+                    )
+                )
             }
-            _loginState.emit(loginFormat)
+                .onSuccess {
+                    when (it.body()?.code) {
+                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
+                            memberId = it.headers()["Location"]
+                            _loginState.value = AuthState.Success
+                        }
+
+                        else -> _loginState.value = AuthState.InputError
+                    }
+                }
+                .onFailure {
+                    _loginState.value = AuthState.Failure
+                }
         }
     }
 
-    fun checkIdInput(id: String) {
-        if (::user.isInitialized) isIdCorrect = id == user.id
+    companion object {
+        private const val SERVER_MIN_CODE = 200
+        private const val SERVER_MAX_CODE = 209
     }
-
-    fun checkPwInput(pw: String) {
-        if (::user.isInitialized) isPwCorrect = user.pw == pw
-    }
-
 }

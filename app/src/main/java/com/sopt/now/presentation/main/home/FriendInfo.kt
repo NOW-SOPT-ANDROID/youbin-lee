@@ -1,4 +1,4 @@
-package com.sopt.now.data
+package com.sopt.now.presentation.main.home
 
 sealed class FriendInfo {
 

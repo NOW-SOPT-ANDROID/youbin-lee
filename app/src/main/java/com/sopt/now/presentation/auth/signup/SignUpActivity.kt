@@ -2,16 +2,14 @@ package com.sopt.now.presentation.auth.signup
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.sopt.now.R
-import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivitySignUpBinding
+import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
+import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
@@ -34,27 +32,34 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     etSignUpMbti.text.toString().trim(),
                 )
             })
-            signUpViewModel.checkSignUpFormat()
+            signUpViewModel.checkSignUpAvailable()
         }
     }
 
     private fun observeSignUpFormat() {
-        signUpViewModel.signUpState.flowWithLifecycle(lifecycle).onEach { signUpState ->
-            when (signUpState) {
-                is SignUpState.IdError -> shortToast(R.string.sign_up_id_format_error)
-                is SignUpState.PwError -> shortToast(R.string.sign_up_pw_format_error)
-                is SignUpState.BlankError -> shortToast(R.string.sign_up_nickname_mbti_format_error)
-                is SignUpState.Success -> {
+        signUpViewModel.signUpState.observe(this) { state ->
+            when (state) {
+                is AuthState.Success -> {
                     shortToast(R.string.sign_up_success)
                     navigateToLogin(signUpViewModel.getUser())
                 }
+
+                is AuthState.InputError ->
+                    shortToast(R.string.sign_up_format_error)
+
+                is AuthState.Failure -> {
+                    shortToast(R.string.server_error)
+                }
             }
-        }.launchIn(lifecycleScope)
+        }
     }
 
-    private fun navigateToLogin(updateUser: User) {
-        intent.putExtra(USER, updateUser)
-        setResult(RESULT_OK, intent)
+    private fun navigateToLogin(user: User) {
+        intent.apply {
+            putExtra(USER, user)
+            putExtra(MEMBER_ID, signUpViewModel.getMemberId())
+            setResult(RESULT_OK, this)
+        }
         finish()
     }
 

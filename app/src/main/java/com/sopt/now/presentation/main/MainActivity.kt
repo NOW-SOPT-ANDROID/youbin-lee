@@ -3,25 +3,24 @@ package com.sopt.now.presentation.main
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.sopt.now.R
-import com.sopt.now.data.User
 import com.sopt.now.databinding.ActivityMainBinding
-import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
+import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.main.home.HomeFragment
 import com.sopt.now.presentation.main.mypage.MyPageFragment
 import com.sopt.now.presentation.main.search.SearchFragment
 import com.sopt.now.util.base.BaseActivity
-import com.sopt.now.util.extension.getParcelable
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    private lateinit var user: User
+    private lateinit var memberId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initBnvItemClickListener()
-        getUserData()
+        getMemberId()
     }
 
     private fun initBnvItemClickListener() {
@@ -45,7 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 R.id.menu_my_page -> {
                     val myPageFragment = MyPageFragment().apply {
                         arguments = Bundle().apply {
-                            putParcelable(USER, user)
+                            putString(MEMBER_ID, memberId)
                         }
                     }
                     replaceFragment(myPageFragment)
@@ -63,8 +62,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .commit()
     }
 
-    private fun getUserData() {
-        user = intent.getParcelable(USER, User::class.java) ?: return
+    private fun getMemberId() {
+        memberId = intent.getStringExtra(MEMBER_ID) ?: return
     }
 
 }

@@ -72,27 +72,27 @@
             tools:text="아이디" />
 
         <TextView
-            android:id="@+id/tv_my_page_mbti_title"
+            android:id="@+id/tv_my_page_phone_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:text="@string/my_page_mbti_title"
+            android:text="@string/my_page_phone_title"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_my_page_id" />
 
         <TextView
-            android:id="@+id/tv_my_page_mbti"
+            android:id="@+id/tv_my_page_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_page_mbti_title"
-            tools:text="엠비티아이" />
+            app:layout_constraintTop_toBottomOf="@id/tv_my_page_phone_title"
+            tools:text="010-XXXX-XXXX" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

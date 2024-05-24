@@ -1,18 +1,22 @@
 package com.sopt.now.presentation.auth.signup
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.User
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import com.sopt.now.data.di.ServicePool.authService
+import com.sopt.now.data.dto.request.SignUpRequestDto
+import com.sopt.now.presentation.User
+import com.sopt.now.presentation.auth.AuthState
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
 
-    private val _signUpState = MutableSharedFlow<SignUpState>()
-    val signUpState: SharedFlow<SignUpState> get() = _signUpState
-
     private lateinit var user: User
+
+    private val _signUpState = MutableLiveData<AuthState>()
+    val signUpState: MutableLiveData<AuthState> get() = _signUpState
+
+    private var memberId: String? = null
 
     fun setUser(user: User) {
         this.user = user
@@ -20,26 +24,38 @@ class SignUpViewModel : ViewModel() {
 
     fun getUser() = user
 
-    fun checkSignUpFormat() {
+    fun getMemberId() = memberId
+
+    fun checkSignUpAvailable() {
         viewModelScope.launch {
-            val signUpFormat = when {
-                user.id.length !in ID_MIN_LENGTH..ID_MAX_LENGTH -> SignUpState.IdError
-
-                user.pw.length !in PW_MIN_LENGTH..PW_MAX_LENGTH -> SignUpState.PwError
-
-                user.nickname.isEmpty() || user.mbti.isEmpty() -> SignUpState.BlankError
-
-                else -> SignUpState.Success
+            runCatching {
+                authService.postSignUpToServer(
+                    SignUpRequestDto(
+                        user.id,
+                        user.pw,
+                        user.nickname,
+                        user.phone
+                    )
+                )
             }
-            _signUpState.emit(signUpFormat)
+                .onSuccess {
+                    when (it.body()?.code) {
+                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
+                            memberId = it.headers()["Location"]
+                            _signUpState.value = AuthState.Success
+                        }
+
+                        else -> _signUpState.value = AuthState.InputError
+                    }
+                }
+                .onFailure {
+                    _signUpState.value = AuthState.Failure
+                }
         }
     }
 
     companion object {
-        private const val ID_MIN_LENGTH = 6
-        private const val ID_MAX_LENGTH = 10
-        private const val PW_MIN_LENGTH = 8
-        private const val PW_MAX_LENGTH = 12
+        private const val SERVER_MIN_CODE = 200
+        private const val SERVER_MAX_CODE = 209
     }
-
 }
