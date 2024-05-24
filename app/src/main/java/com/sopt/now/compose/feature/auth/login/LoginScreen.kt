@@ -23,7 +23,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
-import com.sopt.now.compose.component.text.TextFieldWithTitle
+import com.sopt.now.compose.component.textfield.TextFieldWithTitle
 import com.sopt.now.compose.util.shortToast
 import com.sopt.now.compose.util.toast
 import kotlinx.coroutines.launch

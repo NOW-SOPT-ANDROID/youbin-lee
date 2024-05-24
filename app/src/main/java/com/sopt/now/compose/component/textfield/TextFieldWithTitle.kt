@@ -1,4 +1,4 @@
-package com.sopt.now.compose.component.text
+package com.sopt.now.compose.component.textfield
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
