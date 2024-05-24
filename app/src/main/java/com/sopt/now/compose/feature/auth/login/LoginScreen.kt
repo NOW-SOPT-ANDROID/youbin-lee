@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
 import com.sopt.now.compose.util.shortToast
+import com.sopt.now.compose.util.toast
 import kotlinx.coroutines.launch
 
 @Composable
@@ -62,7 +63,7 @@ fun LoginRoute(
                         )
                     }
 
-                    LoginSideEffect.InputError -> context.shortToast(R.string.input_error)
+                    is LoginSideEffect.ErrorToast -> context.toast(loginSideEffect.message)
 
                     LoginSideEffect.Failure -> context.shortToast(R.string.server_failure)
                 }

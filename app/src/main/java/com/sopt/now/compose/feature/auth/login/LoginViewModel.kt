@@ -51,7 +51,7 @@ class LoginViewModel : ViewModel() {
                             )
                         )
 
-                        else -> _sideEffect.emit(LoginSideEffect.InputError)
+                        else -> _sideEffect.emit(LoginSideEffect.ErrorToast(it.message()))
                     }
                 }
                 .onFailure {
