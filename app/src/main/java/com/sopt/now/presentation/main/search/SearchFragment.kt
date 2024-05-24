@@ -36,7 +36,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     }
 
     private fun initFollowerList() {
-        followerViewModel.getFollowerListFromServer(2)
+        followerViewModel.getFollowerListFromServer(PAGE)
     }
 
     private fun observeFollowerState() {
@@ -58,6 +58,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private fun setFollowerList(followerData: List<FollowerResponseModel>) {
         followerAdapter.setFollowerList(followerData)
+    }
+
+    companion object {
+        private const val PAGE = 2
     }
 
 }
