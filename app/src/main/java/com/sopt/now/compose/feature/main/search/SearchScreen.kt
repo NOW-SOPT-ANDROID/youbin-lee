@@ -1,7 +1,5 @@
 package com.sopt.now.compose.feature.main.search
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,7 +29,7 @@ fun SearchRoute(
 
     val state by searchViewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = true) {
         searchViewModel.getFriendsInfo(PAGE)
     }
 
@@ -58,22 +56,17 @@ fun SearchRoute(
 fun SearchScreen(
     followerList: List<FollowerResponseDto.FollowerData>
 ) {
-    Column(
-        modifier = Modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
-        ) {
-            items(followerList) { friend ->
-                FollowerItem(
-                    name = friend.first_name,
-                    profileImage = friend.avatar,
-                    email = friend.email
-                )
-            }
+        items(followerList) { friend ->
+            FollowerItem(
+                name = friend.first_name,
+                profileImage = friend.avatar,
+                email = friend.email
+            )
         }
     }
 }
