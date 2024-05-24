@@ -45,8 +45,8 @@ data class FollowerResponseDto(
         FollowerResponseModel(
             avatar = it.avatar,
             email = it.email,
-            first_name = it.first_name,
-            last_name = it.last_name
+            firstName = it.first_name,
+            lastName = it.last_name
         )
     }
 }

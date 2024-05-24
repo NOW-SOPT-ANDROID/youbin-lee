@@ -49,7 +49,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
                 is UiState.Failure -> toast(followerState.msg)
 
-
                 is UiState.Loading -> shortToast(R.string.ui_state_loading)
 
             }

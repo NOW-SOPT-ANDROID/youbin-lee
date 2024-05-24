@@ -41,7 +41,7 @@ class SignUpViewModel : ViewModel() {
                 .onSuccess {
                     when (it.body()?.code) {
                         in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
-                            memberId = it.headers()["Location"]?.split("/")?.last()
+                            memberId = it.headers()["Location"]
                             _signUpState.value = AuthState.Success
                         }
 
