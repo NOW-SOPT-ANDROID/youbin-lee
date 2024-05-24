@@ -1,10 +1,7 @@
 package com.sopt.now.compose.feature.main.search
 
-import com.sopt.now.compose.data.dto.response.FollowerResponseDto
+import androidx.annotation.StringRes
 
 sealed class SearchSideEffect {
-    data class Success(val followerList: List<FollowerResponseDto.FollowerData>) :
-        SearchSideEffect()
-
-    data object Failure : SearchSideEffect()
+    data class Toast(@StringRes val message: Int) : SearchSideEffect()
 }
