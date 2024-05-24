@@ -11,7 +11,7 @@ class SearchViewHolder(private val binding: ItemFollowerBinding) :
 
     fun onBind(followerData: FollowerResponseModel) {
         with(binding) {
-            tvFollowerName.text = followerData.first_name
+            tvFollowerName.text = followerData.firstName
             tvFollowerEmail.text = followerData.email
             imgFollowerProfile.load(followerData.avatar) {
                 placeholder(R.drawable.img_main_profile)

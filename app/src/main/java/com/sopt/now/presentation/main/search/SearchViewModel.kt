@@ -29,8 +29,8 @@ class SearchViewModel @Inject constructor(private val repository: FollowerReposi
                         FollowerResponseModel(
                             avatar = entity.avatar,
                             email = entity.email,
-                            first_name = entity.first_name,
-                            last_name = entity.last_name
+                            firstName = entity.firstName,
+                            lastName = entity.lastName
                         )
                     }
                     _followerState.value = UiState.Success(followerDataList)
