@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -25,6 +23,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.now.compose.R
+import com.sopt.now.compose.component.text.TextFieldWithTitle
 import com.sopt.now.compose.util.shortToast
 import com.sopt.now.compose.util.toast
 import kotlinx.coroutines.launch
@@ -105,25 +104,21 @@ fun LoginScreen(
             fontSize = 25.sp
         )
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = stringResource(id = R.string.id))
-        TextField(
+        TextFieldWithTitle(text = stringResource(id = R.string.id),
             value = loginState.id,
-            onValueChange = { id ->
+            placeholder = stringResource(id = R.string.login_id_hint),
+            onValueChanged = { id ->
                 loginViewModel.setId(id)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(id = R.string.login_id_hint)) }
+            }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
-        Text(stringResource(id = R.string.pw))
-        TextField(
+        TextFieldWithTitle(
+            text = stringResource(id = R.string.pw),
             value = loginState.password,
-            onValueChange = { password ->
+            placeholder = stringResource(id = R.string.login_pw_hint),
+            onValueChanged = { password ->
                 loginViewModel.setPassword(password)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(id = R.string.login_pw_hint)) },
-            visualTransformation = PasswordVisualTransformation(),
+            }
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
