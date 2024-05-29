@@ -99,4 +99,7 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // location
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
 }
