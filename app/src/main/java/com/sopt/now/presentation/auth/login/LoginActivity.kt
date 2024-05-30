@@ -15,7 +15,6 @@ import com.sopt.now.presentation.auth.signup.SignUpActivity
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.getParcelable
-import com.sopt.now.util.extension.shortToast
 import com.sopt.now.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,9 +74,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     navigateToMain(loginViewModel.getUser())
                 }
 
-                is AuthState.InputError -> shortToast(R.string.sign_up_format_error)
-
-                is AuthState.Failure -> shortToast(R.string.server_error)
+                is AuthState.Failure -> toast(state.message)
             }
         }
     }

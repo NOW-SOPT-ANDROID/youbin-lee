@@ -10,6 +10,7 @@ import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
+import com.sopt.now.util.extension.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,12 +47,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     navigateToLogin(signUpViewModel.getUser())
                 }
 
-                is AuthState.InputError ->
-                    shortToast(R.string.sign_up_format_error)
+                is AuthState.Failure -> toast(state.message)
 
-                is AuthState.Failure -> {
-                    shortToast(R.string.server_error)
-                }
             }
         }
     }

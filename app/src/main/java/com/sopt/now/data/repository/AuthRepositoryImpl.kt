@@ -20,10 +20,12 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.password
                 )
             )
-            LoginResponseModel(
-                code = response.code(),
-                memberId = response.headers()["location"]
-            )
+            response.headers()[LOCATION].run {
+                LoginResponseModel(
+                    code = response.code(),
+                    memberId = response.headers()[LOCATION] ?: throw Exception(response.message())
+                )
+            }
         }
 
     override suspend fun postSignUp(request: SignUpRequestModel): Result<SignUpResponseModel> =
@@ -36,10 +38,15 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.phone
                 )
             )
-            SignUpResponseModel(
-                code = response.code(),
-                memberId = response.headers()["location"]
-            )
+            response.headers()[LOCATION].run {
+                SignUpResponseModel(
+                    code = response.code(),
+                    memberId = this ?: throw Exception(response.message())
+                )
+            }
         }
 
+    companion object {
+        private const val LOCATION = "location"
+    }
 }

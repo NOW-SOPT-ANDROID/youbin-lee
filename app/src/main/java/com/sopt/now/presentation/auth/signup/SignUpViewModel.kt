@@ -38,27 +38,13 @@ class SignUpViewModel @Inject constructor(private val repository: AuthRepository
                     user.nickname,
                     user.phone
                 )
-            )
-
-                .onSuccess { response ->
-                    when (response.code) {
-                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
-                            memberId = response.memberId
-                            _signUpState.value = AuthState.Success
-                        }
-
-                        else -> _signUpState.value = AuthState.InputError
-                    }
-                }
-
-                .onFailure {
-                    _signUpState.value = AuthState.Failure
-                }
+            ).onSuccess { response ->
+                memberId = response.memberId
+                _signUpState.value = AuthState.Success
+            }.onFailure {
+                _signUpState.value = AuthState.Failure(it.message.orEmpty())
+            }
         }
     }
 
-    companion object {
-        private const val SERVER_MIN_CODE = 200
-        private const val SERVER_MAX_CODE = 209
-    }
 }
