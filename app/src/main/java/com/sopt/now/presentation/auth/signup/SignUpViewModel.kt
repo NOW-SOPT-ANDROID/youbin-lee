@@ -40,10 +40,10 @@ class SignUpViewModel @Inject constructor(private val repository: AuthRepository
                 )
             )
 
-                .onSuccess {
-                    when (it.code) {
+                .onSuccess { response ->
+                    when (response.code) {
                         in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
-                            memberId = it.memberId
+                            memberId = response.memberId
                             _signUpState.value = AuthState.Success
                         }
 
