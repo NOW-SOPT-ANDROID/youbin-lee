@@ -4,22 +4,22 @@ import com.sopt.now.data.datasource.AuthDataSource
 import com.sopt.now.data.datasource.FollowerDataSource
 import com.sopt.now.data.datasourceimpl.AuthDataSourceImpl
 import com.sopt.now.data.datasourceimpl.FollowerDataSourceImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataSourceModule {
-    @Provides
+abstract class DataSourceModule {
+    @Binds
     @Singleton
-    fun provideFollowerDataSource(followerDataSourceImpl: FollowerDataSourceImpl): FollowerDataSource =
-        followerDataSourceImpl
+    abstract fun bindFollowerDataSource(followerDataSourceImpl: FollowerDataSourceImpl): FollowerDataSource
 
-    @Provides
+
+    @Binds
     @Singleton
-    fun provideAuthDataSource(authDataSourceImpl: AuthDataSourceImpl): AuthDataSource =
-        authDataSourceImpl
+    abstract fun bindAuthDataSource(authDataSourceImpl: AuthDataSourceImpl): AuthDataSource
+
 }
