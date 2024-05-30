@@ -24,14 +24,7 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                 code = response.code(),
                 memberId = response.headers()["location"]
             )
-        }.fold(
-            onSuccess = {
-                Result.success(it)
-            },
-            onFailure = {
-                Result.failure(it)
-            }
-        )
+        }
 
     override suspend fun postSignUp(request: SignUpRequestModel): Result<SignUpResponseModel> =
         runCatching {
@@ -47,13 +40,6 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                 code = response.code(),
                 memberId = response.headers()["location"]
             )
-        }.fold(
-            onSuccess = {
-                Result.success(it)
-            },
-            onFailure = {
-                Result.failure(it)
-            }
-        )
+        }
 
 }
