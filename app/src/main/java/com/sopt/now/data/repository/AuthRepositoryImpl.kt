@@ -8,6 +8,7 @@ import com.sopt.now.domain.entity.request.SignUpRequestModel
 import com.sopt.now.domain.entity.response.LoginResponseModel
 import com.sopt.now.domain.entity.response.SignUpResponseModel
 import com.sopt.now.domain.repository.AuthRepository
+import org.json.JSONObject
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDataSource) :
@@ -20,10 +21,18 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.password
                 )
             )
-            response.headers()[LOCATION].run {
-                LoginResponseModel(
-                    code = response.code(),
-                    memberId = response.headers()[LOCATION] ?: throw Exception(response.message())
+            if (response.isSuccessful) {
+                response.headers()[LOCATION].run {
+                    LoginResponseModel(
+                        code = response.code(),
+                        memberId = this ?: throw Exception(response.message())
+                    )
+                }
+            } else {
+                throw Exception(
+                    JSONObject(
+                        response.errorBody()?.string().orEmpty()
+                    ).getString(MESSAGE)
                 )
             }
         }
@@ -38,15 +47,20 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.phone
                 )
             )
-            response.headers()[LOCATION].run {
-                SignUpResponseModel(
-                    code = response.code(),
-                    memberId = this ?: throw Exception(response.message())
-                )
+            if (response.isSuccessful) {
+                response.headers()[LOCATION].run {
+                    SignUpResponseModel(
+                        code = response.code(),
+                        memberId = this ?: throw Exception(response.message())
+                    )
+                }
+            } else {
+                throw Exception(JSONObject(response.errorBody()?.string()).getString(MESSAGE))
             }
         }
 
     companion object {
-        private const val LOCATION = "location"
+        private const val LOCATION = "Location"
+        private const val MESSAGE = "message"
     }
 }
