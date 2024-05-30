@@ -10,7 +10,9 @@ import com.sopt.now.presentation.auth.login.LoginActivity.Companion.MEMBER_ID
 import com.sopt.now.presentation.auth.login.LoginActivity.Companion.USER
 import com.sopt.now.util.base.BaseActivity
 import com.sopt.now.util.extension.shortToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
     private val signUpViewModel by viewModels<SignUpViewModel>()

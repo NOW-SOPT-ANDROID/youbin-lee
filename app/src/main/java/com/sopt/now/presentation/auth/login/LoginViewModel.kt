@@ -5,11 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.di.ServicePool.authService
 import com.sopt.now.data.dto.request.LoginRequestDto
+import com.sopt.now.domain.repository.AuthRepository
 import com.sopt.now.presentation.User
 import com.sopt.now.presentation.auth.AuthState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
 
     private val _loginState = MutableLiveData<AuthState>()
     val loginState: MutableLiveData<AuthState> get() = _loginState

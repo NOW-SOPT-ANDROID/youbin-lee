@@ -1,6 +1,8 @@
 package com.sopt.now.data.di
 
+import com.sopt.now.data.di.qualifier.AUTH
 import com.sopt.now.data.di.qualifier.OPEN
+import com.sopt.now.data.service.AuthService
 import com.sopt.now.data.service.FollowerService
 import dagger.Module
 import dagger.Provides
@@ -15,6 +17,11 @@ object ServiceModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(@OPEN retrofit: Retrofit): FollowerService =
+    fun provideFollowerService(@OPEN retrofit: Retrofit): FollowerService =
         retrofit.create(FollowerService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthService(@AUTH retrofit: Retrofit): AuthService =
+        retrofit.create(AuthService::class.java)
 }

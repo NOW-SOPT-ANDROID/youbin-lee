@@ -3,13 +3,16 @@ package com.sopt.now.presentation.auth.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.di.ServicePool.authService
-import com.sopt.now.data.dto.request.SignUpRequestDto
+import com.sopt.now.domain.entity.request.SignUpRequestModel
+import com.sopt.now.domain.repository.AuthRepository
 import com.sopt.now.presentation.User
 import com.sopt.now.presentation.auth.AuthState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
 
     private lateinit var user: User
 
@@ -28,26 +31,28 @@ class SignUpViewModel : ViewModel() {
 
     fun checkSignUpAvailable() {
         viewModelScope.launch {
-            runCatching {
-                authService.postSignUpToServer(
-                    SignUpRequestDto(
-                        user.id,
-                        user.pw,
-                        user.nickname,
-                        user.phone
-                    )
+            repository.postSignUp(
+                SignUpRequestModel(
+                    user.id,
+                    user.pw,
+                    user.nickname,
+                    user.phone
                 )
-            }
+            )
+
                 .onSuccess {
-                    when (it.body()?.code) {
+                    when (it.code) {
                         in SERVER_MIN_CODE..SERVER_MAX_CODE -> {
-                            memberId = it.headers()["Location"]
+                            memberId = it.memberId
                             _signUpState.value = AuthState.Success
                         }
 
-                        else -> _signUpState.value = AuthState.InputError
+                        else -> {
+                            _signUpState.value = AuthState.InputError
+                        }
                     }
                 }
+
                 .onFailure {
                     _signUpState.value = AuthState.Failure
                 }
