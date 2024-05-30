@@ -7,6 +7,5 @@ import com.sopt.now.domain.entity.response.SignUpResponseModel
 
 interface AuthRepository {
     suspend fun postLogin(request: LoginRequestModel): Result<LoginResponseModel>
-
     suspend fun postSignUp(request: SignUpRequestModel): Result<SignUpResponseModel>
 }
