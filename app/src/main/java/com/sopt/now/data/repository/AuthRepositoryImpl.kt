@@ -20,7 +20,10 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.password
                 )
             )
-            LoginResponseModel(code = response.code(), memberId = response.headers()["location"])
+            LoginResponseModel(
+                code = response.code(),
+                memberId = response.headers()["location"]
+            )
         }.fold(
             onSuccess = {
                 Result.success(it)
@@ -40,7 +43,10 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.phone
                 )
             )
-            SignUpResponseModel(code = response.code(), memberId = response.headers()["location"])
+            SignUpResponseModel(
+                code = response.code(),
+                memberId = response.headers()["location"]
+            )
         }.fold(
             onSuccess = {
                 Result.success(it)
