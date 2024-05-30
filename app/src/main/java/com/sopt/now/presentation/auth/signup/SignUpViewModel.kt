@@ -47,9 +47,7 @@ class SignUpViewModel @Inject constructor(private val repository: AuthRepository
                             _signUpState.value = AuthState.Success
                         }
 
-                        else -> {
-                            _signUpState.value = AuthState.InputError
-                        }
+                        else -> _signUpState.value = AuthState.InputError
                     }
                 }
 
