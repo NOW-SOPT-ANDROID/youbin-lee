@@ -21,11 +21,11 @@ class LoginViewModel : ViewModel() {
     private val _sideEffect: MutableSharedFlow<LoginSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<LoginSideEffect> get() = _sideEffect.asSharedFlow()
 
-    fun setId(id: String) {
+    fun fetchId(id: String) {
         _state.value = _state.value.copy(id = id)
     }
 
-    fun setPassword(password: String) {
+    fun fetchPassword(password: String) {
         _state.value = _state.value.copy(password = password)
     }
 

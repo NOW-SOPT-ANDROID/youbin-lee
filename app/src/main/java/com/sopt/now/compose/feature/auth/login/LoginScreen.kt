@@ -108,7 +108,7 @@ fun LoginScreen(
             value = loginState.id,
             placeholder = stringResource(id = R.string.login_id_hint),
             onValueChanged = { id ->
-                loginViewModel.setId(id)
+                loginViewModel.fetchId(id)
             }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
@@ -117,7 +117,7 @@ fun LoginScreen(
             value = loginState.password,
             placeholder = stringResource(id = R.string.login_pw_hint),
             onValueChanged = { password ->
-                loginViewModel.setPassword(password)
+                loginViewModel.fetchPassword(password)
             }
         )
         Spacer(modifier = Modifier.weight(2f))

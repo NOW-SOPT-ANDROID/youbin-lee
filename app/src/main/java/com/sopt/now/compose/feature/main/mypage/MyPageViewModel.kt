@@ -21,11 +21,11 @@ class MyPageViewModel : ViewModel() {
     val sideEffect: SharedFlow<Boolean> get() = _sideEffect.asSharedFlow()
 
     private var memberId: Int? = null
-    fun setMemberId(memberId: Int) {
+    fun fetchMemberId(memberId: Int) {
         this.memberId = memberId
     }
 
-    private fun setUserInfo(user: MyPageState) {
+    private fun fetchUserInfo(user: MyPageState) {
         _state.value = _state.value.copy(
             nickname = user.nickname,
             phone = user.phone
@@ -37,7 +37,7 @@ class MyPageViewModel : ViewModel() {
             runCatching {
                 memberId?.let { authService.getUserFromServer(it) }
             }.onSuccess { response ->
-                setUserInfo(
+                fetchUserInfo(
                     MyPageState(
                         response?.body()?.data?.phone.orEmpty(),
                         response?.body()?.data?.nickname.orEmpty()

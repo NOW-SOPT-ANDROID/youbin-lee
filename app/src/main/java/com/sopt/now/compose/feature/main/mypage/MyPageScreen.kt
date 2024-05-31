@@ -55,7 +55,7 @@ fun MyPageRoute(
     LaunchedEffect(true) {
         navHostController.previousBackStackEntry?.savedStateHandle?.run {
             val memberId = get<String>("memberId")?.toInt()
-            myPageViewModel.setMemberId(memberId ?: 0)
+            myPageViewModel.fetchMemberId(memberId ?: 0)
 
             myPageViewModel.getUserInfo()
         }
