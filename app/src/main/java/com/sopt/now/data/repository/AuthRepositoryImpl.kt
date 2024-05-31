@@ -55,7 +55,11 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     )
                 }
             } else {
-                throw Exception(JSONObject(response.errorBody()?.string()).getString(MESSAGE))
+                throw Exception(
+                    JSONObject(
+                        response.errorBody()?.string().orEmpty()
+                    ).getString(MESSAGE)
+                )
             }
         }
 
