@@ -48,21 +48,19 @@ class SignUpViewModel : ViewModel() {
                         )
                     }
                 )
-            }
-                .onSuccess {
-                    when (it.body()?.code) {
-                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
-                            SignUpSideEffect.Success(
-                                it.headers()["Location"]
-                            )
+            }.onSuccess {
+                when (it.body()?.code) {
+                    in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
+                        SignUpSideEffect.Success(
+                            it.headers()["Location"]
                         )
+                    )
 
-                        else -> _sideEffect.emit(SignUpSideEffect.InputError)
-                    }
+                    else -> _sideEffect.emit(SignUpSideEffect.InputError)
                 }
-                .onFailure {
-                    _sideEffect.emit(SignUpSideEffect.Failure)
-                }
+            }.onFailure {
+                _sideEffect.emit(SignUpSideEffect.Failure)
+            }
         }
     }
 

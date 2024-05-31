@@ -40,23 +40,20 @@ class LoginViewModel : ViewModel() {
                             password
                         )
                     }
-
                 )
-            }
-                .onSuccess {
-                    when (it.body()?.code) {
-                        in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
-                            LoginSideEffect.Success(
-                                it.headers()["Location"]
-                            )
+            }.onSuccess {
+                when (it.body()?.code) {
+                    in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
+                        LoginSideEffect.Success(
+                            it.headers()["Location"]
                         )
+                    )
 
-                        else -> _sideEffect.emit(LoginSideEffect.ErrorToast(it.message()))
-                    }
+                    else -> _sideEffect.emit(LoginSideEffect.ErrorToast(it.message()))
                 }
-                .onFailure {
-                    _sideEffect.emit(LoginSideEffect.Failure)
-                }
+            }.onFailure {
+                _sideEffect.emit(LoginSideEffect.Failure)
+            }
         }
     }
 

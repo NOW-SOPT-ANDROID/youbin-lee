@@ -36,20 +36,17 @@ class MyPageViewModel : ViewModel() {
         viewModelScope.launch {
             runCatching {
                 memberId?.let { authService.getUserFromServer(it) }
-            }
-                .onSuccess { response ->
-                    setUserInfo(
-                        MyPageState(
-                            response?.body()?.data?.phone.orEmpty(),
-                            response?.body()?.data?.nickname.orEmpty()
-                        )
+            }.onSuccess { response ->
+                setUserInfo(
+                    MyPageState(
+                        response?.body()?.data?.phone.orEmpty(),
+                        response?.body()?.data?.nickname.orEmpty()
                     )
-                    _sideEffect.emit(true)
-                }
-
-                .onFailure {
-                    _sideEffect.emit(false)
-                }
+                )
+                _sideEffect.emit(true)
+            }.onFailure {
+                _sideEffect.emit(false)
+            }
         }
     }
 }
