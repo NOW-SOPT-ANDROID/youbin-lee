@@ -103,7 +103,7 @@ fun SignUpScreen(
             value = signUpState.id,
             placeholder = stringResource(id = R.string.sign_up_id_hint),
             onValueChanged = { id ->
-                signUpViewModel.setId(id)
+                signUpViewModel.fetchId(id)
             }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
@@ -112,7 +112,7 @@ fun SignUpScreen(
             value = signUpState.password,
             placeholder = stringResource(id = R.string.sign_up_pw_hint),
             onValueChanged = { password ->
-                signUpViewModel.setPassword(password)
+                signUpViewModel.fetchPassword(password)
             })
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
         TextFieldWithTitle(
@@ -120,7 +120,7 @@ fun SignUpScreen(
             value = signUpState.nickname,
             placeholder = stringResource(id = R.string.sign_up_nickname_hint),
             onValueChanged = { nickname ->
-                signUpViewModel.setNickname(nickname)
+                signUpViewModel.fetchNickname(nickname)
             }
         )
         Spacer(modifier = Modifier.padding(vertical = 20.dp))
@@ -129,7 +129,7 @@ fun SignUpScreen(
             value = signUpState.phone,
             placeholder = stringResource(id = R.string.sign_up_phone_hint),
             onValueChanged = { phone ->
-                signUpViewModel.setPhone(phone)
+                signUpViewModel.fetchPhone(phone)
             }
         )
         Spacer(modifier = Modifier.weight(2f))

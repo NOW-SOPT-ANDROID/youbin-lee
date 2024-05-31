@@ -19,19 +19,19 @@ class SignUpViewModel : ViewModel() {
     private val _sideEffect: MutableSharedFlow<SignUpSideEffect> = MutableSharedFlow()
     val sideEffect: SharedFlow<SignUpSideEffect> get() = _sideEffect
 
-    fun setId(id: String) {
+    fun fetchId(id: String) {
         _state.value = _state.value.copy(id = id)
     }
 
-    fun setPassword(password: String) {
+    fun fetchPassword(password: String) {
         _state.value = _state.value.copy(password = password)
     }
 
-    fun setNickname(nickname: String) {
+    fun fetchNickname(nickname: String) {
         _state.value = _state.value.copy(nickname = nickname)
     }
 
-    fun setPhone(phone: String) {
+    fun fetchPhone(phone: String) {
         _state.value = _state.value.copy(phone = phone)
     }
 
