@@ -15,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object ApiFactory {
+    private const val APPLICATION_JSON = "application/json"
     fun getLogOkHttpClient(): Interceptor {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             Log.d("Retrofit2", "CONNECTION INFO -> $message")
@@ -30,7 +31,7 @@ object ApiFactory {
     fun getRetrofit(url: String): Retrofit =
         Retrofit.Builder()
             .baseUrl(url)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json.asConverterFactory(APPLICATION_JSON.toMediaType()))
             .client(okHttpClient)
             .build()
 
