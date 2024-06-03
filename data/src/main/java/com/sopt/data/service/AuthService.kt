@@ -25,6 +25,6 @@ interface AuthService {
     @GET("member/info")
     suspend fun getUserFromServer(
         @Header("memberId") userId: Int,
-    ): Response<UserResponseDto>
+    ): UserResponseDto
 
 }

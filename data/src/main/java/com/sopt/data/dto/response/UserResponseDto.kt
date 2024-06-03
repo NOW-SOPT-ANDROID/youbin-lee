@@ -1,5 +1,6 @@
 package com.sopt.data.dto.response
 
+import com.sopt.domain.entity.response.UserResponseModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,4 +22,10 @@ data class UserResponseDto(
         @SerialName("phone")
         val phone: String,
     )
+
+    fun toUserEntity(): UserResponseModel =
+        UserResponseModel(
+            nickname = data.nickname,
+            phone = data.phone
+        )
 }

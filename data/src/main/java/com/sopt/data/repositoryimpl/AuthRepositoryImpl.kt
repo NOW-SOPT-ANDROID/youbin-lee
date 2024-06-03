@@ -1,13 +1,14 @@
 package com.sopt.data.repositoryimpl
 
-import android.util.Log
 import com.sopt.data.datasource.AuthDataSource
 import com.sopt.data.dto.request.LoginRequestDto
 import com.sopt.data.dto.request.SignUpRequestDto
 import com.sopt.domain.entity.request.LoginRequestModel
 import com.sopt.domain.entity.request.SignUpRequestModel
+import com.sopt.domain.entity.request.UserRequestModel
 import com.sopt.domain.entity.response.LoginResponseModel
 import com.sopt.domain.entity.response.SignUpResponseModel
+import com.sopt.domain.entity.response.UserResponseModel
 import com.sopt.domain.repository.AuthRepository
 import org.json.JSONObject
 import javax.inject.Inject
@@ -55,14 +56,18 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                         memberId = this ?: throw Exception(response.message())
                     )
                 }
-            }
-            else {
+            } else {
                 throw Exception(
                     JSONObject(
                         response.errorBody()?.string().orEmpty()
                     ).getString(MESSAGE)
                 )
             }
+        }
+
+    override suspend fun getUser(request: UserRequestModel): Result<UserResponseModel> =
+        runCatching {
+            authDataSource.getUser(request.userId).toUserEntity()
         }
 
     companion object {

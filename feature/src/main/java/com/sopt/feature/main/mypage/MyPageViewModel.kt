@@ -1,8 +1,10 @@
 package com.sopt.feature.main.mypage
 
 import androidx.lifecycle.ViewModel
-//import androidx.lifecycle.viewModelScope
-//import com.sopt.now.compose.di.ServicePool.authService
+import androidx.lifecycle.viewModelScope
+import com.sopt.domain.entity.request.UserRequestModel
+import com.sopt.domain.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -10,8 +12,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MyPageViewModel : ViewModel() {
+@HiltViewModel
+class MyPageViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
 
     private val _state: MutableStateFlow<MyPageState> = MutableStateFlow(MyPageState())
     val state: StateFlow<MyPageState>
@@ -32,21 +36,23 @@ class MyPageViewModel : ViewModel() {
         )
     }
 
-//    fun getUserInfo() {
-//        viewModelScope.launch {
-//            runCatching {
-//                memberId?.let { authService.getUserFromServer(it) }
-//            }.onSuccess { response ->
-//                fetchUserInfo(
-//                    MyPageState(
-//                        response?.body()?.data?.phone.orEmpty(),
-//                        response?.body()?.data?.nickname.orEmpty()
-//                    )
-//                )
-//                _sideEffect.emit(true)
-//            }.onFailure {
-//                _sideEffect.emit(false)
-//            }
-//        }
-//    }
+    fun getUserInfo() {
+        viewModelScope.launch {
+            repository.getUser(
+                UserRequestModel(
+                    userId = memberId ?: return@launch
+                )
+            ).onSuccess { response ->
+                fetchUserInfo(
+                    MyPageState(
+                        response.phone,
+                        response.nickname
+                    )
+                )
+                _sideEffect.emit(true)
+            }.onFailure {
+                _sideEffect.emit(false)
+            }
+        }
+    }
 }

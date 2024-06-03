@@ -31,14 +31,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.feature.R
 import com.sopt.ui.ui.theme.Pink80
@@ -47,17 +48,17 @@ import com.sopt.ui.ui.theme.black
 @Composable
 fun MyPageRoute(
     navHostController: NavHostController,
-    myPageViewModel: MyPageViewModel = viewModel()
+    myPageViewModel: MyPageViewModel = hiltViewModel()
 ) {
 
-    val myPageState by myPageViewModel.state.collectAsStateWithLifecycle()
+    val myPageState by myPageViewModel.state.collectAsStateWithLifecycle(lifecycleOwner = LocalLifecycleOwner.current)
 
     LaunchedEffect(true) {
         navHostController.previousBackStackEntry?.savedStateHandle?.run {
             val memberId = get<String>("memberId")?.toInt()
             myPageViewModel.fetchMemberId(memberId ?: 0)
 
-//            myPageViewModel.getUserInfo()
+            myPageViewModel.getUserInfo()
         }
     }
 

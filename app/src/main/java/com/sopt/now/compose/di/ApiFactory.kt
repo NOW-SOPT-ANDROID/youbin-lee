@@ -40,5 +40,4 @@ import retrofit2.Retrofit
 //
 //object ServicePool {
 //    val authService = ApiFactory.create<AuthService, String>(AUTH_BASE_URL)
-//    val followerService = ApiFactory.create<FollowerService, String>(OPEN_BASE_URL)
 //}
