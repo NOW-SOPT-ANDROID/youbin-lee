@@ -27,24 +27,22 @@ class SearchViewModel @Inject constructor(private val repository: FollowerReposi
 
     fun getFriendsInfo(page: Int) {
         viewModelScope.launch {
-            runCatching {
-                _state.value = SearchState.Loading
-                repository.getFollowerList(
-                    page
-                ).onSuccess { response ->
-                    val followerDataList = response.map { entity ->
-                        FollowerResponseModel(
-                            avatar = entity.avatar,
-                            email = entity.email,
-                            firstName = entity.firstName,
-                            lastName = entity.lastName
-                        )
-                    }
-                    _state.value = SearchState.Success(followerDataList)
-                    _sideEffect.emit(SearchSideEffect.Toast(R.string.server_success))
-                }.onFailure {
-                    _sideEffect.emit(SearchSideEffect.Toast(R.string.server_failure))
+            _state.value = SearchState.Loading
+            repository.getFollowerList(
+                page
+            ).onSuccess { response ->
+                val followerDataList = response.map { entity ->
+                    FollowerResponseModel(
+                        avatar = entity.avatar,
+                        email = entity.email,
+                        firstName = entity.firstName,
+                        lastName = entity.lastName
+                    )
                 }
+                _state.value = SearchState.Success(followerDataList)
+                _sideEffect.emit(SearchSideEffect.Toast(R.string.server_success))
+            }.onFailure {
+                _sideEffect.emit(SearchSideEffect.Toast(R.string.server_failure))
             }
         }
     }

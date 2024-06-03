@@ -32,22 +32,19 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
         _state.value = _state.value.copy(password = password)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     fun checkLoginAvailable() {
         viewModelScope.launch {
-            runCatching {
-                repository.postLogin(
-                    state.value.run {
-                        LoginRequestModel(
-                            id,
-                            password
-                        )
-                    }
-                ).onSuccess {
-                    _sideEffect.emit(LoginSideEffect.Success(it.memberId))
-                }.onFailure {
-                    _sideEffect.emit(LoginSideEffect.Failure(it.message.orEmpty()))
+            repository.postLogin(
+                state.value.run {
+                    LoginRequestModel(
+                        id,
+                        password
+                    )
                 }
+            ).onSuccess {
+                _sideEffect.emit(LoginSideEffect.Success(it.memberId))
+            }.onFailure {
+                _sideEffect.emit(LoginSideEffect.Failure(it.message.orEmpty()))
             }
         }
     }

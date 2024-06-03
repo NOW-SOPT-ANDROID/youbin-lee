@@ -40,23 +40,22 @@ class SignUpViewModel @Inject constructor(private val repository: AuthRepository
 
     fun checkSignUpAvailable() {
         viewModelScope.launch {
-            runCatching {
-                repository.postSignUp(
-                    state.value.run {
-                        SignUpRequestModel(
-                            id,
-                            password,
-                            nickname,
-                            phone
-                        )
-                    }
-                ).onSuccess {
-                    _sideEffect.emit(SignUpSideEffect.Success(it.memberId))
-                }.onFailure {
-                    _sideEffect.emit(SignUpSideEffect.Failure(it.message.orEmpty()))
+            repository.postSignUp(
+                state.value.run {
+                    SignUpRequestModel(
+                        id,
+                        password,
+                        nickname,
+                        phone
+                    )
                 }
+            ).onSuccess {
+                _sideEffect.emit(SignUpSideEffect.Success(it.memberId))
+            }.onFailure {
+                _sideEffect.emit(SignUpSideEffect.Failure(it.message.orEmpty()))
             }
         }
+
     }
 
 }
