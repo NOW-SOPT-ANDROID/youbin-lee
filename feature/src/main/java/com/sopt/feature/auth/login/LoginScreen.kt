@@ -18,14 +18,15 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.component.textfield.TextFieldWithTitle
 import com.sopt.feature.R
-import com.sopt.ui.util.shortToast
-import com.sopt.ui.util.toast
+import com.sopt.ui.extension.shortToast
+import com.sopt.ui.extension.toast
 import kotlinx.coroutines.launch
 
 @Composable
@@ -34,7 +35,7 @@ fun LoginRoute(
     navController: NavHostController,
     onMainClick: () -> Unit,
     onSignUpClick: () -> Unit,
-    loginViewModel: LoginViewModel = viewModel()
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val loginState by loginViewModel.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
@@ -43,8 +44,8 @@ fun LoginRoute(
 
     LaunchedEffect(loginViewModel.sideEffect, lifecycleOwner) {
         loginViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
-            .collect { loginSideEffect ->
-                when (loginSideEffect) {
+            .collect { sideEffect ->
+                when (sideEffect) {
                     LoginSideEffect.SignUpNavigation -> {
                         popBackStack()
                         onSignUpClick()
@@ -58,13 +59,12 @@ fun LoginRoute(
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "memberId",
-                            value = loginSideEffect.memberId
+                            value = sideEffect.memberId
                         )
                     }
 
-                    is LoginSideEffect.ErrorToast -> context.toast(loginSideEffect.message)
+                    is LoginSideEffect.Failure -> context.toast(sideEffect.message)
 
-                    LoginSideEffect.Failure -> context.shortToast(R.string.server_failure)
                 }
             }
     }

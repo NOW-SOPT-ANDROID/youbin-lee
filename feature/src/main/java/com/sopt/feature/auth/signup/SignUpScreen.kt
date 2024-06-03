@@ -19,19 +19,20 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.component.textfield.TextFieldWithTitle
 import com.sopt.feature.R
-import com.sopt.ui.util.shortToast
+import com.sopt.ui.extension.toast
 import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
     navController: NavHostController,
-    signUpViewModel: SignUpViewModel = viewModel(),
+    signUpViewModel: SignUpViewModel = hiltViewModel(),
     onLoginClick: () -> Unit
 ) {
 
@@ -42,27 +43,24 @@ fun SignUpRoute(
 
     LaunchedEffect(signUpViewModel.sideEffect, lifecycleOwner) {
         signUpViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
-            .collect { signUpSideEffect ->
-                when (signUpSideEffect) {
+            .collect { sideEffect ->
+                when (sideEffect) {
                     is SignUpSideEffect.Success -> {
                         Toast.makeText(
                             context,
-                            "회원가입 성공! ID는 " + signUpSideEffect.memberId,
+                            "회원가입 성공! ID는 " + sideEffect.memberId,
                             Toast.LENGTH_SHORT
                         ).show()
 
                         navController.currentBackStackEntry?.savedStateHandle?.set(
                             key = "memberId",
-                            value = signUpSideEffect.memberId
+                            value = sideEffect.memberId
                         )
 
                         onLoginClick()
                     }
 
-                    SignUpSideEffect.InputError -> context.shortToast(R.string.input_error)
-
-
-                    SignUpSideEffect.Failure -> context.shortToast(R.string.server_failure)
+                    is SignUpSideEffect.Failure -> context.toast(sideEffect.message)
 
                 }
             }

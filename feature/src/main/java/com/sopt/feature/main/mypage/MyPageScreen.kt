@@ -57,7 +57,7 @@ fun MyPageRoute(
             val memberId = get<String>("memberId")?.toInt()
             myPageViewModel.fetchMemberId(memberId ?: 0)
 
-            myPageViewModel.getUserInfo()
+//            myPageViewModel.getUserInfo()
         }
     }
 

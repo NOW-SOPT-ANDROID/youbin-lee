@@ -11,17 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.component.profile.FollowerItem
-import com.sopt.data.dto.response.FollowerResponseDto
+import com.sopt.domain.entity.response.FollowerResponseModel
 import com.sopt.feature.main.search.SearchViewModel.Companion.PAGE
-import com.sopt.ui.util.shortToast
+import com.sopt.ui.extension.shortToast
 
 @Composable
 fun SearchRoute(
-    searchViewModel: SearchViewModel = viewModel()
+    searchViewModel: SearchViewModel = hiltViewModel()
 ) {
 
     val context = LocalContext.current
@@ -54,7 +55,7 @@ fun SearchRoute(
 
 @Composable
 fun SearchScreen(
-    followerList: List<FollowerResponseDto.FollowerData>
+    followerList: List<FollowerResponseModel>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -63,7 +64,7 @@ fun SearchScreen(
     ) {
         items(followerList) { friend ->
             FollowerItem(
-                name = friend.first_name,
+                name = friend.firstName,
                 profileImage = friend.avatar,
                 email = friend.email
             )

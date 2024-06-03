@@ -1,8 +1,8 @@
 package com.sopt.feature.main.mypage
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.sopt.now.compose.di.ServicePool.authService
+//import androidx.lifecycle.viewModelScope
+//import com.sopt.now.compose.di.ServicePool.authService
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -32,21 +32,21 @@ class MyPageViewModel : ViewModel() {
         )
     }
 
-    fun getUserInfo() {
-        viewModelScope.launch {
-            runCatching {
-                memberId?.let { authService.getUserFromServer(it) }
-            }.onSuccess { response ->
-                fetchUserInfo(
-                    MyPageState(
-                        response?.body()?.data?.phone.orEmpty(),
-                        response?.body()?.data?.nickname.orEmpty()
-                    )
-                )
-                _sideEffect.emit(true)
-            }.onFailure {
-                _sideEffect.emit(false)
-            }
-        }
-    }
+//    fun getUserInfo() {
+//        viewModelScope.launch {
+//            runCatching {
+//                memberId?.let { authService.getUserFromServer(it) }
+//            }.onSuccess { response ->
+//                fetchUserInfo(
+//                    MyPageState(
+//                        response?.body()?.data?.phone.orEmpty(),
+//                        response?.body()?.data?.nickname.orEmpty()
+//                    )
+//                )
+//                _sideEffect.emit(true)
+//            }.onFailure {
+//                _sideEffect.emit(false)
+//            }
+//        }
+//    }
 }

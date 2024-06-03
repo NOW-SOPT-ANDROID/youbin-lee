@@ -2,16 +2,19 @@ package com.sopt.feature.auth.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.data.dto.request.SignUpRequestDto
-import com.sopt.now.compose.di.ServicePool.authService
+import com.sopt.domain.entity.request.SignUpRequestModel
+import com.sopt.domain.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
     private val _state: MutableStateFlow<SignUpState> = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState>
         get() = _state.asStateFlow()
@@ -38,35 +41,22 @@ class SignUpViewModel : ViewModel() {
     fun checkSignUpAvailable() {
         viewModelScope.launch {
             runCatching {
-                authService.postSignUpToServer(
+                repository.postSignUp(
                     state.value.run {
-                        SignUpRequestDto(
+                        SignUpRequestModel(
                             id,
                             password,
                             nickname,
                             phone
                         )
                     }
-                )
-            }.onSuccess {
-                when (it.body()?.code) {
-                    in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
-                        SignUpSideEffect.Success(
-                            it.headers()["Location"]
-                        )
-                    )
-
-                    else -> _sideEffect.emit(SignUpSideEffect.InputError)
+                ).onSuccess {
+                    _sideEffect.emit(SignUpSideEffect.Success(it.memberId))
                 }
             }.onFailure {
-                _sideEffect.emit(SignUpSideEffect.Failure)
+                _sideEffect.emit(SignUpSideEffect.Failure(it.message.orEmpty()))
             }
         }
-    }
-
-    companion object {
-        private const val SERVER_MIN_CODE = 200
-        private const val SERVER_MAX_CODE = 209
     }
 
 }

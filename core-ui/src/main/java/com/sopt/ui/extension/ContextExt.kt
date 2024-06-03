@@ -1,4 +1,4 @@
-package com.sopt.ui.util
+package com.sopt.ui.extension
 
 import android.content.Context
 import android.widget.Toast

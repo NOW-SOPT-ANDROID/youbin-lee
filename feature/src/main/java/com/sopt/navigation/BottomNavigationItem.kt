@@ -27,7 +27,7 @@ enum class BottomNavigationItem(
     );
 
     companion object {
-        operator fun contains(route: String) =
+         operator fun contains(route: String?) =
             entries.map { itemType -> itemType.route }.contains(route)
 
         fun find(route: String): BottomNavigationItem? =

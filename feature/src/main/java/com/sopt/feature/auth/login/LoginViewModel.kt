@@ -2,8 +2,9 @@ package com.sopt.feature.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.data.dto.request.LoginRequestDto
-import com.sopt.now.compose.di.ServicePool.authService
+import com.sopt.domain.entity.request.LoginRequestModel
+import com.sopt.domain.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,8 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
     val state: StateFlow<LoginState>
         get() = _state.asStateFlow()
@@ -33,26 +36,18 @@ class LoginViewModel : ViewModel() {
     fun checkLoginAvailable() {
         viewModelScope.launch {
             runCatching {
-                authService.postLoginToServer(
+                repository.postLogin(
                     state.value.run {
-                        LoginRequestDto(
+                        LoginRequestModel(
                             id,
                             password
                         )
                     }
-                )
-            }.onSuccess {
-                when (it.body()?.code) {
-                    in SERVER_MIN_CODE..SERVER_MAX_CODE -> _sideEffect.emit(
-                        LoginSideEffect.Success(
-                            it.headers()["Location"]
-                        )
-                    )
-
-                    else -> _sideEffect.emit(LoginSideEffect.ErrorToast(it.message()))
+                ).onSuccess {
+                    _sideEffect.emit(LoginSideEffect.Success(it.memberId))
+                }.onFailure {
+                    _sideEffect.emit(LoginSideEffect.Failure(it.message.orEmpty()))
                 }
-            }.onFailure {
-                _sideEffect.emit(LoginSideEffect.Failure)
             }
         }
     }
@@ -63,8 +58,4 @@ class LoginViewModel : ViewModel() {
         _sideEffect.resetReplayCache()
     }
 
-    companion object {
-        private const val SERVER_MIN_CODE = 200
-        private const val SERVER_MAX_CODE = 209
-    }
 }

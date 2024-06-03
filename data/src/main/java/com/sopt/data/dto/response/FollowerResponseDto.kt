@@ -1,5 +1,6 @@
 package com.sopt.data.dto.response
 
+import com.sopt.domain.entity.response.FollowerResponseModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -39,4 +40,14 @@ data class FollowerResponseDto(
         @SerialName("text")
         val text: String,
     )
+
+    fun toFollowerEntity(): List<FollowerResponseModel> = data.map {
+        FollowerResponseModel(
+            avatar = it.avatar,
+            email = it.email,
+            firstName = it.first_name,
+            lastName = it.last_name
+        )
+    }
+
 }
