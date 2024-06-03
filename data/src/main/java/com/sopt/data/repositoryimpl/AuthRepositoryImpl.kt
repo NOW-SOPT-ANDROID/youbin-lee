@@ -40,7 +40,6 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
 
     override suspend fun postSignUp(request: SignUpRequestModel): Result<SignUpResponseModel> =
         runCatching {
-            Log.d("LYB", "레포지토리에서 확인중")
             val response = authDataSource.postSignUp(
                 SignUpRequestDto(
                     request.authenticationId,
@@ -49,28 +48,22 @@ class AuthRepositoryImpl @Inject constructor(private val authDataSource: AuthDat
                     request.phone
                 )
             )
-            Log.d("LYB", "response"+response.body().toString())
             if (response.isSuccessful) {
-                Log.d("LYB", "레포지토리에서 성공")
-                Log.d("LYB", "response body: ${response.body()?.toString()}")
                 response.headers()[LOCATION].run {
                     SignUpResponseModel(
                         code = response.code(),
                         memberId = this ?: throw Exception(response.message())
                     )
                 }
-            } else {
-                Log.d("LYB", "레포지토리에서 실패")
+            }
+            else {
                 throw Exception(
                     JSONObject(
                         response.errorBody()?.string().orEmpty()
                     ).getString(MESSAGE)
                 )
             }
-        }.onFailure {
-            Log.e("LYB", "Exception: ${it.message}", it)
         }
-
 
     companion object {
         private const val LOCATION = "Location"
