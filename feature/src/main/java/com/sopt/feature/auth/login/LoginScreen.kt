@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
-import com.sopt.component.textfield.TextFieldWithTitle
+import com.sopt.feature.component.textfield.TextFieldWithTitle
 import com.sopt.feature.R
 import com.sopt.ui.extension.shortToast
 import com.sopt.ui.extension.toast

@@ -14,8 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sopt.component.profile.FollowerItem
+import com.sopt.ui.component.profile.FollowerItem
 import com.sopt.domain.entity.response.FollowerResponseModel
 import com.sopt.feature.main.search.SearchViewModel.Companion.PAGE
 import com.sopt.ui.extension.shortToast

@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sopt.component.profile.FriendProfileItem
-import com.sopt.component.profile.MyProfileItem
+import com.sopt.ui.component.profile.FriendProfileItem
+import com.sopt.ui.component.profile.MyProfileItem
 
 @Composable
 fun HomeRoute(

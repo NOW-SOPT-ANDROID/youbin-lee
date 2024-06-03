@@ -1,4 +1,4 @@
-package com.sopt.component.profile
+package com.sopt.ui.component.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -12,16 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
 
 @Composable
-fun FollowerItem(
+fun MyProfileItem(
     name: String,
-    profileImage: String,
-    email: String,
+    profileImage: Int,
+    profileImageEtc: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -31,10 +31,10 @@ fun FollowerItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = rememberImagePainter(data = profileImage),
+            painter = painterResource(profileImage),
             contentDescription = "img_profile",
             modifier = modifier
-                .size(60.dp)
+                .size(100.dp)
                 .aspectRatio(1f),
         )
         Spacer(modifier = modifier.width(10.dp))
@@ -44,9 +44,12 @@ fun FollowerItem(
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.weight(1f))
-        Text(
-            text = email,
-            fontSize = 14.sp,
+        Image(
+            painter = painterResource(profileImageEtc),
+            contentDescription = "img_profile_etc",
+            modifier = modifier
+                .size(60.dp)
+                .aspectRatio(1f),
         )
     }
 }

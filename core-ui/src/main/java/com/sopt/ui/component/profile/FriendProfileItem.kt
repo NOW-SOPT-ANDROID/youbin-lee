@@ -1,4 +1,4 @@
-package com.sopt.component.profile
+package com.sopt.ui.component.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -12,16 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 
 @Composable
-fun MyProfileItem(
+fun FriendProfileItem(
     name: String,
-    profileImage: Int,
-    profileImageEtc: Int,
+    profileImage: String,
+    selfDescription: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -31,10 +31,10 @@ fun MyProfileItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(profileImage),
+            painter = rememberImagePainter(data = profileImage),
             contentDescription = "img_profile",
             modifier = modifier
-                .size(100.dp)
+                .size(60.dp)
                 .aspectRatio(1f),
         )
         Spacer(modifier = modifier.width(10.dp))
@@ -44,12 +44,9 @@ fun MyProfileItem(
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = modifier.weight(1f))
-        Image(
-            painter = painterResource(profileImageEtc),
-            contentDescription = "img_profile_etc",
-            modifier = modifier
-                .size(60.dp)
-                .aspectRatio(1f),
+        Text(
+            text = selfDescription,
+            fontSize = 14.sp,
         )
     }
 }

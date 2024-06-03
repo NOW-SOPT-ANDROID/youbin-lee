@@ -1,4 +1,4 @@
-package com.sopt.component.textfield
+package com.sopt.feature.component.textfield
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text

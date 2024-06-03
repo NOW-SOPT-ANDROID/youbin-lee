@@ -1,4 +1,4 @@
-package com.sopt.component.profile
+package com.sopt.ui.component.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 
 @Composable
-fun FriendProfileItem(
+fun FollowerItem(
     name: String,
     profileImage: String,
-    selfDescription: String,
+    email: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -45,7 +45,7 @@ fun FriendProfileItem(
         )
         Spacer(modifier = modifier.weight(1f))
         Text(
-            text = selfDescription,
+            text = email,
             fontSize = 14.sp,
         )
     }
