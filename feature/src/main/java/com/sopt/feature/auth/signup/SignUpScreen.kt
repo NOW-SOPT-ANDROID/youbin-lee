@@ -36,7 +36,7 @@ fun SignUpRoute(
     onLoginClick: () -> Unit
 ) {
 
-    val signUpState by signUpViewModel.state.collectAsStateWithLifecycle()
+    val signUpState by signUpViewModel.state.collectAsStateWithLifecycle(lifecycleOwner = LocalLifecycleOwner.current)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current

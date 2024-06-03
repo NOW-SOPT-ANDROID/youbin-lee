@@ -1,5 +1,7 @@
 package com.sopt.feature.auth.login.navigation
 
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -20,12 +22,17 @@ fun NavGraphBuilder.loginGraph(
     onMainClick: () -> Unit,
     navHostController: NavHostController
 ) {
-    composable(route = Login.ROUTE) {
+    composable(route = Login.ROUTE) { backStackEntry ->
+//        val parentEntry = remember(backStackEntry) {
+//            navHostController.getBackStackEntry(Login.ROUTE)
+//        }
+
         LoginRoute(
             popBackStack = popBackStack,
             onSignUpClick = onSingUpClick,
             onMainClick = onMainClick,
-            navController = navHostController
+            navController = navHostController,
+//            loginViewModel = hiltViewModel(parentEntry)
         )
     }
 }

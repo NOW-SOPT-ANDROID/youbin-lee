@@ -17,21 +17,6 @@ import com.sopt.feature.main.home.navigation.homeGraph
 import com.sopt.feature.main.mypage.navigation.myPageGraph
 import com.sopt.feature.main.search.navigation.searchGraph
 import com.sopt.ui.ui.theme.NOWSOPTAndroidTheme
-//
-//@Composable
-//fun MainScreen()
-//{
-//    val navController: MainNavigator = rememberMainNavigator()
-//    NOWSOPTAndroidTheme {
-//        Surface(
-//            modifier = Modifier.fillMaxSize(),
-//            color = MaterialTheme.colorScheme.background
-//        ) {
-//            MainScreenHome(navController)
-//        }
-//    }
-//}
-
 
 @Composable
 fun MainScreen(

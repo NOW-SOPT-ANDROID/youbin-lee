@@ -52,10 +52,7 @@ class MainNavigator(
 
     @Composable
     fun showBottomBar(): Boolean {
-        // 현재 라우트가 null인 경우 false 반환
         val currentRoute = currentRoute ?: return false
-
-        // 현재 라우트가 BottomNavigationItem에 포함되어 있는지 여부 반환
         return currentRoute.route in BottomNavigationItem
     }
 

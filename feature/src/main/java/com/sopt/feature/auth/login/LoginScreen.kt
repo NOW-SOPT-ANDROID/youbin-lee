@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,6 +30,7 @@ import com.sopt.ui.extension.shortToast
 import com.sopt.ui.extension.toast
 import kotlinx.coroutines.launch
 
+
 @Composable
 fun LoginRoute(
     popBackStack: () -> Unit,
@@ -37,7 +39,8 @@ fun LoginRoute(
     onSignUpClick: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val loginState by loginViewModel.state.collectAsStateWithLifecycle()
+    val loginState by loginViewModel.state.collectAsStateWithLifecycle(lifecycleOwner = LocalLifecycleOwner.current)
+
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current

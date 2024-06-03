@@ -28,7 +28,7 @@ fun SearchRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val state by searchViewModel.state.collectAsStateWithLifecycle()
+    val state by searchViewModel.state.collectAsStateWithLifecycle(lifecycleOwner = LocalLifecycleOwner.current)
 
     LaunchedEffect(key1 = true) {
         searchViewModel.getFriendsInfo(PAGE)
