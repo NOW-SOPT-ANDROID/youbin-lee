@@ -1,5 +1,6 @@
 package com.sopt.feature.auth.signup
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,12 +23,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.sopt.component.textfield.TextFieldWithTitle
 import com.sopt.feature.R
 import com.sopt.ui.extension.toast
-import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
@@ -37,7 +36,6 @@ fun SignUpRoute(
 ) {
 
     val signUpState by signUpViewModel.state.collectAsStateWithLifecycle(lifecycleOwner = LocalLifecycleOwner.current)
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -68,10 +66,8 @@ fun SignUpRoute(
 
     SignUpScreen(
         signUpViewModel = signUpViewModel,
-        onLoginClick = {
-            scope.launch {
-                signUpViewModel.checkSignUpAvailable()
-            }
+        onSignUpClick = {
+            signUpViewModel.checkSignUpAvailable()
         },
         signUpState = signUpState,
     )
@@ -81,7 +77,7 @@ fun SignUpRoute(
 @Composable
 fun SignUpScreen(
     signUpState: SignUpState,
-    onLoginClick: () -> Unit,
+    onSignUpClick: () -> Unit,
     signUpViewModel: SignUpViewModel,
 ) {
     Column(
@@ -132,7 +128,7 @@ fun SignUpScreen(
         )
         Spacer(modifier = Modifier.weight(2f))
         Button(
-            onClick = onLoginClick,
+            onClick = onSignUpClick,
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(stringResource(id = R.string.btn_sign_up))

@@ -22,17 +22,12 @@ fun NavGraphBuilder.loginGraph(
     onMainClick: () -> Unit,
     navHostController: NavHostController
 ) {
-    composable(route = Login.ROUTE) { backStackEntry ->
-//        val parentEntry = remember(backStackEntry) {
-//            navHostController.getBackStackEntry(Login.ROUTE)
-//        }
-
+    composable(route = Login.ROUTE) {
         LoginRoute(
             popBackStack = popBackStack,
             onSignUpClick = onSingUpClick,
             onMainClick = onMainClick,
             navController = navHostController,
-//            loginViewModel = hiltViewModel(parentEntry)
         )
     }
 }

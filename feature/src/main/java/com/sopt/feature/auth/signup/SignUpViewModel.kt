@@ -1,5 +1,6 @@
 package com.sopt.feature.auth.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.domain.entity.request.SignUpRequestModel
