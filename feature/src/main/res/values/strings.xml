@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">NOW SOPT Android</string>
+    <string name="server_success">서버통신 성공</string>
+    <string name="server_failure">서버통신 실패</string>
+    <string name="input_error">정확한 값을 입력해주세요</string>
+
+    <string name="id">ID</string>
+    <string name="pw">비밀번호</string>
+    <string name="nickname">닉네임</string>
+    <string name="phone">전화번호</string>
+    <string name="btn_sign_up">회원가입 하기</string>
+    <string name="btn_login">로그인 하기</string>
+
+    <!--sign_up-->
+    <string name="sign_up_title">SIGN UP</string>
+    <string name="sign_up_id_hint">아이디를 입력해주세요</string>
+    <string name="sign_up_pw_hint">비밀번호를 입력해주세요</string>
+    <string name="sign_up_nickname_hint">닉네임을 입력해주세요</string>
+    <string name="sign_up_phone_hint">전화번호를 입력해주세요</string>
+    <string name="sign_up_success">회원가입에 성공! ID는 %d!</string>
+    <string name="sign_up_nickname_mbti_format_error">모든 정보를 입력해주세요</string>
+
+    <!--login-->
+    <string name="login_title">Welcome To SOPT</string>
+    <string name="login_id_hint">사용자 이름 입력</string>
+    <string name="login_pw_hint">비밀번호 입력</string>
+    <string name="login_success">로그인에 성공했습니다</string>
+    <string name="login_id_pw_error">ID 혹은 비밀번호가 틀렸습니다</string>
+
+    <!--main_page-->
+    <string name="main_page_sub_title">나솝은 지금부터~~~~</string>
+    <string name="nav_home">home</string>
+    <string name="nav_search">search</string>
+    <string name="nav_my_page">my page</string>
+    <string name="main_page_search">자세히 알아보기</string>
+    <string name="main_page_detail">안녕하세요 이유빈입니당</string>
+    <string name="main_page_text_hello">Hello, </string>
+    <string name="main_page_text_name">leeeyubin</string>
+    <string name="main_page_show_less">Show less</string>
+    <string name="main_page_show_more">Show more</string>
+
+
+</resources>
