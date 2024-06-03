@@ -1,4 +1,4 @@
-package com.sopt.now.compose.feature.main.home
+package com.sopt.feature.main.home
 
 sealed class FriendInfo {
 

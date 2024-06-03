@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.feature.main.home.FriendInfo
 import com.sopt.now.compose.component.profile.FriendProfileItem
 import com.sopt.now.compose.component.profile.MyProfileItem
 
