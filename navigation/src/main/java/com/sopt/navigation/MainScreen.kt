@@ -19,7 +19,7 @@ import com.sopt.feature.main.search.navigation.searchGraph
 import com.sopt.ui.ui.theme.NOWSOPTAndroidTheme
 
 @Composable
-fun MainApp(){
+fun MainApp() {
     val navController: MainNavigator = rememberMainNavigator()
     NOWSOPTAndroidTheme {
         Surface(
@@ -30,6 +30,7 @@ fun MainApp(){
         }
     }
 }
+
 @Composable
 fun MainScreen(
     navController: MainNavigator = rememberMainNavigator()
