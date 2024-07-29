@@ -2,6 +2,7 @@ package com.sopt.now.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.BuildConfig
+import com.sopt.now.data.di.qualifier.AUTH
 import com.sopt.now.data.di.qualifier.OPEN
 import com.sopt.now.util.extension.isJsonArray
 import com.sopt.now.util.extension.isJsonObject
@@ -71,6 +72,18 @@ object RetrofitModule {
         factory: Converter.Factory
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.OPEN_BASE_URL)
+        .addConverterFactory(factory)
+        .client(client)
+        .build()
+
+    @Provides
+    @Singleton
+    @AUTH
+    fun provideAuthRetrofit(
+        client: OkHttpClient,
+        factory: Converter.Factory
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.AUTH_BASE_URL)
         .addConverterFactory(factory)
         .client(client)
         .build()
