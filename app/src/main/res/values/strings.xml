@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
+    <string name="adapter_not_initialized_error_msg">Adapter is not initialized</string>
+    <string name="server_error">서버통신 실패</string>
+    <string name="ui_state_loading">로딩 중..</string>
+
+    <!--login-->
+    <string name="login_title">Welcome to SOPT</string>
+    <string name="login_id">ID</string>
+    <string name="login_id_hint">아이디를 입력해주세요</string>
+    <string name="login_pw">PW</string>
+    <string name="login_pw_hint">비밀번호를 입력해주세요</string>
+    <string name="login_btn_login">로그인 하기</string>
+    <string name="login_btn_sign_up">회원가입 하기</string>
+    <string name="login_is_not_initialized">회원가입을 먼저 진행해주세요</string>
+    <string name="login_id_error">아이디가 일치하지 않습니다</string>
+    <string name="login_pw_error">비밀번호가 일치하지 않습니다</string>
+    <string name="login_success">로그인 성공! 유저의 ID는 %s!</string>
+
+    <!--sign_up-->
+    <string name="sign_up_title">SIGN UP</string>
+    <string name="sign_up_id">ID</string>
+    <string name="sign_up_id_hint">아이디를 입력해주세요</string>
+    <string name="sign_up_pw">비밀번호</string>
+    <string name="sign_up_pw_hint">비밀번호를 입력해주세요</string>
+    <string name="sign_up_nickname">닉네임</string>
+    <string name="sign_up_nickname_hint">닉네임을 입력해주세요</string>
+    <string name="sign_up_phone">전화번호</string>
+    <string name="sign_up_phone_hint">전화번호를 입력해주세요</string>
+    <string name="sign_up_btn_sign_up">회원가입 하기</string>
+    <string name="sign_up_format_error">정확한 값을 입력해주세요</string>
+    <string name="sign_up_success">회원가입에 성공했습니다</string>
+
+    <!--my_page-->
+    <string name="my_page_introduce">진정한 엥뿌피 되기 도전~!</string>
+    <string name="my_page_id_title">ID</string>
+    <string name="my_page_phone_title">전화번호</string>
+
+    <!--menu-->
+    <string name="menu_home">홈</string>
+    <string name="menu_search">검색</string>
+    <string name="menu_my_page">마이페이지</string>
+
+    <!--home-->
+    <string name="home_my_profile_message">상태 메세지</string>
+
 </resources>
